@@ -1,0 +1,212 @@
+
+body, 
+body div, 
+body p, 
+body th, 
+body td, 
+body li, 
+body dd	{
+	
+	font-size:				small;
+}
+
+body	{
+	
+	margin:					0;
+	padding:				0;
+	text-align:				center;/*IE hack*/
+	font-family:			Lucida Grande,Verdana,Geneva,Sans-serif;
+	color:					black;
+}
+	
+a	{
+	
+	text-decoration:		none;
+}
+a img	{
+	
+	border:					none;
+}
+
+.pg-separador {
+	
+	margin:					0;
+	padding:				0;
+	height:					1px;
+	visibility:				hidden;
+}
+
+
+#content-wrapper {
+	
+	position:				relative;
+	width:					900px;
+	margin:					0 auto;
+}
+
+.oculto {
+
+	display:none;
+}
+
+/* Headers
+----------------------------------------------------------------------------------------------- */
+
+h1 {
+
+	color: #e13300;
+	border-bottom: 1px solid #666;
+	background-color: transparent;
+	font-weight: normal;
+	font-size: 20px;
+	margin: 0 0 5px;
+}
+
+h2 {
+
+	background-color: transparent;
+	border-bottom: 1px solid #999;
+	color: #336699;
+	font-size: 14px;
+	font-weight: bold;
+	margin: 0px 0 16px 0;
+	padding: 0px 0 6px 0;
+}
+
+h3 {
+
+	background-color: transparent;
+	color: #333;
+	font-size: 16px;
+	font-weight: bold;
+	margin: 0px 0 15px 0;
+	padding: 0 0 0 0;
+}
+
+h4 {
+
+	background-color: transparent;
+	color: #444;
+	font-size: 14px;
+	font-weight: bold;
+	margin: 0px 0 0 0;
+	padding: 0 0 0 0;
+}
+
+
+/* Cabecera.
+----------------------------------------------------------------------------------------------- */
+
+#cabecera {
+	
+	text-align:				left;
+	padding:				0;
+	background:				#6D7FC2 url("../img/fnd-azul1.png") repeat-x;
+}
+
+
+/* Nombre.
+----------------------------------------------------------------------------------------------- */
+
+#cabecera h1 {
+	
+	margin:					0 30px;
+	padding:				0.8em 0;
+	font-weight:			normal;
+	font-size:				1.6em;
+	color:					white;
+	border:					none;
+}	
+	
+	
+/* Menu.
+----------------------------------------------------------------------------------------------- */
+
+#menu,
+#submenu {
+	
+	float:					left;
+	width:					100%;
+	margin:					0px;
+	padding:				0px;
+	list-style-type:		none;
+	background-color:		#3a4798;
+	border-top:				1px solid #29399A;
+	background-image:		url(../img/fnd-azul1.png);
+	background-position:	0 -50px;
+}
+
+#menu li,
+#submenu li	{
+	
+	float:					left;
+	width:					7em;
+	margin:					0;
+	text-align:				center;
+	border-left:			1px solid #3F52A2;
+}	
+	
+#menu li.primero,
+#submenu li.primero	{
+	
+	border:					none;
+}
+
+#menu li a,
+#submenu li a {
+
+	background-image:		url(../img/fnd-azul1.png);
+	background-position:	0 -50px;
+	text-decoration:		none;
+	color:					#B3BEEE;
+	width:					7em;
+	display:				block;
+	height:					20px;
+}
+
+#menu li a:hover,
+#menu li.selected a,
+#submenu li a:hover,
+#submenu li.selected a	{
+	
+	color:					white;
+}
+
+
+/* Conenidos.
+----------------------------------------------------------------------------------------------- */
+
+#contenidos {
+	
+	clear:					both;
+	padding:				10px 5px;
+	text-align:				left;
+}
+
+
+/* Footer
+----------------------------------------------------------------------------------------------- */
+
+.footer {
+	
+	clear:both;
+	padding:				10px 10px;
+	border-top:				2px solid #7A8BC7;
+}
+
+
+/* Other
+----------------------------------------------------------------------------------------------- */
+
+code, pre {
+
+	font-family: Monaco, Verdana, Sans-serif;
+	font-size: 12px;
+	background-color: #f9f9f9;
+	border: 1px solid #D0D0D0;
+	color: #002166;
+	display: block;
+	margin: 14px 0 14px 0;
+	padding: 12px 10px 12px 10px;
+	white-space:pre-line;
+}
