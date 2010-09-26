@@ -1,0 +1,121 @@
+
+
+hr {
+    clear: both;
+} 
+
+.version {
+    float: right;
+} 
+
+.description {
+    float: left;
+}
+
+form {
+    padding: 0;
+    margin: 0;
+}
+
+#form textarea {
+    clear: both;
+    width: 98%;
+    margin-top: 4px;
+    padding: 0 2px;
+    font-family: monospace;
+	border-style:solid;
+	border-width:2px;
+	margin-right:1em;
+}
+
+#form textarea#input {
+
+	border-color:#E6E9F9;
+}
+
+#form textarea#output {
+
+	border-color:#E6E9F9;
+}
+
+textarea.disabled, .disabled textarea {
+    background-color: #EEEEEE;
+    border: 2px solid #898E79;
+}
+
+*.disabled, .disabled * {
+    color: #898E79 !important;
+} 
+
+#output {
+    background-color: #F0F0F0;
+    border-color: #CCCCCC;
+} 
+
+#controls {
+    float: right;
+    text-align: right;
+} 
+
+#controls select {
+    font-size: 0.83em;
+    vertical-align: top;
+} 
+
+#message {
+    font-size: x-small;
+    margin-top: 0.5em;
+} 
+
+.error {
+    color: #AA3333;
+} 
+
+#packer #message {
+    margin: 0 0 1em 0;
+    float: right;
+} 
+
+#help {
+    float: right;
+} 
+
+#packer p {
+    margin: 0;
+} 
+
+#packer p.form-buttons, #packer #controls {
+    margin: 1em 0;
+}
+
+p.form-buttons button {
+    margin-right: 0.2em;
+}
+
+.menu {
+    display: none;
+} 
+
+#disabled {
+    font-weight: bold;
+    text-align: center;
+    display: none;
+    color: #000000 !important;
+} 
+
+.disabled #disabled {
+    display: block;
+} 
+
+#upload-script {
+    display: none;
+}
+
+p.footnote {
+    margin-bottom: 0;
+    float: left;
+} 
+
+#load-script, #save-script {
+    display: none;
+}

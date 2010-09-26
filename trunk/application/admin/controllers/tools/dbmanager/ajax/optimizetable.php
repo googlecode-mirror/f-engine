@@ -1,0 +1,41 @@
+<?php
+/**
+ * Dbmanager
+ *
+ * @package		F-engine
+ * @author		flmn
+ * @copyright	Copyright (c) 2010, Mikel Madariaga
+ * @license		http://www.f-engine.net/userguide/license
+ * @link		http://www.f-engine.net/
+ * @since		Version 0.1
+ * @filesource
+ */
+class optimizetable extends Controller
+{
+	function optimizetable() {
+		
+		parent::Controller();
+		session_start();
+
+		$project = $_POST["project"] != "" ? $_POST["project"] : $_SESSION['project'];  
+		if(isset($project)) {
+
+			require(APPPATH.'../'.$project.'/config/database.php');
+			$this->load->database($db[$active_group]);
+
+		} else {
+			$this->load->database();	
+		}
+
+		$this->load->dbutil() ;
+	}
+	
+	function index() {
+		
+		if(!isset($_POST['table'])) return;
+
+        $response = $this->dbutil->optimize_table($_POST['table']);
+        echo $response['Msg_text'];
+	}
+}
+?>
