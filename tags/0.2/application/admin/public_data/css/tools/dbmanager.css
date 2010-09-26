@@ -1,0 +1,198 @@
+div.leftFrame {
+	
+	width: 170px;
+	float:left;
+}
+
+div.newTable {
+		
+	padding-top: 10px;
+	padding-bottom: 12px;
+	padding-left: 15px;
+}
+
+div.newTable a {
+	
+	color: black;
+	font-weight: bold;
+}
+
+div.newTable a:hover {
+	
+	color: #2F3B6F;
+}
+
+div.frame {
+	
+	background:	#FFFFFF none repeat scroll 0 0;
+	border:		1px solid #BBBBBB;
+	height:		260px;
+	margin:		0 5px;
+	overflow-y:	auto;
+	overflow-x: hidden;
+	padding:	5px;
+	width:		150px;
+	position:	relative;
+}
+
+div.frame input {
+
+	width: 120px;
+}
+
+div#tableContent {
+
+	width:610px;
+	float:left;
+}
+
+div#tableContent a#maximize, 
+div#tableContent a#minimize {
+	
+	display:block;
+	padding-top:15px;
+	padding-bottom:8px;
+	background-image:url(../../img/tabs/background.png);
+	background-position:center bottom;
+	background-repeat:repeat-x;
+	color: #2F3B6F;
+	cursor: pointer;
+	float:left;
+}
+
+div#tableContent a#maximize:hover, 
+div#tableContent a#minimize:hover {
+	
+	font-weight: bold;
+}
+
+div#tableContent #exam-results th.desc center {
+	
+	background-image:url(../../img/tools/bullet_arrow_down.png);
+	background-position:left bottom;
+	background-repeat:no-repeat;
+	padding-left:18px; 
+}
+
+div#tableContent #exam-results th.asc center {
+	
+	background-image:url(../../img/tools/bullet_arrow_up.png);
+	background-position:left bottom;
+	background-repeat:no-repeat;
+	padding-left:18px; 
+}
+
+div#tableContent > div {
+
+	padding-left:10px;
+}
+
+div#tableContent table a {
+
+	color: #8B0D00;
+	background-color: transparent;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+div#tableContent table a:visited {
+
+	color: #8B0D00;
+	background-color: transparent;
+	text-decoration: none;
+}
+
+div#tableContent table a:hover {
+
+	color: #000;
+	text-decoration: none;
+	background-color: transparent;
+}
+
+
+div#tableContent table {
+
+	background-color: #efefef;
+}
+
+div#tableContent th {
+
+	background-color: #eee;
+	font-weight: bold;
+	padding: 6px;
+	text-align: left;
+}
+
+div#tableContent td {
+
+	background-color: #fff;
+	padding: 6px;
+}
+
+/*** other tab ***/
+div#tableContent div#other h2 {
+
+	margin-top: 10px;
+}
+
+/*** Structure tab ***/
+ul.dbheader {
+    font-weight: bold;
+	
+}
+
+ul.dbheader,
+ul.dbfldlst {
+    margin: 0px 0px 0px -30px;
+}
+
+ul.dbfldlst div.row {
+	
+	
+	overflow: auto;
+	
+}
+
+ul.dbheader li,
+ul.dbfldlst li{
+ 
+    text-align: left;
+    list-style: none;
+    height: 30px;
+}
+
+ul.dbheader div div,
+ul.dbfldlst div div {
+ 
+    width: 45px;
+    float:left;
+}
+
+ul.dbheader div.enlarge,
+ul.dbfldlst div.enlarge {
+ 
+    width: 105px;
+}
+
+div.enlarge input {
+ 
+    width: 100px!important;
+}
+
+ul.dbheader li.edit input,
+ul.dbfldlst li.edit input {
+ 
+    width: 43px;
+	background-color: #FFFFCD;
+}
+
+ul.dbheader li.edit div.enlarge input,
+ul.dbfldlst li.edit div.enlarge input {
+ 
+    width: 103px;
+}
+
+.db_fields input {
+	
+	width: 360px;
+}
