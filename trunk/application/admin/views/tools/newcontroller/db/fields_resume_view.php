@@ -55,21 +55,21 @@
     </ul>
 	
 	<br />
-	<hr />
-	<? if (count($databases) > 1): ?>
 	
+	<? if (count($databases) > 1) { ?>
+		<hr />
 		<span class="rel_title">Define database relationships:</span>
 		<?
 			$select = 0;
 		?>
-		<div style="padding: 10px 0;display:none;">
+		<div style="padding: 10px 0;">
 			<div id="relationships">
 				<span style="display:block;">
 					<select name="resume_rel_field1[]">
 						<?foreach ($databases as $name=>$table):?>
 							<optgroup label="<? echo $name?>">
 							<?foreach ($table as $field): ?>
-								<option name="<? echo $name.'.'.$field->Field;?>" <?if($select == 0): $select = 1;?>selected="selected" <?endif;?>><? echo $field->Field;?></option>
+								<option value="<? echo $name.'.'.$field->Field;?>" <?if($select == 0): $select = 1;?>selected="selected" <?endif;?>><? echo $field->Field;?></option>
 							<?endforeach;?>
 							</optgroup>
 						<?endforeach;?>
@@ -80,7 +80,7 @@
 							<?	$select++;	?>
 							<optgroup label="<? echo $name?>">
 							<?foreach ($table as $field): ?>
-								<option name="<? echo $name.'.'.$field->Field;?>" <?if($select == 3): $select++;?>selected="selected" <?endif;?>><? echo $field->Field;?></option>
+								<option value="<? echo $name.'.'.$field->Field;?>" <?if($select == 3): $select++;?>selected="selected" <?endif;?>><? echo $field->Field;?></option>
 							<?endforeach;?>
 							</optgroup>
 						<?endforeach;?>
@@ -93,38 +93,34 @@
 			</div>
 			<br style="clear:both;"/>
 		</div>
-		<hr />
-		<br />
 	
-	<? endif; ?>
+	<? } //endif; ?>
 	
-	<input type="checkbox" class="checkbox" value="1" name="delete" /> Include delete feature
-	
-	<!-- 
-	<input type="checkbox" class="checkbox" value="1" name="pagination" disabled="disabled" /> Include pagination
-	 -->
+	<?if(count($databases) == 1) { ?>
+		<input type="checkbox" class="checkbox" value="1" name="delete" /> Include delete feature
 
-	<div class="delRecLnk" style="margin-left: 20px;padding-left:5px;display:none;">
-		<div style="margin-top:5px;">Select the <?if(count($databases) > 1):?>database and the <?endif;?>fields that will identify the record to be deleted</div>
-		<ul style="display: inline;list-style:none;">
-			<?foreach ($databases as $name=>$table):?>
-				<?if(count($databases) > 1):?>
-					<li style="clear:both;margin:0px;padding:10px 0px 5px;font-weight:bold;">
-						<input type="radio"name="delete_db" class="delete_db" value="<? echo $name;?>" />
-						<? echo $name;?>
-					</li>
-				<?else:?>
-					<li style="clear:both;margin:0px;padding:0px 0px 5px;font-weight:bold;">
-						<? echo $name;?>
-					</li>
-				<?endif;?>
-				<?foreach ($table as $field): ?>
-			        <li style="float:left;width:30%;">
-			        	<input style="margin-left:10px;" type="checkbox" class="checkbox" rel="<? echo $name;?>" <?if($field->Key == 'PRI'):?>checked="checked"<?endif;?> name="remove_id_fields[]" value="<? echo $name.'.'.$field->Field?>" />
-						<span title="<? echo $name.'.'.$field->Field?>"><? echo substr($field->Field,0,14)?></span>
-			        </li>
-				<?endforeach;?>
-			<?endforeach;?>
-		</ul>
-	</div>
+		<div class="delRecLnk" style="margin-left: 20px;padding-left:5px;display:none;">
+			<div style="margin-top:5px;">Select the <?if(count($databases) > 1):?>database and the <?endif;?>fields that will identify the record to be deleted</div>
+			<ul style="display: inline;list-style:none;">
+				<?foreach ($databases as $name=>$table) { ?>
+					<?if(count($databases) > 1) { ?>
+						<li style="clear:both;margin:0px;padding:10px 0px 5px;font-weight:bold;">
+							<input type="radio"name="delete_db" class="delete_db" value="<? echo $name;?>" />
+							<? echo $name;?>
+						</li>
+					<? } else { ?>
+						<li style="clear:both;margin:0px;padding:0px 0px 5px;font-weight:bold;">
+							<? echo $name;?>
+						</li>
+					<? } //endif?>
+					<?foreach ($table as $field) { ?>
+				        <li style="float:left;width:30%;">
+				        	<input style="margin-left:10px;" type="checkbox" class="checkbox" rel="<? echo $name;?>" <?if($field->Key == 'PRI'):?>checked="checked"<?endif;?> name="remove_id_fields[]" value="<? echo $name.'.'.$field->Field?>" />
+							<span title="<? echo $name.'.'.$field->Field?>"><? echo substr($field->Field,0,14)?></span>
+				        </li>
+					<? } //endforeach?>
+				<?} //endforeach;?>
+			</ul>
+		</div>
+	<?php }//endif ?>
 </fieldset>

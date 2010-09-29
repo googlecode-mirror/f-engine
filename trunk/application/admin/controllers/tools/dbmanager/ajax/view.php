@@ -7,7 +7,7 @@
  * @copyright	Copyright (c) 2010, Mikel Madariaga
  * @license		http://www.f-engine.net/userguide/license
  * @link			http://www.f-engine.net/
- * @since		Version 0.1
+ * @since		Version 0.3
  * @filesource
  */
 class view extends Controller 
@@ -36,7 +36,11 @@ class view extends Controller
 		if(isset($_POST['project'])) {
 
 			require(APPPATH.'../'.$_POST['project'].'/config/database.php');
-			$this->load->database($db[$active_group], FALSE, TRUE);
+			
+			if(isset($_POST["dbconf"]) and isset($db[$_POST["dbconf"]]))
+				$this->load->database($db[$_POST["dbconf"]], FALSE, TRUE);
+			else
+				$this->load->database($db[$active_group], FALSE, TRUE);
 
 		} else {
 

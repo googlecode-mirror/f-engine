@@ -10,11 +10,11 @@
  * @since		Version 0.1
  * @filesource
  */
-class appcreator extends Controller {
+class appbuilder extends Controller {
 
 	private $xml;
 
-	function appcreator()
+	function appbuilder()
 	{
 		parent::Controller();
 		$this->load->helper('directory'); 

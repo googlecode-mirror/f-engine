@@ -1,0 +1,17 @@
+new features in v0.3
+
+Core:
+	- added backup feature to mysqli driver
+	
+New form wizard:
+	- Some short tag replaced width standard php sintax
+	- Multidatabase feature added for datagrids
+	
+Dbmanager:
+	- Now its posible to switch between predefined databases
+	- Bugfixing in edit/delete record when no one index is defined in the table
+	- It does not set/read project/database from session any more. Now its posible to have project independent tabs/windows opened in browser 
+	
+Other:
+	- minor bugs fixed
+

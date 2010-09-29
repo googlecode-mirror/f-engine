@@ -11,7 +11,7 @@
 	    <tbody>
 	    	<?php
 			  $i=0;
-	    	  foreach($field_names as $item): if($item == '') continue;?>
+	    	  foreach($field_names as $item){ if($item == '') continue;?>
 	<tr>
 			        <td width="10%">
 			            <?php echo $item;?> 
@@ -22,7 +22,7 @@
 			        </td>
 			    </tr>
 
-			<?php endforeach;?>
+			<?php }//endforeach ?>
 </tbody>
 	</table>
 	<input type="submit" id="form-submit" value="save" />

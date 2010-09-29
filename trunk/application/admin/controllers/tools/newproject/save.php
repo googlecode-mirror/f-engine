@@ -25,7 +25,7 @@ class save extends Controller {
 		if( !isset($_POST['projectname']) || $_POST['projectname'] == '') die;
 
 		$pname = BASEPATH.'application/'.$_POST['projectname'];
-		mkdir($pname);
+		mkdir($pname, 0777);
 
 		$xml = simplexml_load_file(BASEPATH.'src/newproject.xml'); 
 		
@@ -113,8 +113,7 @@ class save extends Controller {
 		foreach ($xml->dir as $type => $item) {
 
 			$current_folder = $pname.'/'.$item['name'];
-			mkdir($current_folder);
-			chmod($current_folder, 0777);
+			mkdir($current_folder, 0777);
 
 			if($type == 'dir') {
 
@@ -127,8 +126,7 @@ class save extends Controller {
 
 					} else {
 
-						mkdir($current_folder.'/'.$subitem['name']);
-						chmod($current_folder, 0777);
+						mkdir($current_folder.'/'.$subitem['name'], 0777);
 						$this->run_folder($subitem,$current_folder.'/'.$subitem['name']);
 					}
 				}

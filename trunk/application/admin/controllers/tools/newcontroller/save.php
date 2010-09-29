@@ -28,7 +28,6 @@ class save extends Controller
 
 	function index() {
 
-		//echo "<pre>"; print_r($_POST); die;
 		$this->newform->init($_POST);
 
 		/**
@@ -53,7 +52,8 @@ class save extends Controller
 			$this->newform->set_files();
 			$data = $this->newform->get_files();
 		}
-
+		
+		
 		$this->load->masterview('tools/newcontroller/done',$data,'done');
 	}
 }

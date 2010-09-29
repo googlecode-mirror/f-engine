@@ -1,11 +1,11 @@
 /**
  *
  * @package		F-engine
- * @author			flmn
- * @copyright		Copyright (c) 2010, Mikel Madariaga
- * @license			http://www.f-engine.net/userguide/license
- * @link				http://www.f-engine.net/
- * @since			Version 0.2
+ * @author		flmn
+ * @copyright	Copyright (c) 2010, Mikel Madariaga
+ * @license		http://www.f-engine.net/userguide/license
+ * @link		http://www.f-engine.net/
+ * @since		Version 0.3
  * @filesource
  */
  var backup;
@@ -294,14 +294,23 @@
     	function(obj)  {	highlight(obj);		}
     );
 	$('#footer_select ul').sortable();
-	
+
  	/***	DB Table list
  	 ********************************************************/
-    $('.db_list a').each(function (i) {
+	//datagrid
+    $('#resume .db_list a').each(function (i) {
 
         $(this).bind('click', function () {
 
-        	//remove this line for multidatabase mode: 
+        	highlight($(this));
+        });
+    });
+ 
+    //new record, edit
+    $('.db_list a',$('#insert, #edit')).each(function (i) {
+
+        $(this).bind('click', function () {
+
         	highlight( $("a.selected",$($(this).parent().parent())) );
         	highlight($(this));
         });

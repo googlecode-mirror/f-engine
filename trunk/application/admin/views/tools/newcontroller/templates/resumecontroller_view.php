@@ -10,8 +10,10 @@ class <?php echo $classname;?> extends Controller {
 	function index() {
 
 		$this->load->database();
-
-		$content = $this->db->f_select(array('<?php echo implode("','",$dbs);?>'),<?php echo "\r\n\t\t'".implode(", ",$data);?>')->result();
+		
+		<?php if(isset($where)) { echo '$where = '.$where."\r\n"; } ?>
+		$content = $this->db->f_select(array('<?php echo implode("','",$dbs);?>'),
+		'<?php echo implode(", ",$data);?>'<?php if(isset($where)) { echo ',$where'; } ?>)->result();
 
 		$data = array(
 <?php foreach($assets as $key => $val) {

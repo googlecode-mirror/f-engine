@@ -3,7 +3,7 @@
 
 	<li rel="newController">
 		<a href="<?php echo site_url();?>tools/newcontroller" style="color:black;">
-			<img src="<?php echo base_url();?>public_data/img/tools/wizard.png">New controller wizard
+			<img src="<?php echo base_url();?>public_data/img/tools/wizard.png">New form wizard
 		</a>
 	</li>
 	<li rel="sqlManager">
