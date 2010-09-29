@@ -84,9 +84,9 @@ class update extends Controller {
 
 	function validate () {
 
-<?php foreach ($rules as $key => $val):?>
+<?php foreach ($rules as $key => $val) { ?>
 		$rules['<?php echo $key?>'] = '<?php echo $val?>';<?php echo "\r\n";?>
-<?php endforeach;?>
+<?php }//endforeach ?>
 
 		$this->validation->set_rules($rules);
 

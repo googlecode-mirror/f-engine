@@ -7,7 +7,7 @@
  * @copyright	Copyright (c) 2010, Mikel Madariaga
  * @license		http://www.f-engine.net/userguide/license
  * @link		http://www.f-engine.net/
- * @since		Version 0.1
+ * @since		Version 0.3
  * @filesource
  */
 class createtable extends Controller
@@ -65,7 +65,10 @@ class createtable extends Controller
         	if(isset($_POST['project'])) {
 
 				require(APPPATH.'../'.$_POST['project'].'/config/database.php');
-				$this->load->database($db[$active_group]);
+				if(isset($_POST["dbconf"]) and isset($db[$_POST["dbconf"]]))
+					$this->load->database($db[$_POST["dbconf"]]);
+				else
+					$this->load->database($db[$active_group]);
 
 			} else {
 

@@ -50,10 +50,23 @@
                                 $exam_keys = explode(",",$tmp[1]);
                                 $exam_key = $exam_keys[0];
                                 $lcase_exam_key = strtolower($exam_keys[0]);
+
+                                //multiple indexes ? 
+                                if(strpos($tmp[1],",")) {
                             ?>
-		                            <input type="hidden" name="<?php  echo $tmp[0];?>" value="<?php  echo $tmp[1];?>" />
+									<input type="hidden" name="<?php  echo $tmp[0];?>" value="<?php  echo $tmp[1];?>" />
+									<?php foreach(explode(",",$tmp[1]) as $fld) { 
+										  $lcase_fld = strtolower($fld);
+									?>
+		                            <input type="hidden" name="<?php  echo $tmp[0];?>_value[]" value="<?php  echo isset($row->$fld) ? $row->$fld : $row->$lcase_fld;?>" />
+		                            <?php }//endforeach ?>
+
+							<?php } else { ?>
+
+									<input type="hidden" name="<?php  echo $tmp[0];?>" value="<?php  echo $tmp[1];?>" />
 		                            <input type="hidden" name="<?php  echo $tmp[0];?>_value" value="<?php  echo isset($row->$exam_key) ? $row->$exam_key : $row->$lcase_exam_key;?>" />
-		
+
+							<?php }//endif ?>
 		                            <a href="<?php  echo site_url();?>tools/dbmanager/ajax/edit/" class="edit">
 		                                <img class="delete_field" style="cursor: pointer;" title="edit this record" src="<?php  echo base_url();?>public_data/img/contextmenu/page_white_edit.png"/>
 		                            </a>

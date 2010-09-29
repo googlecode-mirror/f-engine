@@ -11,6 +11,7 @@
 </ul>
 <form method="post" action="<? echo site_url();?>/tools/dbmanager/ajax/createtable" >
 <input type="hidden" name="project" value="<?php echo $_POST["project"]?>" />
+<input type="hidden" name=dbconf value="<?php echo $_POST["dbconf"]?>" />
 <div id="main">
 	<table cellspacing="1" cellpadding="0" border="0" style="width: 100%;">
 	    <tbody>

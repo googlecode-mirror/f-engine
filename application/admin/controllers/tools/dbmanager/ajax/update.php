@@ -7,7 +7,7 @@
  * @copyright	Copyright (c) 2010, Mikel Madariaga
  * @license		http://www.f-engine.net/userguide/license
  * @link		http://www.f-engine.net/
- * @since		Version 0.1
+ * @since		Version 0.3
  * @filesource
  */
 class update extends Controller 
@@ -22,7 +22,13 @@ class update extends Controller
 		if(isset($project)) {
 
 			require(APPPATH.'../'.$project.'/config/database.php');
-			$this->load->database($db[$active_group], FALSE, TRUE);
+			if(isset($_POST["dbconf"]) and isset($db[$_POST["dbconf"]])) {
+				
+				$this->load->database($db[$_POST["dbconf"]], FALSE, TRUE);
+				unset($_POST["dbconf"]);
+				
+			} else
+				$this->load->database($db[$active_group], FALSE, TRUE);
 
 		} else {
 			$this->load->database("", FALSE, TRUE);
@@ -36,7 +42,18 @@ class update extends Controller
 
 		if(isset($_POST["primary"])) {
 
-            $where = array($_POST["primary"] => $_POST["primary_value"]);
+			if(is_array($_POST["primary_value"])) {
+				$where = array();
+				$i=0;
+				foreach(explode(",",$_POST["primary"]) as $field) {
+					$where[$field] = $_POST["primary_value"][$i];
+					$i++;
+				}
+
+			} else {
+				$where = array($_POST["primary"] => $_POST["primary_value"]); 
+			}
+
             unset($_POST["primary"]);
             unset($_POST["primary_value"]);
 
@@ -45,7 +62,17 @@ class update extends Controller
 
         } elseif(isset($_POST["unique"])) {
 
-            $where = array($_POST["unique"] => $_POST["unique_value"]);
+           if(is_array($_POST["unique"])) {
+				$where = array();
+				$i=0;
+				foreach(explode(",",$_POST["unique"]) as $field) {
+					$where[$field] = $_POST["unique"][$i];
+					$i++;
+				}
+
+			} else {
+				$where = array($_POST["unique"] => $_POST["unique_value"]); 
+			}
             unset($_POST["unique"]);
             unset($_POST["unique_value"]);
 

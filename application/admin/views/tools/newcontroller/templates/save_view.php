@@ -17,7 +17,7 @@ class save extends Controller {
 			/** action	**/
 			$this->load->database();
 
-			<?php foreach($dbs as $db):
+			<?php foreach($dbs as $db) {
 				echo '$data = array('."\r\n";
 				$i = 0;
 				foreach($data as $field) {
@@ -29,7 +29,7 @@ class save extends Controller {
 			);
 
 			$this->db->f_insert('<?php echo $db;?>',$data);
-			<?php endforeach; ?>
+			<?php }//endforeach ?>
 			
 			if(!IS_AJAX) {
 				

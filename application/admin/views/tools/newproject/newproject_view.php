@@ -87,7 +87,7 @@
 				<td>
 					<select name="dbdriver">
 						<option value="mysql">mysql</option>
-						<option value="mysqli">mysqli</option>
+						<option value="mysqli" selected="selected">mysqli</option>
 						<option value="mssql">mssql</option>
 						<option value="oci8">oci8</option>
 						<option value="odbc">odbc</option>

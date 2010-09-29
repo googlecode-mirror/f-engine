@@ -287,9 +287,27 @@ class newform extends Model {
 			foreach($this->post['resume_form_fields'] as $item) {
 				$databases[] = substr($item,0,strpos($item,'.'));
 			}
+			$databases = array_unique($databases);
+			
+			
+			if(count($databases) > 1 && isset($this->post['resume_rel_field1'])) {
+				
+				$where = array();
+				for($i = 0; $i < count($this->post['resume_rel_field1']); $i++) {
+					
+					$where[] = "'".$this->post['resume_rel_field1'][$i]." = ".$this->post['resume_rel_field2'][$i]."'";
+				}
+				
+				$where = 'array('.implode($where,",").');';
+				
+			} else {
+				
+				$where = 'array();';	
+			}
 
 			$data = array('fields' => $this->post['resume_field_names'],'data' => array(),
-							'classname'=>$this->foldername,'vpath'=> $this->foldername, 'dbs' => array_unique($databases));
+							'classname'=>$this->foldername,'vpath'=> $this->foldername, 
+							'dbs' => $databases, 'where' => $where);
 
 			if(isset($this->post['resume_form_fields'])) $data['data'] = array_unique(array_merge($data['data'], $this->post['resume_form_fields']));
 			if(isset($this->post['edit_id_fields']))	 $data['data'] = array_unique(array_merge($data['data'],$this->post['edit_id_fields']));

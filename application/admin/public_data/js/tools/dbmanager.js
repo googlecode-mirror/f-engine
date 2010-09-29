@@ -5,9 +5,22 @@
  * @copyright	Copyright (c) 2010, Mikel Madariaga
  * @license		http://www.f-engine.net/userguide/license
  * @link		http://www.f-engine.net/
- * @since		Version 0.2
+ * @since		Version 0.3
  * @filesource
  */
+
+
+/***	Switch database configuration
+ ********************************************************/
+
+	$("select[name=db_conf]").change(function () {
+
+		var form = $(this).parent().parent();
+		$(form).attr("action",$(form).attr("action")+$(this).attr("value"));
+
+		form.submit();
+	});
+
 
 /***	DB Table list filter
  ********************************************************/
@@ -47,13 +60,13 @@ $('#db_list a').each(function () {
     $(this).bind('click', function () {
 
 		$('div.newTable a').css('color','');
-		
+
 		$('ul.jqueryFileTree a.selected').removeClass('selected');
 		$(this).addClass('selected');
-		
+
 		$.ajax({ type: "POST",
 		  		 url: $('#forms form').attr('action'),
-		  		 data: "table="+$(this).text()+"&fullLoad=true&project="+$("#currentprojectname").attr("rel"),
+		  		 data: "table="+$(this).text()+ "&dbconf=" + $("select[name=db_conf]").attr("value")+"&fullLoad=true&project="+$("#currentprojectname").attr("rel"),
 				 success: function(msg) {
 					loadContent(msg);		
 				 }
@@ -61,13 +74,18 @@ $('#db_list a').each(function () {
     });
 });
 
+
 $('div.newTable a').click(function () {
 
 	$(this).css('color','#2F3B6F').blur();
 
-	$.post($(this).attr("href"), { project: $("#currentprojectname").attr("rel")} ,function (html) {
-		loadCreateTable(html);
-	});
+	$.post( $(this).attr("href"), 
+	{ project: $("#currentprojectname").attr("rel"), 
+	  dbconf : $("select[name=db_conf]").attr("value")} ,
+	  function (html) {
+		  loadCreateTable(html);
+	  }
+	);
 	return false;
 });
 
@@ -275,7 +293,7 @@ function pagination (html) {
     $('#exam-results tr:gt(0) td a.edit').click(function () {
 
         $.post($(this).attr('href')+$("#currentprojectname").attr("rel"), 
-        "table="+$('#db_list ul.jqueryFileTree a.selected').text()+ "&" +$(this).parent().serialize(),
+        "table="+$('#db_list ul.jqueryFileTree a.selected').text() + "&dbconf=" + $("select[name=db_conf]").attr("value") + "&" + $(this).parent().serialize(),
         function (content) {
 
             $('#exam div.edit').html(content);
@@ -289,7 +307,7 @@ function pagination (html) {
     $('#exam-results tr:gt(0) td a.delete').click(function () {
 
     	$.post($(this).attr('href')+$("#currentprojectname").attr("rel"), 
-    	        "table="+$('#db_list ul.jqueryFileTree a.selected').text()+ "&" +$(this).parent().serialize(), 
+    	        "table="+$('#db_list ul.jqueryFileTree a.selected').text() + "&dbconf=" + $("select[name=db_conf]").attr("value") + "&" +$(this).parent().serialize(), 
         function (response) {
             if(response == 1) {
 
@@ -361,7 +379,7 @@ function loadContent (msg) {
     $('#exam-results tr:gt(0) td a.edit').click(function () {
 
         $.post($(this).attr('href')+$("#currentprojectname").attr("rel"), 
-        "table="+$('#db_list ul.jqueryFileTree a.selected').text()+ "&" +$(this).parent().serialize(),
+        "table="+$('#db_list ul.jqueryFileTree a.selected').text() + "&dbconf=" + $("select[name=db_conf]").attr("value") + "&" +$(this).parent().serialize(),
         function (content) {
 
             $('#exam div.edit').html(content);
@@ -375,7 +393,7 @@ function loadContent (msg) {
     $('#exam-results tr:gt(0) td a.delete').click(function () {
 
         $.post($(this).attr('href')+$("#currentprojectname").attr("rel"), 
-        "table="+$('#db_list ul.jqueryFileTree a.selected').text()+ "&" +$(this).parent().serialize(), 
+        "table="+$('#db_list ul.jqueryFileTree a.selected').text() + "&dbconf=" + $("select[name=db_conf]").attr("value") + "&" +$(this).parent().serialize(), 
         function (response) {
             if(response == 1) {
             	
@@ -400,13 +418,14 @@ function loadContent (msg) {
 	$('#insert form input[type="submit"]').click(function () {
 
 		var form = $(this).parent();
-		$.post(form.attr('action') + "/" + $("#currentprojectname").attr("rel"), form.serialize(), function (response) {
+		$.post(form.attr('action') + "/" + $("#currentprojectname").attr("rel") + "/" + $("select[name=db_conf]").attr("value"), 
+				form.serialize(), function (response) {
 
 			if(response == 1) {
 
 				$.ajax({ type: "POST",
 				  		 url: $('#forms form').attr('action'),
-				  		 data: "table="+$('#db_list ul.jqueryFileTree a.selected').text()+"&fullLoad=true&project=" + $("#currentprojectname").attr("rel"),
+				  		 data: "table="+$('#db_list ul.jqueryFileTree a.selected').text() + "&dbconf=" + $("select[name=db_conf]").attr("value") +"&fullLoad=true&project=" + $("#currentprojectname").attr("rel"),
 						 success: function(msg) {
 							loadContent(msg);		
 						 }
@@ -441,7 +460,9 @@ function loadContent (msg) {
 
         var form = $($(this).parent());
 
-        $.post(form.attr('action'), form.serialize() +"&project=" + $("#currentprojectname").attr("rel"), function (response) {
+        $.post(form.attr('action'), 
+        	   form.serialize() +"&project=" + $("#currentprojectname").attr("rel")+"&dbconf=" + $("select[name=db_conf]").attr("value"), 
+        	   function (response) {
                 
                $('#editfield').html(response);
                $('#tfields').hide();
@@ -490,7 +511,8 @@ function loadContent (msg) {
 			            data: "query="+str
                               +"&tablename="+$('#editfield input[name=tablename]').attr('value')
                               +"&tablefield="+$('#editfield input[name=tablefield]').attr('value')
-                              +"&project=" + $("#currentprojectname").attr("rel"),
+                              +"&project=" + $("#currentprojectname").attr("rel")
+                              + "&dbconf=" + $("select[name=db_conf]").attr("value"),
 			            success:function(response){
 				        	if(response == 1 || response == '1') {
 				
@@ -578,13 +600,14 @@ function loadContent (msg) {
         return false;
     });
 
-    //delete field
+    //drop field
     $('#structure div#tfields table tr:gt(0) td a.delete_field').click(function () {
 
     	if(confirm("Are you sure?")) {
 	        var form = $($(this).parent());
 	
-	        $.post(form.attr('action'), form.serialize()+"&project=" + $("#currentprojectname").attr("rel"), 
+	        $.post(form.attr('action'), form.serialize()+"&project=" + $("#currentprojectname").attr("rel")
+	        		+"&dbconf=" + $("select[name=db_conf]").attr("value"), 
 	        function (response) {
 	
 	               if(response == 1 || response == '1') {
@@ -728,7 +751,8 @@ function loadContent (msg) {
             type: "POST",
             url: $('#newField form').attr('action'),
             dataType:"html",
-            data: $('#newField form').serialize()+"&project=" + $("#currentprojectname").attr("rel"),
+            data: $('#newField form').serialize()+"&project=" + $("#currentprojectname").attr("rel")
+            +"&dbconf=" + $("select[name=db_conf]").attr("value"),
             success:function(response){
 	        	if(response == 1 || response == '1') {
 	
@@ -772,7 +796,8 @@ function recordEditEvents () {
 
 		var form = $(this).parent();
 		$.post(form.attr('action'), 
-		form.serialize(), function (response) {
+		form.serialize()+"&dbconf=" + $("select[name=db_conf]").attr("value"), 
+		function (response) {
 
 			if(response == 1) {
 
@@ -805,6 +830,7 @@ function init_paginationLinks() {
 		  		 url: $(this).attr('href'),
 		  		 data: {
 						"table": $('#db_list .jqueryFileTree a.selected').text(), 
+						"dbconf" : $("select[name=db_conf]").attr("value"),
 						"query":$.trim($("#current_query").text()),
 						"action" : $(this).attr("class"),
 						"orderby" : orderby,
@@ -892,20 +918,34 @@ function initTab_backup () {
 
 		if($('input[name="format"]',form)[0].checked == true) {
 
-			$.post(form.attr('action'), form.serialize()+"&project=" + $("#currentprojectname").attr("rel"), 
-			function (response) {
+			$.ajax({
+				type: "POST",
+				url : form.attr('action'), 
+				data: form.serialize()
+				+"&project=" + $("#currentprojectname").attr("rel")+ "&dbconf=" + $("select[name=db_conf]").attr("value"), 
+				success : function (response) {
+	
+					//replace line breaks by html <br> tags
+					response = response.replace(/\n/g,"<BR>");
+	
+					/***
+					 * if current table has more than 7 fields
+					 * split inserts in 2 lines
+					 */
+					if($('#tfields tr:gt(0)').length > 7)
+						response = response.replace(" VALUES ","<BR>VALUES ");
+					$('div#result code',form).html(response);
+					$('#backup ul li:eq(2)').click();
+					
+				}, error: function (xhr, ajaxOptions, thrownError){
 
-				//replace line breaks by html <br> tags
-				response = response.replace(/\n/g,"<BR>");
+					debug = xhr.responseText;
+					response = debug.substring(debug.indexOf("<body"),debug.indexOf("</body"));
 
-				/***
-				 * if current table has more than 7 fields
-				 * split inserts in 2 lines
-				 */
-				if($('#tfields tr:gt(0)').length > 7)
-					response = response.replace(" VALUES ","<BR>VALUES ");
-				$('div#result code',form).html(response);
-				$('#backup ul li:eq(2)').click();
+					$('div#result code',form).html(response);
+					$('#backup ul li:eq(2)').click();
+	            }  
+				
 			});
 			return false;
 		}
@@ -969,7 +1009,7 @@ function initTab_other() {
 		if (answer) {
 
 			$.post($('#remove_table').attr('rel'), 
-			'table='+$('#db_list a.selected').text()+"&project=" + $("#currentprojectname").attr("rel"), 
+			'table='+$('#db_list a.selected').text() + "&dbconf=" + $("select[name=db_conf]").attr("value") +"&project=" + $("#currentprojectname").attr("rel"), 
 			function (response) {
 
 				if(response == 1) {
@@ -992,7 +1032,7 @@ function initTab_other() {
 		if (answer) {
 
 			$.post($('#optimize_table').attr('rel'), 
-			'table='+$('#db_list a.selected').text()+"&project=" + $("#currentprojectname").attr("rel"), 
+			'table='+$('#db_list a.selected').text() + "&dbconf=" + $("select[name=db_conf]").attr("value") +"&project=" + $("#currentprojectname").attr("rel"), 
 			function (response) {
 
                 alert(response);
@@ -1007,7 +1047,7 @@ function initTab_other() {
 		if (answer) {
 
 			$.post($('#repair_table').attr('rel'), 
-			'table='+$('#db_list a.selected').text()+"&project=" + $("#currentprojectname").attr("rel"), 
+			'table='+$('#db_list a.selected').text() + "&dbconf=" + $("select[name=db_conf]").attr("value") +"&project=" + $("#currentprojectname").attr("rel"), 
 			function (response) {
 
 				if(response == 1) {

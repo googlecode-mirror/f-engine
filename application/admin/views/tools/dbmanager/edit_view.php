@@ -1,12 +1,18 @@
 <form action="<?php  echo $action?>" method="post">
-	<input type="hidden" name="table" value="<?php  echo $table?>" />
+	<input type="hidden" name="table" value="<?php  echo $table; ?>" />
 
     <?php if(isset($_POST['primary'])) { ?>
         <input type="hidden" name="primary" value="<?php  echo $_POST["primary"];?>" />
-        <input type="hidden" name="primary_value" value="<?php  echo $_POST["primary_value"];?>" />
+        <?php if(is_array($_POST["primary_value"])) { ?>
+        	<?php foreach($_POST["primary_value"] as $val) { ?>
+        		<input type="hidden" name="primary_value[]" value="<?php echo $val;?>" />
+        	<?php }//end foreach ?>
+        <?php } else { ?>
+        	<input type="hidden" name="primary_value" value="<?php echo $_POST["primary_value"];?>" />
+        <?php }//endif ?>
     <?php } elseif(isset($_POST['unique'])) { ?>
         <input type="hidden" name="unique" value="<?php  echo $_POST["unique"];?>" />
-        <input type="hidden" name="unique_value" value="<?php  echo $_POST["unique_value"];?>" />
+        <input type="hidden" name="unique_value" value="<?php echo $_POST["unique_value"];?>" />
     <?php } else {  ?>
     	<?php foreach($data as $key => $val) { ?>
     			<textarea name="old_<?php echo $key; ?>" style="display:none;"><?php echo $val; ?></textarea>
