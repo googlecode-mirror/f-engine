@@ -46,3 +46,9 @@
 	<? echo '<?php }//endforeach ?>'?>	
 	</tbody>
 </table>
+
+<?php echo "<";?>?php 
+if(isset($pagination)) {
+	echo "<br />".$pagination;
+}
+?>
