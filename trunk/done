@@ -6,6 +6,7 @@ Core:
 New form wizard:
 	- Some short tag replaced width standard php sintax
 	- Multidatabase feature added for datagrids
+	- Pagination included by default in datagrids
 	
 Dbmanager:
 	- Now its posible to switch between predefined databases
