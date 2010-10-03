@@ -17,7 +17,6 @@ class view extends Controller
 		parent::Controller();
 		$this->load->helper(array('url','form'));
 		$this->load->library('pagination');
-		session_start();
 	}
 
 	function index($offset=0) {
@@ -25,18 +24,10 @@ class view extends Controller
 		//Set items per page var
 		$items_per_page = 10;	
 
-		if(isset($_POST["query"])) {
-			
-			$tmp = array_pop(explode(",",$_POST["query"]));
-			
-			if(is_numeric($tmp))
-				$items_per_page = (int) $tmp;
-		}
-
 		if(isset($_POST['project'])) {
 
 			require(APPPATH.'../'.$_POST['project'].'/config/database.php');
-			
+
 			if(isset($_POST["dbconf"]) and isset($db[$_POST["dbconf"]]))
 				$this->load->database($db[$_POST["dbconf"]], FALSE, TRUE);
 			else
@@ -65,18 +56,33 @@ class view extends Controller
 		if(isset($_POST["query"])) {
 
 			$query_str = str_ireplace("limit","LIMIT",$_POST["query"]);
-			$query_nolimit = explode("LIMIT", $query_str);
-			$query_nolimit = $query_nolimit[0];
-			
+			$query_array = explode("LIMIT", $query_str);
+			$query_nolimit = strtolower($query_array[0]);
+
+			//redefine offset and limit if is sent
+			if(isset($query_array[1])) {
+
+				@list($newOffset,$newLimit) = explode(",",$query_array[1]);
+
+				if(isset($newLimit) and is_numeric($newLimit)) {
+
+					$items_per_page = $newLimit;
+
+				} else {
+
+					$items_per_page = $newOffset;
+				}
+			}
+
 			if(isset($_POST["orderby"]) &&  $_POST["orderby"] != '') {
-				
+
 				$query_nolimit = explode("order", $query_nolimit);
-				$query_nolimit = $query_nolimit[0];	
-				
+				$query_nolimit = strtolower($query_nolimit[0]);	
+
 				$orderby = " order by ".strtolower($_POST["orderby"])." ";
-				
+
 			} else {
-				
+
 				$orderby = " ";
 			}
 
@@ -85,20 +91,19 @@ class view extends Controller
 
 			// Run the query
 			if($_POST["action"] == 'refresh')  {
-				
+
 				if(stripos($_POST["query"],"limit") !== false) {
-					
-					
+
 					$query_str = str_ireplace("limit","LIMIT",$_POST["query"]);
 					$tmp = explode("LIMIT", $query_str); 
 					$tmp2 = explode("order", $tmp[0]);
-					$sql = $tmp2[0].$orderby."LIMIT ".$tmp[1];
+					$sql = strtolower($tmp2[0].$orderby."LIMIT ".$tmp[1]);
 
 					$query = $this->db->query($sql);
 
 				} else {
 
-					$sql = $_POST["query"].$orderby." LIMIT ".$items_per_page;
+					$sql = strtolower($_POST["query"].$orderby." LIMIT ".$items_per_page);
 					$query = $this->db->query($sql);
 				}
 
@@ -108,18 +113,18 @@ class view extends Controller
 			}
 
 			$sql = $this->db->last_query();
-				
+
 			if ($total_rows > 0) {
 				$fields = array();
 				if(isset($query)) {
 					foreach($query->row_array() as $key => $val) {
-		
+
 						$fields[] = $key;
 					}
 				}
-			
+
 			} else {
-				
+
 				$fields = $this->db->list_fields($_POST["table"]); 
 			}
 
@@ -147,15 +152,15 @@ class view extends Controller
 
 		// Pagination
 		$data =  array(
-						'base_url'		 => site_url().'tools/dbmanager/ajax/view',
+						'base_url'		 => site_url('tools/dbmanager/ajax/view'),
 						'total_rows'	 => $total_rows,
 						'per_page'		 => $items_per_page,
-						'offset'		=> $offset,
+						'offset'	     => $offset,
 						'uri_segment'	 => 5,
 						'full_tag_open'	 => '<p style="margin:1px;">',
 						'full_tag_close' => '</p>',
-						'first_link'			=> '«',
-						'last_link'			=> '»'
+						'first_link'	 => '«',
+						'last_link'		 => '»'
 		);
 
 		$this->pagination->initialize($data);
@@ -171,7 +176,7 @@ class view extends Controller
 		);
 
 		$data["actions"] = $actions;
-		
+
         if(!isset($_POST['fullLoad'])) {
 
                $this->load->view('tools/dbmanager/exam',$data);
@@ -185,34 +190,33 @@ class view extends Controller
         }
 
         $field = "Create Table";
-        
+ 
         if(!isset($tmp->$field)) {
         	
         	$field = "Create View";
         }
-        
+
         $data['createtable'] = $tmp->$field;
 
 		/*** backup tab ***/
 		$data['dbfields'] = $listables;
 		$this->load->view('tools/dbmanager/data', $data);
-		
+
 	}
 
     function get_primary ($table = '',$concat_type = true) {
-    	
+
     	if($table == '') return '';	
 
         $sql = "SHOW CREATE TABLE ".$table;
         $query = $this->db->query($sql)->row();
-        
 
         if(isset($query->View)) {
-        	
+
         	$row = "Create View";
-        	
+ 
         } else {
-        	
+
         	$row = "Create Table";
         }
 

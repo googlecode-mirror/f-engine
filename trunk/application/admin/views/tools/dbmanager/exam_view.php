@@ -12,7 +12,7 @@
 
 	<div id="current_query" style="border:1px solid #f26d6d;background-color:#faf799;padding:2px;">
 		<img class="oculto" src="<?php echo public_data();?>img/tools/preloader.gif" alt="loading" title="loading" style="vertical-align:sub;" />
-		<span><?php echo $exam["sql"];?></span>
+		<span><?php echo ucfirst(strtolower($exam["sql"]));?></span>
 	</div>
 
     <table border="0" cellpadding="0" cellspacing="1" style="width:100%;margin-top:10px;">

@@ -1,14 +1,15 @@
 Core & libraries:
-    - Calendar con uri segment
-    - Pagination con URI segment 
     - Check URL Suffix compatibility
     - Permisos de directorios new project
+    - Still much lorem ipsum to remove
+    
+Doc:
+	- Chrome compatibility test
 
 new controller wizard:
-	- Add multidatabase selection, at least in datagrid tab
-	- Add pagination
 	- Select masterview profile 
 	
 Dbmanager:
+
 	- Insert field after
 	- More backup options
