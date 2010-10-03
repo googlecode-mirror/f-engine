@@ -74,7 +74,6 @@ $('#db_list a').each(function () {
     });
 });
 
-
 $('div.newTable a').click(function () {
 
 	$(this).css('color','#2F3B6F').blur();
@@ -373,7 +372,6 @@ function loadContent (msg) {
 	
 	/*** exam :: pagination ***/
 	init_paginationLinks();
-
 
 	/*** exam :: edit ***/
     $('#exam-results tr:gt(0) td a.edit').click(function () {
@@ -813,34 +811,35 @@ function recordEditEvents () {
 	});
 }
 
-/*** init exam tab pagination and refresh buttons ***/
+/*** init exam tab, pagination and refresh buttons ***/
 function init_paginationLinks() {
-	
+
 	$('#exam-results div.pagination a').click( function () {
-		
+
 		var orderby = '';
 
 		if( $("#exam-results th.desc").length > 0 )
 			orderby = $("#exam-results th.desc center").text() + " desc"
-		else if( $("#exam-results th.asc").length > 0  )
+		else if( $("#exam-results th.asc").length > 0 )
 			orderby = $("#exam-results th.asc center").text() + " asc"
 
 		$("#current_query > img").removeClass("oculto");
 		$.ajax({ type: "POST",
 		  		 url: $(this).attr('href'),
 		  		 data: {
-						"table": $('#db_list .jqueryFileTree a.selected').text(), 
-						"dbconf" : $("select[name=db_conf]").attr("value"),
-						"query":$.trim($("#current_query").text()),
-						"action" : $(this).attr("class"),
+						"table"	 :	$('#db_list .jqueryFileTree a.selected').text(), 
+						"dbconf" :	$("select[name=db_conf]").attr("value"),
+						"query"	 :	$.trim($("#current_query").text()),
+						"action" :	$(this).attr("class"),
 						"orderby" : orderby,
 						"project" : $("#currentprojectname").attr("rel")
 				},
-				 success: function(msg) {
+				success: function(msg) {
 					pagination(msg);
 				},
-				error: function (xhr, ajaxOptions, thrownError){
+				error: function (xhr, ajaxOptions, thrownError) {
 
+					loading();
 					debug = xhr.responseText;
 					resp = debug.substring(debug.indexOf("<body"),debug.indexOf("</body"));
 
@@ -851,11 +850,10 @@ function init_paginationLinks() {
 
 		return false;
 	});
-	
-    
+
     /*** order by links ***/
     $("#exam-results tr:eq(0) th").not(".actions").css("cursor","pointer").click(function () {
-    	
+
     	if( $(this).hasClass("desc") ) {
 
     		$("th",$(this).parent()).removeClass("desc").removeClass("asc");
@@ -887,12 +885,12 @@ function initTab_backup () {
                     $('#tables select[name="tables[]"]').show();
                     $('#tables input[name=backup_query[]]:eq(0)').parent().parent().hide();
                     break;
-                    
+   
             case "All":
                 	$('#tables select[name="tables[]"]').hide();
                 	$('#tables input[name=backup_query[]]:eq(0)').parent().parent().hide();
             		break;
-            		
+
             default:
 
                     $('#tables select[name="tables[]"]').hide();
@@ -908,7 +906,7 @@ function initTab_backup () {
 		if($('input[name="witch"]:eq(2):checked',form).length > 0) {
 
 			if($('select[name="tables[]"]').serialize()== "") {
-				
+
 				alert('Select at least one table');
 				return false;
 			}
@@ -924,10 +922,10 @@ function initTab_backup () {
 				data: form.serialize()
 				+"&project=" + $("#currentprojectname").attr("rel")+ "&dbconf=" + $("select[name=db_conf]").attr("value"), 
 				success : function (response) {
-	
+
 					//replace line breaks by html <br> tags
 					response = response.replace(/\n/g,"<BR>");
-	
+
 					/***
 					 * if current table has more than 7 fields
 					 * split inserts in 2 lines
@@ -936,7 +934,7 @@ function initTab_backup () {
 						response = response.replace(" VALUES ","<BR>VALUES ");
 					$('div#result code',form).html(response);
 					$('#backup ul li:eq(2)').click();
-					
+
 				}, error: function (xhr, ajaxOptions, thrownError){
 
 					debug = xhr.responseText;
@@ -944,8 +942,7 @@ function initTab_backup () {
 
 					$('div#result code',form).html(response);
 					$('#backup ul li:eq(2)').click();
-	            }  
-				
+	            }
 			});
 			return false;
 		}
@@ -971,21 +968,40 @@ function initTab_sql() {
                 	if($("#tableContent ul.idTabs li:eq(0)").hasClass("oculto")) {
                 		$("#tableContent ul.idTabs li:eq(0)").removeClass("oculto");
                 	}
-                	
+
                 	$("#tableContent ul.btnTabs a[href*=#exam]").click();
-                	
+
+                	//hide old results and pagination
+                	$("#exam-results div.pagination").hide();
+                	$("#exam-results > table").hide();
+ 
                 	//fire query
                 	$('#sqlResult').hide();
-            		$("#current_query span").text($("#query textarea").attr("value"));
+                	var newquery = $("#query textarea").attr("value");
+            		$("#current_query span").text(newquery);
             		loading();
-            		$("#exam-results a.refresh:eq(0)").click();
 
+            		targetPage = ROOT+"/tools/dbmanager/ajax/view/";
+
+            		var querySegments = $("#current_query > span").text().split("limit");
+
+            		if(querySegments.length > 1) {
+
+            			var limitAndOffset = querySegments[1].split(",");
+            			if(limitAndOffset.length > 1) {
+
+            				targetPage += limitAndOffset[0] + "/"
+            			}
+            		}
+
+            		$("#exam-results a.refresh:eq(0)").attr("href",targetPage);
+            		$("#exam-results a.refresh:eq(0)").click();
 
             	} else {
 
                 	$('#sqlResult code').html(response).parent().show();
             	}
-            	
+
             }, error: function (xhr, ajaxOptions, thrownError){
 
 				debug = xhr.responseText;
@@ -993,7 +1009,6 @@ function initTab_sql() {
 
 				$('#sqlResult code').html(response).parent().show();
             }  
-
         });
 
         return false;
@@ -1065,7 +1080,10 @@ function initTab_other() {
 
 function loading() {
 	
-	$("#current_query > img").removeClass("oculto");
+	if($("#current_query > img").hasClass("oculto"))
+		$("#current_query > img").removeClass("oculto");
+	else
+		$("#current_query > img").addClass("oculto");
 }
 
 //onload

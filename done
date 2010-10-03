@@ -1,4 +1,4 @@
-new features in v0.3
+new in v0.3
 
 Core:
 	- added backup feature to mysqli driver
@@ -10,9 +10,11 @@ New form wizard:
 	
 Dbmanager:
 	- Now its posible to switch between predefined databases
-	- Bugfixing in edit/delete record when no one index is defined in the table
-	- It does not set/read project/database from session any more. Now its posible to have project independent tabs/windows opened in browser 
-	
+	- Bugfixing in edit/delete record when the table has not any index defined 
+	- It does not set/read project/database from session anymore. Now its posible to have project independent tabs/windows opened in browser 
+	- Bugfixing in sql tab
+	- Pagination improved
+
 Other:
 	- minor bugs fixed
 

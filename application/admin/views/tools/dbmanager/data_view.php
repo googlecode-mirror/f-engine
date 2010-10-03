@@ -43,7 +43,7 @@
 <?php } else { ?>
 	<div id="exam" style="clear:both;display:none;">
 <?php } //endif  ?>
-	<?php if(isset($exam)): ?>
+	<?php if(isset($exam)) {  ?>
         <div> 
             <div id="exam-results">
                 <?php $this->load->view('tools/dbmanager/exam');?>
@@ -51,27 +51,27 @@
         </div>
         <div class="edit" style="display: none;">
         </div>
-	<?php else:?>
+	<?php } else{ ?>
 		<div id="exam-results">
 			<!-- The code above is just for compatibility reasons -->
 			<div class="pagination" style="display:none;" >
-        	<a href="http://localhost/f-engine/application/admin/index.php/tools/dbmanager/ajax/view/0" class="refresh">
-        		<img src="http://localhost/f-engine/application/admin/public_data/img/tools/arrow_refresh.png" title="edit this record" style="cursor: pointer; vertical-align: middle;"> 
+        	<a href="<?php echo site_url("tools/dbmanager/ajax/view/0");?>" class="refresh">
+        		<img src="<?php echo public_data("img/tools/arrow_refresh.png");?>" title="edit this record" style="cursor: pointer; vertical-align: middle;"> 
         		Refresh
         	</a>
         	</div>
-
-			<div style="display:none;" id="current_query"></div>
+			<div id="current_query" style="border:1px solid #f26d6d;background-color:#faf799;padding:2px;">
+				<img class="oculto" src="<?php echo public_data();?>img/tools/preloader.gif" alt="loading" title="loading" style="vertical-align:sub;" />
+				<span></span>
+			</div>
 			<div id="content"></div>
 			<!-- end  -->
 			
 		</div>
-	<?php endif;?>
+	<?php }//endif ?>
 </div>
 
-
 <div id="sql" style="clear:both;">
-
 	<div style="clear: both; padding-top: 15px;">
 		<div id="query">
 			<form method="post" action="<?php echo site_url()?>tools/dbmanager/ajax/query">
