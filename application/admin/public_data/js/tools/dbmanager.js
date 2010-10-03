@@ -65,6 +65,7 @@ $('#db_list a').each(function () {
 		$(this).addClass('selected');
 
 		$.ajax({ type: "POST",
+				 async: false,
 		  		 url: $('#forms form').attr('action'),
 		  		 data: "table="+$(this).text()+ "&dbconf=" + $("select[name=db_conf]").attr("value")+"&fullLoad=true&project="+$("#currentprojectname").attr("rel"),
 				 success: function(msg) {
@@ -964,12 +965,23 @@ function initTab_sql() {
 
             	if(response.substring(0,11) == "<!--exam-->") {
 
-                	//tab switch
-                	if($("#tableContent ul.idTabs li:eq(0)").hasClass("oculto")) {
-                		$("#tableContent ul.idTabs li:eq(0)").removeClass("oculto");
-                	}
+            		var newquery = $("#query textarea").attr("value");
 
-                	$("#tableContent ul.btnTabs a[href*=#exam]").click();
+            		if($('ul.jqueryFileTree a.selected').length == 0) {
+
+            			//highlight table
+	            		var newtable = response.substring(11);
+	            		$('ul.jqueryFileTree a[title='+newtable+']').click();
+
+            		} else {
+
+                    	//tab switch
+                    	if($("#tableContent ul.idTabs li:eq(0)").hasClass("oculto")) {
+                    		$("#tableContent ul.idTabs li:eq(0)").removeClass("oculto");
+                    	}
+
+                    	$("#tableContent ul.btnTabs a[href*=#exam]").click();
+            		}
 
                 	//hide old results and pagination
                 	$("#exam-results div.pagination").hide();
@@ -977,12 +989,11 @@ function initTab_sql() {
  
                 	//fire query
                 	$('#sqlResult').hide();
-                	var newquery = $("#query textarea").attr("value");
+                	
             		$("#current_query span").text(newquery);
             		loading();
 
             		targetPage = ROOT+"/tools/dbmanager/ajax/view/";
-
             		var querySegments = $("#current_query > span").text().split("limit");
 
             		if(querySegments.length > 1) {
