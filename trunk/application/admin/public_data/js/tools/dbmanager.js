@@ -21,7 +21,6 @@
 		form.submit();
 	});
 
-
 /***	DB Table list filter
  ********************************************************/
 var filter = {
@@ -960,7 +959,7 @@ function initTab_sql() {
         $.ajax({
         	type : "POST",
         	url : form.attr('action'),
-        	data : form.serialize()+"&project=" + $("#currentprojectname").attr("rel"),
+        	data : form.serialize()+"&project=" + $("#currentprojectname").attr("rel") + "&dbconf=" + $("select[name=db_conf]").attr("value"),
         	success : function (response) {
 
             	if(response.substring(0,11) == "<!--exam-->") {
