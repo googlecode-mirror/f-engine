@@ -10,6 +10,17 @@
  */
 
 
+//onload
+$(document).ready(function () {
+
+	$("div#id, div#tables").show();
+	$("div#id").children("div").show();
+	initTab_backup();
+	init_paginationLinks();
+	initTab_sql();
+	$('#tableContent textarea.expanding').autogrow();
+});
+
 /***	Switch database configuration
  ********************************************************/
 
@@ -336,6 +347,10 @@ function loadContent (msg) {
 	//maximize
 	$('#tableContent a#maximize').click(function () {
 
+		$('#current_query').css({
+			'max-width' : $(window).width()-150
+		});
+		
 		$('#tableContent').css({
 
 			'position' : 'absolute',
@@ -345,6 +360,8 @@ function loadContent (msg) {
 			'width' : $(document).width(),
 			'height' : $(document).height()
 		});
+		
+		
 
 		$('#contenidos div.leftFrame').hide();
 		$('#tableContent a#maximize').hide();
@@ -962,9 +979,27 @@ function initTab_sql() {
         	data : form.serialize()+"&project=" + $("#currentprojectname").attr("rel") + "&dbconf=" + $("select[name=db_conf]").attr("value"),
         	success : function (response) {
 
-            	if(response.substring(0,11) == "<!--exam-->") {
+        		var newquery = $("#query textarea").attr("value");
 
-            		var newquery = $("#query textarea").attr("value");
+        		if(response == "<!--exam-->" && $('ul.jqueryFileTree a.selected').length == 0) {
+        			//table not detected, fire query
+
+                    if( $("#db_list li a.selected").length == 0 ) {
+
+                    	$("#current_query span").text(newquery);
+                    	loading();
+
+                    	//hide old results and pagination
+                    	$("#exam-results > table, #exam-results > div#content").hide();
+                    	
+                    	//switch tabs
+                    	$("#tableContent ul a[href=#exam]").parent().show();
+                    	$("#tableContent ul a[href=#exam]").click();
+                    	$("#exam-results a.refresh:eq(0)").click();
+                    }
+                    
+        		} else if(response.substring(0,11) == "<!--exam-->") {
+        			//select table and fire query
 
             		if($('ul.jqueryFileTree a.selected').length == 0) {
 
@@ -985,10 +1020,11 @@ function initTab_sql() {
                 	//hide old results and pagination
                 	$("#exam-results div.pagination").hide();
                 	$("#exam-results > table").hide();
+                	$("#exam-results > table, #exam-results > div#content").hide();
  
                 	//fire query
                 	$('#sqlResult').hide();
-                	
+
             		$("#current_query span").text(newquery);
             		loading();
 
@@ -1095,15 +1131,4 @@ function loading() {
 	else
 		$("#current_query > img").addClass("oculto");
 }
-
-//onload
-$(document).ready(function () {
-
-	$("div#id, div#tables").show();
-	$("div#id").children("div").show();
-	initTab_backup();
-	init_paginationLinks();
-	initTab_sql();
-	$('#tableContent textarea.expanding').autogrow();
-});
 
