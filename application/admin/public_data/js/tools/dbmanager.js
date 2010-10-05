@@ -982,7 +982,7 @@ function initTab_sql() {
         		var newquery = $("#query textarea").attr("value");
 
         		if(response == "<!--exam-->" && $('ul.jqueryFileTree a.selected').length == 0) {
-        			//table not detected, fire query
+        			//table undetected, just fire the query
 
                     if( $("#db_list li a.selected").length == 0 ) {
 

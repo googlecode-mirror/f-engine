@@ -36,33 +36,44 @@ class query extends Controller
 
 		if(!isset($_POST['sql'])) return;
 
-        if ( stripos(substr($_POST['sql'],0, stripos(trim($_POST['sql'])," ")+1), 'update ') !== false
-        		  || stripos($_POST['sql'], 'insert ') !== false
-                  || stripos($_POST['sql'], 'delete ') !== false
-                  || stripos($_POST['sql'], 'drop ') !== false
-                  || stripos($_POST['sql'], 'create table ') !== false
-                  || stripos($_POST['sql'], 'alter') !== false) {
+		$patterns = array(
+			'/["\'][^,]*["\']/i',
+			'/\s{2}/i'
+		);
+		$dummy_query = preg_replace($patterns, "", trim($_POST['sql']));
+		
+        if ( stripos($dummy_query, 'update ') !== false
+             || stripos($dummy_query, 'insert ') !== false
+             || stripos($dummy_query, 'delete ') !== false
+             || stripos($dummy_query, 'drop ') !== false
+             || stripos($dummy_query, 'create ') !== false
+             || stripos($dummy_query, 'alter ') !== false) {
 
            $this->db->query($_POST["sql"]);
            
            echo "Affected rows: ".$this->db->affected_rows();
 
-           return;
+        } else {
 
-        } elseif(stripos(substr($_POST['sql'],0,stripos(trim($_POST['sql'])," ")+1),'SELECT ') > -1) {
-
-        	$tablelist = $this->db->list_tables();
-        	$sql_segments = explode(" ", str_replace(array("`", "(", ")",",","\n")," ",$_POST["sql"]));
+        	$list_tables = $this->db->list_tables();
+        	$tablelist = array_map("strtolower",$list_tables);
+        	$sql_segments = explode(" ", str_replace(array("`", "(", ")",",","\n")," ",$dummy_query));
 
         	$table = '';
         	$match_num = 0;
 
         	foreach($sql_segments as $item) {
+				
+        		if(in_array(strtolower($item), $tablelist)) {
 
-        		if(in_array($item, $tablelist)) {
+        			if(strtolower($table) != $item) {
 
-        			if($table != $item) {
-        				$table = $item;
+        				for($i=0; $i < count($list_tables); $i++) {
+        					
+        					if(strtolower($item) == strtolower($list_tables[$i])) {
+        						$table = $list_tables[$i];
+        					}
+        				}
         			}
 
         			$match_num++;
@@ -76,22 +87,6 @@ class query extends Controller
         	} else {
         		echo "<!--exam-->";
         	}
-
-        } else  {
-
-            $result = $this->db->query($_POST["sql"])->result();
-
-            foreach ($result as $data) {
-
-                foreach($data as $key=>$value) {
-
-                    echo $key."<br /><pre>";
-                    print_r($value);
-                    echo "</pre>";
-                }
-            }
-
-            return;
         }
 	}
 }
