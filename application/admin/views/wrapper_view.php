@@ -39,10 +39,10 @@
 
 	<script type="text/javascript">
 		ROOT = '<?php echo site_url();?>';
-		<?php if(base_url() != site_url()) :?>
+		<?php if(base_url() != site_url()) { ?>
 
 		BASE = '<?php echo base_url();?>';
-		<?php endif;?>
+		<?php } //endif?>
 
 		CURRENT = '<?php echo current_url();?>';
 

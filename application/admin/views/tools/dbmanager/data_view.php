@@ -335,7 +335,7 @@
 </div>
 <?php } //endif  ?>
 
-<div id="backup" style="clear:both;">
+<div id="backup" style="clear:both;display:none;">
 	<ul class="subTabs idTabs">
 		<li>
 	        <a href="#tables">Tables</a>
