@@ -57,7 +57,7 @@ class view extends Controller
 
 			$query_str = str_ireplace("limit","LIMIT",$_POST["query"]);
 			$query_array = explode("LIMIT", $query_str);
-			$query_nolimit = strtolower($query_array[0]);
+			$query_nolimit = $query_array[0];
 
 			//redefine offset and limit if is sent
 			if(isset($query_array[1])) {
@@ -76,10 +76,11 @@ class view extends Controller
 
 			if(isset($_POST["orderby"]) &&  $_POST["orderby"] != '') {
 
+				$query_nolimit = str_ireplace("ORDER","order",$query_nolimit);
 				$query_nolimit = explode("order", $query_nolimit);
-				$query_nolimit = strtolower($query_nolimit[0]);	
+				$query_nolimit = $query_nolimit[0];	
 
-				$orderby = " order by ".strtolower($_POST["orderby"])." ";
+				$orderby = " ORDER BY ".$_POST["orderby"]." ";
 
 			} else {
 
@@ -94,16 +95,16 @@ class view extends Controller
 
 				if(stripos($_POST["query"],"limit") !== false) {
 
-					$query_str = str_ireplace("limit","LIMIT",$_POST["query"]);
+					$query_str = str_ireplace(array("limit","order"),array("LIMIT","ORDER"),$_POST["query"]);
 					$tmp = explode("LIMIT", $query_str); 
-					$tmp2 = explode("order", $tmp[0]);
-					$sql = strtolower($tmp2[0].$orderby."LIMIT ".$tmp[1]);
+					$tmp2 = explode("ORDER", $tmp[0]);
+					$sql = $tmp2[0].$orderby."LIMIT ".$tmp[1];
 
 					$query = $this->db->query($sql);
 
 				} else {
 
-					$sql = strtolower($_POST["query"].$orderby." LIMIT ".$items_per_page);
+					$sql = $_POST["query"].$orderby." LIMIT ".$items_per_page;
 					$query = $this->db->query($sql);
 				}
 
@@ -201,7 +202,6 @@ class view extends Controller
 		/*** backup tab ***/
 		$data['dbfields'] = $listables;
 		$this->load->view('tools/dbmanager/data', $data);
-
 	}
 
     function get_primary ($table = '',$concat_type = true) {

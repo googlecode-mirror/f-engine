@@ -53,7 +53,7 @@
         </div>
 	<?php } else{ ?>
 		<div id="exam-results">
-			<!-- The code above is just for compatibility reasons -->
+			<!-- The code above is just for js compatibility reasons -->
 			<div class="pagination" style="display:none;" >
         	<a href="<?php echo site_url("tools/dbmanager/ajax/view/0");?>" class="refresh">
         		<img src="<?php echo public_data("img/tools/arrow_refresh.png");?>" title="edit this record" style="cursor: pointer; vertical-align: middle;"> 
@@ -77,7 +77,7 @@
 			<form method="post" action="<?php echo site_url()?>tools/dbmanager/ajax/query">
 				<div class="query">
 				<?php if (isset($_POST['table'])) { ?>
-					<textarea  style="min-height:50px; padding:3px; max-height: 300px; width:450px;" class="expanding" id="sqlquery" name="sql">select * from <?php  echo $_POST['table']?></textarea>
+					<textarea  style="min-height:50px; padding:3px; max-height: 300px; width:450px;" class="expanding" id="sqlquery" name="sql">SELECT * FROM (`<?php  echo $_POST['table']?>`)</textarea>
 				<?php } else { ?>
 					<textarea  style="min-height:50px; padding:3px; max-height: 300px; width:450px;" class="expanding" id="sqlquery" name="sql"></textarea>
 				<?php }//endif ?>
