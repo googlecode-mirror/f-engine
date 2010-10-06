@@ -104,7 +104,22 @@ class view extends Controller
 
 				} else {
 
-					$sql = $_POST["query"].$orderby." LIMIT ".$items_per_page;
+					$patterns = array(
+						'/["\'][^,]*["\']/i',
+						'/\s{2}/i'
+					);
+					$dummy_query = preg_replace($patterns, "", trim($_POST['query']));
+					preg_match("/show\s*/i",$dummy_query,$show);
+
+					if (count($show) > 0) {
+						
+						$sql = $_POST["query"];
+						$actions = false;
+						
+					} else {
+						$sql = str_replace(";","",$_POST["query"]).$orderby." LIMIT ".$items_per_page;
+					}
+
 					$query = $this->db->query($sql);
 				}
 
