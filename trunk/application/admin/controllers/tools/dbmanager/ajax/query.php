@@ -36,26 +36,33 @@ class query extends Controller
 
 		if(!isset($_POST['sql'])) return;
 
+		$list_tables = $this->db->list_tables();
+		
 		$patterns = array(
 			'/["\'][^,]*["\']/i',
 			'/\s{2}/i'
 		);
 		$dummy_query = preg_replace($patterns, "", trim($_POST['sql']));
 		
-        if ( stripos($dummy_query, 'update ') !== false
-             || stripos($dummy_query, 'insert ') !== false
-             || stripos($dummy_query, 'delete ') !== false
-             || stripos($dummy_query, 'drop ') !== false
-             || stripos($dummy_query, 'create ') !== false
-             || stripos($dummy_query, 'alter ') !== false) {
+		preg_match("/show\s*/i",$dummy_query,$show);
+
+		preg_match("/update\s+/i",$dummy_query,$update);
+		preg_match("/insert\s+into/i",$dummy_query,$insert);
+		preg_match("/delete\s+/i",$dummy_query,$delete);
+		preg_match("/drop\s+table/i",$dummy_query,$drop);
+		preg_match("/create\s+table/i",$dummy_query,$create);
+		preg_match("/alter\s+table/i",$dummy_query,$alter);
+
+        if ( count($show) == 0 and (
+             count($update) > 0 || count($insert) > 0 ||
+             count($delete) > 0 || count($drop) > 0 ||
+             count($create) > 0 || count($alter) > 0)) {
 
            $this->db->query($_POST["sql"]);
-           
            echo "Affected rows: ".$this->db->affected_rows();
 
         } else {
 
-        	$list_tables = $this->db->list_tables();
         	$tablelist = array_map("strtolower",$list_tables);
         	$sql_segments = explode(" ", str_replace(array("`", "(", ")",",","\n")," ",$dummy_query));
 
@@ -81,9 +88,7 @@ class query extends Controller
         	}
 
         	if($match_num == 1) {
-        		
         		echo "<!--exam-->".$table;
-
         	} else {
         		echo "<!--exam-->";
         	}
