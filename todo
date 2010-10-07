@@ -1,15 +1,12 @@
 Core & libraries:
     - Check URL Suffix compatibility
     - Permisos de directorios new project
-    - Still much lorem ipsum to remove
-    
-Doc:
-	- Chrome compatibility test
+    - Still many lorem ipsum to remove
+    - Autogrow, whitespace issues
 
 new controller wizard:
 	- Select masterview profile 
 	
 Dbmanager:
 
-	- Insert field after
 	- More backup options

@@ -58,11 +58,42 @@ class addField extends Controller
             }
         }
 
+        $i=0;
         foreach($table_fields as $field) {
 
-            $sql = "ALTER TABLE `".$_POST['tablename']."` ADD {$field};";
-            $this->db->query($sql);
+        	if(isset($sql)) {
+            	$sql .= " , ADD {$field}";
+            	
+            	if(isset($_POST["where"])) {
+	        	    switch($_POST["where"]) {
+			            case "begin":
+			            case "after":
+	
+			            	$sql .= " AFTER `".array_shift(explode(" ",$table_fields[$i-1]))."`";
+			            	break;
+			        }
+            	}
+		         
+        	} else {
+
+            	$sql = "ALTER TABLE `".$_POST['tablename']."` ADD {$field}";
+ 
+            	if(isset($_POST["where"])) {
+	        		switch($_POST["where"]) {
+			            case "begin":
+			            	$sql .= " FIRST";
+			            	break;
+			            case "after":
+			            	$sql .= " AFTER `".$_POST["after_field"]."`";
+			            	break;
+			         }
+            	}
+        	}
+
+			$i++;
         }
+
+        $this->db->query($sql);
 
         foreach($table_keys as $key) {
 

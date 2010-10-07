@@ -320,6 +320,18 @@
             </tbody>
         </table>
         <code></code>
+        <div style="margin:10px 0 15px;">
+        	<strong>Add fields: </strong><br />
+        	<input type="radio" name="where" value="end" checked="checked" /> At the end of the table
+        	<input type="radio" name="where" value="begin" /> At the begining of the table
+        	<br />
+        	<input type="radio" name="where" value="after" /> After
+			<select name="after_field">
+			<?php foreach($structure as $field) { ?>
+				<option value="<?php echo $field->Field; ?>"><?php echo $field->Field; ?></option>
+			<?php }//endforeach ?>
+			</select>
+        </div>
         <center>
         	<input type="button" class="cancel" value="cancel" />
             <input type="button" id="sendField" value="Send" />
