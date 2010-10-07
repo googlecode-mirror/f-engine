@@ -16,7 +16,6 @@ class view extends Controller
 
 		parent::Controller();
 		$this->load->helper(array('url','form'));
-		$this->load->library('pagination');
 	}
 
 	function index($offset=0) {
@@ -115,6 +114,7 @@ class view extends Controller
 						
 						$sql = $_POST["query"];
 						$actions = false;
+						$pagination = false;
 						
 					} else {
 						$sql = str_replace(";","",$_POST["query"]).$orderby." LIMIT ".$items_per_page;
@@ -166,20 +166,34 @@ class view extends Controller
 			$fields = $this->db->list_fields($currentable);
 		}
 
-		// Pagination
-		$data =  array(
-						'base_url'		 => site_url('tools/dbmanager/ajax/view'),
-						'total_rows'	 => $total_rows,
-						'per_page'		 => $items_per_page,
-						'offset'	     => $offset,
-						'uri_segment'	 => 5,
-						'full_tag_open'	 => '<p style="margin:1px;">',
-						'full_tag_close' => '</p>',
-						'first_link'	 => '«',
-						'last_link'		 => '»'
-		);
+		if(isset($pagination) && $pagination === false) {
+			
+			$paginate = '';
+			$data = array(
+				'offset' => 0,
+			);
 
-		$this->pagination->initialize($data);
+		} else {
+			
+			$this->load->library('pagination');
+
+			// Pagination
+			$data =  array(
+							'base_url'		 => site_url('tools/dbmanager/ajax/view'),
+							'total_rows'	 => $total_rows,
+							'per_page'		 => $items_per_page,
+							'offset'	     => $offset,
+							'uri_segment'	 => 5,
+							'full_tag_open'	 => '<p style="margin:1px;">',
+							'full_tag_close' => '</p>',
+							'first_link'	 => '«',
+							'last_link'		 => '»'
+			);
+	
+			$this->pagination->initialize($data);
+			$paginate = $this->pagination->create_links();
+		}
+
 
 		$data['exam'] = array(
 						'title'	=>  'View Data',
@@ -187,7 +201,7 @@ class view extends Controller
 						'sql'		=> $sql,
 						'fields'	=> $fields,
 						'primary'	=> $primary,
-						'paginate'	=> $this->pagination->create_links(),
+						'paginate'	=> $paginate,
 						'orderby' => isset($_POST["orderby"]) ? explode(" ",$_POST["orderby"]) : false
 		);
 

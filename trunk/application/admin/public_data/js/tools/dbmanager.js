@@ -113,7 +113,7 @@ function loadCreateTable (html) {
 
 	$('#db_list .jqueryFileTree a.selected').removeClass("selected");
 	$('#tableContent').html(html);
-	
+
 	//tabs
 	$('#tableContent ul.idTabs').each(function () {	$.idTabs(this,$.idTabs.settings);	});
 	
@@ -650,7 +650,6 @@ function loadContent (msg) {
 
         switch($('#newField select[name=ftype] option:selected').attr('rel')) {
 
-
             case 'Numeric':
 
                     $($('#newField input[name=fattr]')[3]).attr('disabled','disabled');
@@ -711,7 +710,7 @@ function loadContent (msg) {
     //add new field -- reset button
     $('#newField input.resetField').click (function () {
 
-        reset_values($('#newField'));
+        reset_values($('#newField table'));
     });
 
     //add new field --  add button
@@ -756,7 +755,7 @@ function loadContent (msg) {
                                     '<input type="hidden" name="tablefields[]" value="'+ str +'"/>'+
                                 '</div>');
 
-        reset_values($('#newField'));
+        reset_values($('#newField table'));
     });
 
     //add new field --  send button
