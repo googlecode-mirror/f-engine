@@ -29,7 +29,7 @@
     </li>
     <?php if(isset($structure)) { ?>
 	<li>
-		<a href="#other">Other</a>
+		<a href="#other">Operations</a>
 	</li>
 	<?php }//end if ?>
 </ul>
