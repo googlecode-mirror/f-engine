@@ -89,7 +89,7 @@ class view extends Controller
 			// Fetch the total number of DB rows
 			$total_rows = $this->db->query($query_nolimit)->num_rows();
 
-			// Run the query
+			// Run query
 			if($_POST["action"] == 'refresh')  {
 
 				if(stripos($_POST["query"],"limit") !== false) {
@@ -103,21 +103,21 @@ class view extends Controller
 
 				} else {
 
-					$patterns = array(
-						'/["\'][^,]*["\']/i',
-						'/\s{2}/i'
-					);
-					$dummy_query = preg_replace($patterns, "", trim($_POST['query']));
-					preg_match("/show\s*/i",$dummy_query,$show);
+					list($actions, $pagination) = $this->showActions($_POST["query"],$listables);
 
-					if (count($show) > 0) {
-						
-						$sql = $_POST["query"];
+					if($actions == false) {
+
 						$actions = false;
+					}
+
+					if($pagination == false) {
+
+						$sql = $_POST["query"];
 						$pagination = false;
-						
+
 					} else {
-						$sql = str_replace(";","",$_POST["query"]).$orderby." LIMIT ".$items_per_page;
+
+						$sql = preg_replace("/;\s*$/i","",$_POST["query"]).$orderby." LIMIT ".$items_per_page;
 					}
 
 					$query = $this->db->query($sql);
@@ -281,6 +281,52 @@ class view extends Controller
         }
         
         return false;
+    }
+
+    function showActions ($query,$dblist) {
+
+    	$patterns = array(
+			'/["\'][^,]*["\']/i',
+			'/\s{2}/i'
+		);
+		$dummy_query = preg_replace($patterns, "", trim($query));
+
+		//show
+		preg_match("/^\s*show\s*/i",$dummy_query,$show);
+		//group by
+		preg_match("/\s+group\s+by/i",$dummy_query,$groupby);
+		//having
+		preg_match("/\s+having\s+by/i",$dummy_query,$having);
+		//join
+		preg_match("/\s+join\s+/i",$dummy_query,$join);
+		//union
+		preg_match("/\s+union\s+/i",$dummy_query,$union);
+
+		//multidatabase
+		preg_match_all("(".implode("|",$dblist).")",$dummy_query,$multidb);
+		$multidb = $multidb[0];
+		//multiple select
+		preg_match_all("/select\s+/i",$dummy_query,$multiselect);
+		$multiselect = $multiselect[0];
+		//multiple from
+		preg_match_all("/\s+from\s+/i",$dummy_query,$multifrom);
+		$multifrom = $multifrom[0];
+
+		// returns array(show actions,show pagination)
+		if (count($show) > 0) {
+
+			return array(false,false);
+
+		} elseif (count($groupby) > 0 || count($having)  > 0  || count($join) > 0 || 
+		  count($union)   > 0 || count($multidb) > 1  || count($multiselect) > 1  || 
+		  count($multifrom) > 1 ) {
+
+			return array(false,true);
+
+		} else {
+
+			return array(true,true);
+		}
     }
 }
 ?>

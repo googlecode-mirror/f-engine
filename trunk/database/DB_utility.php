@@ -277,14 +277,16 @@ class CI_DB_utility extends CI_DB_forge {
 	
 		// Set up our default preferences
 		$prefs = array(
-							'tables'		=> array(),
-							'ignore'		=> array(),
-							'filename'		=> '',
-							'format'		=> 'gzip', // gzip, zip, txt
-							'add_drop'		=> TRUE,
-							'add_insert'	=> TRUE,
-							'newline'		=> "\n"
-						);
+						'tables'		=> array(),
+						'ignore'		=> array(),
+						'filename'		=> '',
+						'format'		=> 'gzip', // gzip, zip, txt
+						'add_drop'		=> TRUE,
+						'add_insert'	=> TRUE,
+						'newline'		=> "\n",
+						'extended'		=> false,
+						'ifnotexists' 	=> false
+					);
 
 		// Did the user submit any preferences? If so set them....
 		if (count($params) > 0)

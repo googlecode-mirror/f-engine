@@ -19,6 +19,7 @@ $(document).ready(function () {
 	init_paginationLinks();
 	initTab_sql();
 	$('#tableContent textarea.expanding').autogrow();
+	maximize();
 });
 
 /***	Switch database configuration
@@ -334,6 +335,9 @@ function pagination (html) {
         });
         return false;
     });
+    
+    seeFullContent();
+    
 }
 
 function loadContent (msg) {
@@ -344,48 +348,7 @@ function loadContent (msg) {
 	//tabs
 	$('#tableContent ul.idTabs').each(function () {	$.idTabs(this,$.idTabs.settings);	});
 
-	//maximize
-	$('#tableContent a#maximize').click(function () {
-
-		$('#current_query').css({
-			'max-width' : $(window).width()-150
-		});
-		
-		$('#tableContent').css({
-
-			'position' : 'absolute',
-			'background-color': 'white',
-			'top' : 0,
-			'left' : '-' + $('#contenidos').offset().left + "px",
-			'width' : $(document).width(),
-			'height' : $(document).height()
-		});
-		
-		
-
-		$('#contenidos div.leftFrame').hide();
-		$('#tableContent a#maximize').hide();
-		$('#tableContent a#minimize').show();
-		
-		$("#tableContent ul.btnTabs.idTabs").css("max-width",screen.width-150);
-	});
-
-	//minimize
-	$('#tableContent a#minimize').click(function () {
-		
-		$('#tableContent').css({
-			
-			'position' : '',
-			'background-color': '',
-			'width' : '',
-			'top' : '',
-			'left' : ''
-		});
-
-		$('#contenidos div.leftFrame').show();
-		$('#tableContent a#minimize').hide();
-		$('#tableContent a#maximize').show();
-	});
+	maximize();
 	
 	/*** exam :: pagination ***/
 	init_paginationLinks();
@@ -425,6 +388,8 @@ function loadContent (msg) {
         });
         return false;
     });
+
+    seeFullContent();
 
     /*** sql ***/
     initTab_sql();
@@ -949,7 +914,7 @@ function initTab_backup () {
 					if($('#tfields tr:gt(0)').length > 7)
 						response = response.replace(" VALUES ","<BR>VALUES ");
 					$('div#result code',form).html(response);
-					$('#backup ul li:eq(2)').click();
+					$('#backup ul li:eq(3)').click();
 
 				}, error: function (xhr, ajaxOptions, thrownError){
 
@@ -957,7 +922,7 @@ function initTab_backup () {
 					response = debug.substring(debug.indexOf("<body"),debug.indexOf("</body"));
 
 					$('div#result code',form).html(response);
-					$('#backup ul li:eq(2)').click();
+					$('#backup ul li:eq(3)').click();
 	            }
 			});
 			return false;
@@ -1129,5 +1094,69 @@ function loading() {
 		$("#current_query > img").removeClass("oculto");
 	else
 		$("#current_query > img").addClass("oculto");
+}
+
+function seeFullContent() {
+
+    /*** exam :: expand content ***/
+    $('#exam-results tr:gt(0) td img.expand').hover(function () {
+
+    	$(this).css("opacity","1");
+
+    }, function () {
+
+    	$(this).css("opacity","0.3");
+
+    }).click(function () {
+
+    	var content = $(this).prev().attr("title");
+    	$(this).prev().attr("title","");
+    	$(this).prev().html(content);
+    	$(this).remove();
+
+    });
+}
+
+function maximize () {
+
+	//maximize
+	$('#tableContent a#maximize').click(function () {
+
+		$('#current_query').css({
+			'max-width' : $(window).width()-150
+		});
+		
+		$('#tableContent').css({
+
+			'position' : 'absolute',
+			'background-color': 'white',
+			'top' : 0,
+			'left' : '-' + $('#contenidos').offset().left + "px",
+			'width' : $(document).width(),
+			'height' : $(document).height()
+		});
+
+		$('#contenidos div.leftFrame').hide();
+		$('#tableContent a#maximize').hide();
+		$('#tableContent a#minimize').show();
+		
+		$("#tableContent ul.btnTabs.idTabs").css("max-width",screen.width-150);
+	});
+
+	//minimize
+	$('#tableContent a#minimize').click(function () {
+
+		$('#tableContent').css({
+			'position' : '',
+			'background-color': '',
+			'width' : '',
+			'top' : '',
+			'left' : ''
+		});
+
+		$('#contenidos div.leftFrame').show();
+		$('#tableContent a#minimize').hide();
+		$('#tableContent a#maximize').show();
+	});
 }
 
