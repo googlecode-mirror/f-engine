@@ -197,3 +197,12 @@ ul.dbfldlst li.edit div.enlarge input {
 	
 	width: 360px;
 }
+
+p.important {
+
+	background:none repeat scroll 0 0 #FBE6F2;
+	border:1px solid #D893A1;
+	color:#333333;
+	margin:0px 0 5px;
+	padding:10px;
+}

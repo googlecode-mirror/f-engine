@@ -37,21 +37,21 @@ class query extends Controller
 		if(!isset($_POST['sql'])) return;
 
 		$list_tables = $this->db->list_tables();
-		
+
 		$patterns = array(
 			'/["\'][^,]*["\']/i',
 			'/\s{2}/i'
 		);
 		$dummy_query = preg_replace($patterns, "", trim($_POST['sql']));
-		
-		preg_match("/show\s*/i",$dummy_query,$show);
 
-		preg_match("/update\s+/i",$dummy_query,$update);
-		preg_match("/insert\s+into/i",$dummy_query,$insert);
-		preg_match("/delete\s+/i",$dummy_query,$delete);
-		preg_match("/drop\s+table/i",$dummy_query,$drop);
-		preg_match("/create\s+table/i",$dummy_query,$create);
-		preg_match("/alter\s+table/i",$dummy_query,$alter);
+		preg_match("/^\s*show\s+/i",$dummy_query,$show);
+
+		preg_match("/^\s*update\s+/i",$dummy_query,$update);
+		preg_match("/^\s*insert\s+into/i",$dummy_query,$insert);
+		preg_match("/^\s*delete\s+/i",$dummy_query,$delete);
+		preg_match("/^\s*drop\s+table/i",$dummy_query,$drop);
+		preg_match("/^\s*create\s+table/i",$dummy_query,$create);
+		preg_match("/^\s*alter\s+table/i",$dummy_query,$alter);
 
         if ( count($show) == 0 and (
              count($update) > 0 || count($insert) > 0 ||
@@ -61,6 +61,10 @@ class query extends Controller
            $this->db->query($_POST["sql"]);
            echo "Affected rows: ".$this->db->affected_rows();
 
+        } elseif(count($show) > 0) {   
+           
+        	echo "<!--exam-->";
+           
         } else {
 
         	$tablelist = array_map("strtolower",$list_tables);
@@ -70,13 +74,13 @@ class query extends Controller
         	$match_num = 0;
 
         	foreach($sql_segments as $item) {
-				
+
         		if(in_array(strtolower($item), $tablelist)) {
 
         			if(strtolower($table) != $item) {
 
         				for($i=0; $i < count($list_tables); $i++) {
-        					
+       					
         					if(strtolower($item) == strtolower($list_tables[$i])) {
         						$table = $list_tables[$i];
         					}

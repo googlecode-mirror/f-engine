@@ -94,12 +94,19 @@ if ( ! function_exists('base_url'))
  */
 if ( ! function_exists('public_data'))
 {
-    function public_data($uri = '')
+    function public_data($params = '')
     {
         $CI =& get_instance();
-        $uri = $CI->config->slash_item('public_data').$uri;
+        $uri = $CI->config->slash_item('public_data').$params;
 
-        $base_url = site_url($uri);
+        if($params !== "") {
+
+        	$base_url = substr(site_url($uri),0,-1);
+
+        } else {
+
+        	$base_url = site_url($uri);
+        }
 
         return str_replace(site_url(),base_url(),$base_url);
     }

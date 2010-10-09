@@ -46,11 +46,13 @@ class backup extends Controller
 			if($_POST['witch'] == 'this') {
 
 				$prefs = array(
-	                'tables'      => array($_POST['table']),  // Array of tables to backup.
-	                'format'      => 'txt',             // gzip, zip, txt
-	                'add_drop'    => TRUE,              // Whether to add DROP TABLE statements to backup file
-	                'add_insert'  => TRUE,              // Whether to add INSERT data to backup file
-	                'newline'     => "\n"               // Newline character used in backup file
+	                'tables'      => array($_POST['table']),  
+	                'format'      => 'txt', 
+	                'add_drop'    => isset($_POST['drop']) ? true : false,
+	                'add_insert'  => isset($_POST['inserts']) ? true : false,
+	                'newline'     => "\n",
+					'extended'	  => isset($_POST['extended']) ? true : false,
+					'ifnotexists' => isset($_POST['notexists']) ? true : false
 	              ); 
 
 				 $backup =& $this->dbutil->backup($prefs,$backup_query); 
@@ -59,10 +61,12 @@ class backup extends Controller
 			} else if($_POST['witch'] == 'All') {
 				
 				$prefs = array(
-	                'format'      => 'txt',             // gzip, zip, txt
-	                'add_drop'    => TRUE,              // Whether to add DROP TABLE statements to backup file
-	                'add_insert'  => TRUE,              // Whether to add INSERT data to backup file
-	                'newline'     => "\n"               // Newline character used in backup file
+	                'format'      => 'txt',
+	                'add_drop'    => isset($_POST['drop']) ? true : false,
+	                'add_insert'  => isset($_POST['inserts']) ? true : false,
+	                'newline'     => "\n",
+					'extended'	  => isset($_POST['extended']) ? true : false,
+					'ifnotexists' => isset($_POST['notexists']) ? true : false
 	              ); 
 
 				$backup =& $this->dbutil->backup($prefs); 
@@ -77,50 +81,57 @@ class backup extends Controller
 				}
 
 				$prefs = array(
-	                'tables'      => $_POST['tables'],  // Array of tables to backup.
-	                'format'      => 'txt',             // gzip, zip, txt
-	                'add_drop'    => TRUE,              // Whether to add DROP TABLE statements to backup file
-	                'add_insert'  => TRUE,              // Whether to add INSERT data to backup file
-	                'newline'     => "\n"               // Newline character used in backup file
+	                'tables'      => $_POST['tables'],
+	                'format'      => 'txt',
+	                'add_drop'    => isset($_POST['drop']) ? true : false,
+	                'add_insert'  => isset($_POST['inserts']) ? true : false,
+	                'newline'     => "\n",
+					'extended'	  => isset($_POST['extended']) ? true : false,
+					'ifnotexists' => isset($_POST['notexists']) ? true : false
 	              );
 
 				$backup =& $this->dbutil->backup($prefs);
 				echo $backup;
 			}
-			
+
 		} elseif($_POST['format'] == "txt") {
 
 			if($_POST['witch'] == 'this') {
-				
+
 				$prefs = array(
-	                'tables'      => array($_POST['table']), 	// Array of tables to backup.
-	                'format'      => $_POST['compression'], 	// gzip, zip, txt
-	                'add_drop'    => TRUE,              		// Whether to add DROP TABLE statements to backup file
-	                'add_insert'  => TRUE,              		// Whether to add INSERT data to backup file
-	                'newline'     => "\n"               		// Newline character used in backup file
+	                'tables'      => array($_POST['table']),
+	                'format'      => $_POST['compression'],
+	                'add_drop'    => isset($_POST['drop']) ? true : false,
+	                'add_insert'  => isset($_POST['inserts']) ? true : false,
+	                'newline'     => "\n",
+					'extended'	  => isset($_POST['extended']) ? true : false,
+					'ifnotexists' => isset($_POST['notexists']) ? true : false
 	              ); 
-				  
+
 			} elseif($_POST['witch'] == 'All') {
-				
+
 				$prefs = array(
-	                'format'      => $_POST['compression'], // gzip, zip, txt
-	                'add_drop'    => TRUE,              	// Whether to add DROP TABLE statements to backup file
-	                'add_insert'  => TRUE,              	// Whether to add INSERT data to backup file
-	                'newline'     => "\n"               	// Newline character used in backup file
+	                'format'      => $_POST['compression'],
+	                'add_drop'    => isset($_POST['drop']) ? true : false,
+	                'add_insert'  => isset($_POST['inserts']) ? true : false,
+	                'newline'     => "\n",
+					'extended'	  => isset($_POST['extended']) ? true : false,
+					'ifnotexists' => isset($_POST['notexists']) ? true : false
 	              ); 
-	              
+
 			} else if($_POST['witch'] == 'custom') {
 
 				if(!isset($_POST['tables'])) return;
 
 				$prefs = array(
-	                'tables'      => $_POST['tables'],  	// Array of tables to backup.
-	                'format'      => $_POST['compression'], // gzip, zip, txt
-	                'add_drop'    => TRUE,              	// Whether to add DROP TABLE statements to backup file
-	                'add_insert'  => TRUE,              	// Whether to add INSERT data to backup file
-	                'newline'     => "\n"               	// Newline character used in backup file
+	                'tables'      => $_POST['tables'],
+	                'format'      => $_POST['compression'],
+	                'add_drop'    => isset($_POST['drop']) ? true : false,
+	                'add_insert'  => isset($_POST['inserts']) ? true : false,
+	                'newline'     => "\n",
+					'extended'	  => isset($_POST['extended']) ? true : false,
+					'ifnotexists' => isset($_POST['notexists']) ? true : false
 	              );
-
 			}
 
 			if($_POST['witch'] == 'this')

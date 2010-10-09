@@ -111,14 +111,17 @@ class CI_DB_mysql_utility extends CI_DB_utility {
  			{
 				$output .= 'DROP TABLE IF EXISTS '.$table.';'.$newline.$newline;
 			}
-			
+
 			$i = 0;
 			$result = $query->result_array();
 			foreach ($result[0] as $val)
 			{
 				if ($i++ % 2)
-				{ 					
-					$output .= $val.';'.$newline.$newline;
+				{ 		
+					if(isset($ifnotexists) and $ifnotexists == true)
+						$output .= str_replace("`$table`","`$table` IF NOT EXISTS ",$val).';'.$newline.$newline;
+					else
+						$output .= $val.';'.$newline.$newline;
 				}
 			}
 			
@@ -162,9 +165,9 @@ class CI_DB_mysql_utility extends CI_DB_utility {
 			
 			// Trim off the end comma
 			$field_str = preg_replace( "/, $/" , "" , $field_str);
-			
-			
+
 			// Build the insert string
+			$kont = 0;
 			foreach ($query->result_array() as $row)
 			{
 				$val_str = '';
@@ -189,19 +192,45 @@ class CI_DB_mysql_utility extends CI_DB_utility {
 							$val_str .= $v;
 						}					
 					}					
-					
+
 					// Append a comma
 					$val_str .= ', ';
 					$i++;
 				}
-				
+
 				// Remove the comma at the end of the string
 				$val_str = preg_replace( "/, $/" , "" , $val_str);
-								
+
 				// Build the INSERT string
-				$output .= 'INSERT INTO '.$table.' ('.$field_str.') VALUES ('.$val_str.');'.$newline;
+				if(isset($extended) and $extended == true) {
+
+					if($kont == 0) {
+
+						$output .= $newline.'INSERT INTO '.$table.' ('.$field_str.') VALUES ('.$val_str.')';
+
+					} elseif($kont % 25 == 0) {
+
+						$output .= ','.$newline.'('.$val_str.');'.$newline;
+						$output .= $newline.$newline.'INSERT INTO '.$table.' ('.$field_str.') VALUES ('.$val_str.')';
+
+					} else {
+
+						$output .= ','.$newline.'('.$val_str.')';
+					}
+
+					$kont++;
+
+				} else {
+
+					$output .= 'INSERT INTO '.$table.' ('.$field_str.') VALUES ('.$val_str.');'.$newline;
+				}
 			}
-			
+
+			if(isset($extended) and $extended == true and ($kont) % 25 == 0) {
+
+				$output .= ';';
+			}
+
 			$output .= $newline.$newline;
 		}
 
