@@ -1,0 +1,22 @@
+<?php
+
+class userguide extends Controller {
+
+	function userguide()
+	{
+		parent::Controller();	
+		$this->load->model('vmanager');
+		$this->load->helper('url');
+	}
+	
+	function index()
+	{
+		$data = array();
+		
+		if(count($this->uri->params) != 0)
+			$data['page'] = 'userguide/'.implode('/',$this->uri->params);
+
+		$this->vmanager->load('userguide','main',$data);
+	}
+}
+?>
