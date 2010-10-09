@@ -96,7 +96,12 @@
 
             <?php foreach($exam['fields'] as $field) { ?>
             <td>
-                <span title="<?php  echo htmlspecialchars($row->$field)?>"><?php  echo htmlspecialchars(substr($row->$field,0,45));?></span>
+            	<?php if(strlen($row->$field) > 45) { ?>
+                	<span title="<?php  echo htmlspecialchars(str_replace(array("<",">"),array("&lt;","&gt;"),$row->$field));?>"><?php  echo htmlspecialchars(substr($row->$field,0,45));?></span>
+                	<img class="expand" alt="expand" title="expand" style="vertical-align:sub;cursor:pointer;opacity:0.3;" src="<?php echo public_data("img/tools/eye.png");?>" />
+                <?php } else { ?>
+                	<span><?php  echo htmlspecialchars(substr($row->$field,0,45));?></span>
+                <?php }//endif ?>
             </td>
             <?php } //endforeach; ?>
         </tr>
