@@ -33,10 +33,10 @@
 	</li>
 	<?php }//end if ?>
 </ul>
- <?php if(isset($structure)) { ?>
+
 <a id="maximize">maximize</a>
 <a id="minimize" style="display:none;">minimize</a>
-<?php }//end if ?>
+
 </div>
 <?php if(isset($structure)) { ?>
 	<div id="exam" style="clear:both;">
@@ -47,6 +47,7 @@
         <div> 
             <div id="exam-results">
                 <?php $this->load->view('tools/dbmanager/exam');?>
+                <br style="clear:both;" />
             </div>
         </div>
         <div class="edit" style="display: none;">
@@ -355,6 +356,9 @@
         <li>
 	        <a href="#format">Format</a>
 	    </li>
+        <li>
+	        <a href="#options">Options</a>
+	    </li>
 		<li>
 	        <a href="#result">Output</a>
 	    </li>
@@ -393,8 +397,8 @@
 				<input type="submit" />
 			</div>
 			<div id="format">
-				<input type="radio" name="format" value="browser" />Just show output in browser<br />
-				<hr />
+				<input type="radio" name="format" value="browser" />Just show in browser<br />
+				<hr style="color:#eee;" />
 				<input type="radio" name="format" value="txt" checked="checked" />Txt file<br />
 				<input type="radio" name="format" value="xml" />Xml file<br />
 				<input type="radio" name="format" value="csv" />Csv file<br /><br />
@@ -403,13 +407,29 @@
 					<option value="zip">zip</option>
 					<option value="gzip">gzip</option>
 				</select> compression
-				<hr />
+				<hr style="color:#eee;" />
                 <input type="submit" />
+			</div>
+			<div id="options">
+				<p class="important">
+				    <strong>Note:</strong>&nbsp; These options only apply to <i>txt</i> and <i>show in browser</i> formats.
+				</p>
+				<input type="checkbox" checked="checked" name="inserts" value="1" /> Add inserts
+				<br />
+				<input type="checkbox" checked="checked" name="extended" value="1" style="margin-left:25px;" /> Extended inserts
+				<br />
+				<input type="checkbox" name="drop" value="1" /> Add drop table
+				<br />
+				<input type="checkbox" name="notexists" value="1" /> Add if not exists
+				<br /><br />
+				<input type="submit" />
+
 			</div>
 			<div id="result">
 				<code>
 					&nbsp;
 				</code>
+				<br style="clear:both;" />
 			</div>
 		</form>
 	</div>
@@ -417,7 +437,7 @@
 </div>
 <?php if(isset($structure)) { ?>
 <div id="other" style="clear:both;">
-	
+
 	<h2>Remove table</h2>
 		<input type="button" name="remove_table" id="remove_table" value="remove" rel="<? echo site_url();?>tools/dbmanager/ajax/droptable" />
 
