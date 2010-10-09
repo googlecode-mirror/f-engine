@@ -42,16 +42,17 @@ class dbmanager extends Controller
 			
 			require(APPPATH.'../'.$_SESSION['project'].'/config/database.php');
 			
-			if($current_db != '' and isset($db[$current_db]))
-				$this->load->database($db[$current_db]);
-			else
-				$this->load->database($db[$active_group]);
+			if($current_db != '' and isset($db[$current_db])) 
+				$active_group = $current_db;
+
+			$this->load->database($db[$active_group]);
 			
 			$db_configurations = array();
 			foreach($db as $key => $val) {
 				
 				$db_configurations[] = $key;
 			}
+
 		}
 		
 		if($this->db->platform() != "mysql" && $this->db->platform() != "mysqli") {
@@ -60,12 +61,66 @@ class dbmanager extends Controller
 			return;
 		}
 
-		/***	Forms	***/
-		$data["dbfields"] = $data['fields'] = $this->db->list_tables();
+		/***	table list and details	***/
+		$data['details'] = $this->db->query("SHOW TABLE STATUS FROM ".$db[$active_group]["database"])->result();
+		
+		$data["dbfields"] = array();
+		foreach($data['details'] as $table) {
+			
+			$data["tables"][] = $table->Name;
+		}
 
 		/***	Defined db configuratiosn	***/
 		$data["db_conf"] = $db_configurations;
 		$data["current_db"] = $current_db;
+
+		/*** process list ***/
+		$data['processes'] = $this->db->query("SHOW PROCESSLIST")->result();
+
+		/*** users/privileges ***/
+		$this->db->skip_errors = TRUE;
+		$data['permissions'] = $this->db->query("SELECT *, IF(`Password` = '', 'N', 'Y') AS 'Has_password' FROM `mysql`.`user` LIMIT 10");
+		
+		if(!is_string($data['permissions'])) {
+	
+			$data['permissions'] = $data['permissions']->result();
+
+			$privilege_list = array();
+			foreach($data['permissions'][0] as $row => $val) {
+	
+				if (preg_match("/_priv$/", $row)) {
+	
+					$privilege_list[] = $row;
+				}
+			}
+	
+			$i=0;
+			foreach($data['permissions'] as $row) {
+	
+				$user_privileges = array();
+	
+				foreach($row as $key => $val) {
+	
+					if (preg_match("/_priv$/", $key) and $val == "Y") {
+						$user_privileges[] = $val;
+					}
+				}
+	
+				if( count($privilege_list) == count($user_privileges) ) {
+	
+					$data['permissions'][$i]->Privileges = "ALL PRIVILEGES";
+	
+				} elseif( count($privilege_list) == 0 ) {
+	
+					$data['permissions'][$i]->Privileges = "USAGE";
+	
+				} else {
+					
+					$data['permissions'][$i]->Privileges = "Other";
+				}
+				$i++;
+			}
+		}
 
 		/***	Load view	***/
 		$this->load->masterview('tools/dbmanager/dbmanager',$data,'dbmanager');

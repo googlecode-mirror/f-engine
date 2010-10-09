@@ -39,7 +39,7 @@
         </tr>
         <?php } //endif ?>
         <?php foreach($exam['query']->result() as $row) { ?>
-        <tr>
+        <tr style="vertical-align:top;">
         	<?php if(isset($actions) && $actions == true) { ?>
  			<td>
                 <center>
