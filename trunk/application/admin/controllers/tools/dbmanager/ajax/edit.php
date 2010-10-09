@@ -41,7 +41,7 @@ class edit extends Controller
 	function index() {
 
 		if(!isset($_POST['table'])) return;
-		
+
 		$table = $_POST['table'];
 		unset($_POST['table']);		
 
@@ -65,9 +65,9 @@ class edit extends Controller
 				}
 
 				$query = $this->db->get_where($table, $where);
-				
+
 			} elseif(isset($_POST["unique"])) { 
-	            
+
 				if(is_array($_POST["unique"])) {
 
 					$where = array();
@@ -82,11 +82,11 @@ class edit extends Controller
 
 					$where = array($_POST["unique"] => $_POST["unique_value"]); 
 				}
-				
+
 				$query = $this->db->get_where($table, $where);
-				
+
 			}
-			
+
 		} elseif(count($_POST) > 0) {
 
 			$data = array();
@@ -102,7 +102,7 @@ class edit extends Controller
 
 			die("error");
 		}
-		
+
 		$data = array(
 						'title'		=> 	'Edit Data',
 						'fields'	=> 	$query->field_data(),

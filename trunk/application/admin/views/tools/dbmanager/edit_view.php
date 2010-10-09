@@ -39,3 +39,4 @@
 	<input type="button" value="cancel" class="cancel">
 	<input type="submit" value="send">
 </form>
+<br style="clear:both;" />

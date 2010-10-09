@@ -31,6 +31,16 @@
 	<li>
 		<a href="#other">Operations</a>
 	</li>
+	<?php } else {?>
+	<li>
+		<a href="#details">Details</a>
+	</li>
+	<li>
+		<a href="#processes">Processes</a>
+	</li>
+	<li>
+		<a href="#permissions">Permissions</a>
+	</li>
 	<?php }//end if ?>
 </ul>
 
@@ -447,6 +457,103 @@
 	<h2>Repair table</h2>
 		<input type="button" name="repair_table" id="repair_table" value="repair" rel="<? echo site_url();?>tools/dbmanager/ajax/repairtable" />
 
+</div>
+<?php } else {?>
+
+<div id="details" style="clear:both;">
+
+	<table>
+	<thead>
+		<th>Name</th>
+		<th>Length</th>
+		<th>Engine</th>
+		<th>Collation</th>
+		<th>Rows</th>
+		<!-- <th>Auto increment</th>
+		<th>Comment</th> -->
+	</thead>
+	<tbody>
+	<?php foreach($details as $data) { ?>
+	<tr>
+		<td><?php echo $data->Name ?></td>
+		<?php if(1024*1024 < $data->Data_length) { ?>
+			<td><?php echo round($data->Data_length/1024/1024,1) ?> mb</td>
+		<?php } else { ?>
+			<td><?php echo round($data->Data_length/1024,1) ?> kb</td>
+		<?php }//endif ?>
+		<td><?php echo $data->Engine ?></td>
+		<td><?php echo $data->Collation ?></td>
+		<td><?php echo $data->Rows ?></td>
+		<!-- <td><?php echo $data->Auto_increment ?></td>
+		<td><?php echo $data->Comment ?></td> -->
+	</tr>
+	<?php }//endforeach?>
+	</tbody>
+	</table>
+
+</div>
+<div id="processes" style="clear:both;">
+	<table>
+	<thead>
+		<th>Id</th>
+		<th>User</th>
+		<th>Host</th>
+		<th>db</th>
+		<th>Command</th>
+		<th>Time</th>
+		<th>State</th>
+		<th>Info</th>
+	</thead>
+	<tbody>
+	<?php foreach($processes as $process) { ?>
+	<tr style="vertical-align:top;">
+		<td><?php echo $process->Id?></td>
+		<td><?php echo $process->User?></td>
+		<td><?php echo $process->Host?></td>
+		<td><?php echo $process->db?></td>
+		<td><?php echo $process->Command?></td>
+		<td><?php echo $process->Time?></td>
+		<td><?php echo $process->State?></td>
+		<td><?php echo $process->Info?></td>
+	</tr>
+	<?php }//endforeach ?>
+	</tbody>
+	</table>
+</div>
+<div id="permissions" style="clear:both;">
+
+	<?php if(is_array($permissions)) { ?>
+		<table>
+		<thead>
+			<th>User</th>
+			<th>Host</th>
+			<th>Password</th>
+			<th>Privileges</th>
+			<th>Grant</th>
+		</thead>
+		<tbody>
+		<?php foreach($permissions as $user) { ?>
+		<tr style="vertical-align:top;">
+			<td><?php echo $user->User?></td>
+			<td><?php echo $user->Host?></td>
+			<td>
+				<?php if($user->Password != "") { ?>
+					Yes
+				<?php } else { ?>
+					No
+				<?php }//endif ?>
+			</td>
+			<td><?php echo $user->Privileges; ?></td>
+			<td><?php echo $user->Grant_priv?></td>
+		</tr>
+		<?php }//endforeach ?>
+		</tbody>
+		</table>
+	<?php } else { ?>
+		<p class="important">
+		    <strong>Error:</strong>&nbsp; <?php echo $permissions; ?>
+		</p>
+	<?php }//endif ?>
 </div>
 <?php 
 }
