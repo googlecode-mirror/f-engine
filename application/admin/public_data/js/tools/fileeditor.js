@@ -426,7 +426,6 @@
         ,syntax_selection_allow: "php,js,html,css,xml,sql"
         ,save_callback: "file_save"
         ,EA_file_close_callback: "file_close"
-        //,is_multi_files: false
     });
 
  });//end ready
