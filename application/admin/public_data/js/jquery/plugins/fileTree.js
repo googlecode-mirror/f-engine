@@ -59,6 +59,22 @@ if(jQuery) (function($) {
 						if(o.hover != undefined) {	o.hover(c);	}
                         o.onLoad();
 					});
+
+					/*$.ajax({
+						  type: 'POST',
+						  async: false,
+						  url: o.script,
+						  data: { dir: t },
+						  success: function(data) {
+							  	console.log("done");
+								$(c).find('.start').html('');
+								$(c).removeClass('wait').append(data);
+								if( o.root == t ) $(c).find('UL:hidden').show(); else $(c).find('UL:hidden').slideDown({ duration: o.expandSpeed, easing: o.expandEasing });
+								bindTree(c);
+								if(o.hover != undefined) {	o.hover(c);	}
+		                        o.onLoad();
+							}
+						});*/
 				}
 
 				function bindTree(t) {
