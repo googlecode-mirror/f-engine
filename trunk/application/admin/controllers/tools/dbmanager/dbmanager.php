@@ -39,20 +39,27 @@ class dbmanager extends Controller
 			return;
 
 		} else {
-			
-			require(APPPATH.'../'.$_SESSION['project'].'/config/database.php');
-			
-			if($current_db != '' and isset($db[$current_db])) 
-				$active_group = $current_db;
 
-			$this->load->database($db[$active_group]);
+			if(file_exists(APPPATH.'../'.$_SESSION['project'].'/config/database.php')) {
 			
-			$db_configurations = array();
-			foreach($db as $key => $val) {
+				require(APPPATH.'../'.$_SESSION['project'].'/config/database.php');
 				
-				$db_configurations[] = $key;
-			}
+				if($current_db != '' and isset($db[$current_db])) 
+					$active_group = $current_db;
+	
+				$this->load->database($db[$active_group]);
+				
+				$db_configurations = array();
+				foreach($db as $key => $val) {
+					
+					$db_configurations[] = $key;
+				}
 
+			} else {
+
+				$this->target_project();
+				return;	
+			}
 		}
 		
 		if($this->db->platform() != "mysql" && $this->db->platform() != "mysqli") {

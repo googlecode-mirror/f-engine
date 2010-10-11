@@ -7,7 +7,7 @@
  * @copyright	Copyright (c) 2010, Mikel Madariaga
  * @license		http://www.f-engine.net/userguide/license
  * @link		http://www.f-engine.net/
- * @since		Version 0.1
+ * @since		Version 0.4
  * @filesource
  */
 class filetree extends Controller {
@@ -15,27 +15,18 @@ class filetree extends Controller {
 	function filetree()
 	{
 		parent::Controller();
-		session_start();
 	}
 	
-	function index()
+	function index($project = '')
 	{
 		if(!isset($_POST['dir'])) return;
 		
 		$_POST['dir'] = urldecode($_POST['dir']);
 		$base = explode("/",$_POST['dir']);
-		
-		if(isset($_SESSION['project'])) {
 
-			$apppath = explode("/",str_replace("\\","/", APPPATH));
-			$apppath[count($apppath)-2] = $_SESSION['project'];
-			$root = implode("/",$apppath);
-
-		} else {
-
-			$root = APPPATH;	
-		}
-		
+		$apppath = explode("/",str_replace("\\","/", APPPATH));
+		$apppath[count($apppath)-2] = $project;
+		$root = implode("/",$apppath);
 
 		if( file_exists($root . $_POST['dir'])) {
 

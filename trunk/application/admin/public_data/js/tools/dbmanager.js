@@ -290,6 +290,8 @@ function loadCreateTable (html) {
     	var tabIndex = $(this).attr("rel");
     	$("#tableContent ul.idTabs li:eq("+tabIndex+")").click();
     });
+    
+    $("#main input[name=tablename]").focus();
 }
 
 function pagination (html) {

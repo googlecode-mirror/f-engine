@@ -20,7 +20,7 @@ class <?php echo $classname;?> extends Controller {
 
 		/*** set pagination ***/
 		$config['base_url'] = site_url("<?php echo $vpath;?>");
-		$config['total_rows'] = $this->db->f_select(array('<?php echo implode("','",$dbs);?>'),'count(*) as itemNum'<?php if(isset($where)) { echo ',$where'; } ?>,"limit 20")->row()->itemNum;
+		$config['total_rows'] = $this->db->f_select(array('<?php echo implode("','",$dbs);?>'),'count(*) as itemNum'<?php if(isset($where)) { echo ',$where'; } ?>)->row()->itemNum;
 		$config['per_page'] = '20';
 		$config['uri_segment'] = <?php echo substr_count($vpath, "/") + 2; ?>;
 
