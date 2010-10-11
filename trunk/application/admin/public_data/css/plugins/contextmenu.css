@@ -54,6 +54,10 @@
 	classes to the respective LI element(s)
 */
 
+.contextMenu LI.refresh A { background-image: url(../../img/contextmenu/arrow_refresh.png); }
+.contextMenu LI.file A { background-image: url(../../img/contextmenu/file.png); }
+.contextMenu LI.folder A { background-image: url(../../img/contextmenu/directory.png); }
+
 .contextMenu LI.undo A { background-image: url(../../img/contextmenu/undo.png); }
 .contextMenu LI.apply A { background-image: url(../../img/contextmenu/apply.png); }
 .contextMenu LI.addV A { background-image: url(../../img/contextmenu/newvalidationrule.png); }
