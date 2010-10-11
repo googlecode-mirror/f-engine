@@ -547,7 +547,7 @@ class newform extends Model {
 
     function set_delete_vars() {
 
-    	if(isset($this->post["remove_id_fields"]) && count($this->post["remove_id_fields"]) > 0) {
+    	if(isset($this->post["delete"]) && isset($this->post["remove_id_fields"]) && count($this->post["remove_id_fields"]) > 0) {
 	    	$this->delete_vars = array(
 		    	'path' => $this->foldername,
 		    	'table' => array_shift(explode(".",$this->post['remove_id_fields'][0])),

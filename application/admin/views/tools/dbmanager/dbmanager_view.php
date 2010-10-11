@@ -11,11 +11,13 @@
 					<img src="<?php echo base_url();?>public_data/img/tools/validation.png" style="vertical-align:middle;">
 					<hr/>
 					<ul class="jqueryFileTree">
-					<?php foreach($tables as $item) { ?>
-						<li class="file ext_bat">
-							<a title="<?php  echo $item?>"><?php  echo $item?></a>
-						</li>
-					<?php } //endforeach?>	
+					<?php if(isset($tables)) { ?>
+						<?php foreach($tables as $item) { ?>
+							<li class="file ext_bat">
+								<a title="<?php  echo $item?>"><?php  echo $item?></a>
+							</li>
+						<?php } //endforeach?>	
+					<?php } //endif ?>
 					</ul>
 				</div>
 			</form>

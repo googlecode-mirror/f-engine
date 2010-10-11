@@ -7,7 +7,7 @@
  * @copyright	Copyright (c) 2010, Mikel Madariaga
  * @license		http://www.f-engine.net/userguide/license
  * @link		http://www.f-engine.net/
- * @since		Version 0.1
+ * @since		Version 0.4
  * @filesource
  */
 class fileget extends Controller {
@@ -15,24 +15,18 @@ class fileget extends Controller {
 	function fileget()
 	{
 		parent::Controller();
-		session_start();
+
 	}
 	
 	function index()
 	{
 
         if(!isset($_POST['file'])) return;
-		
-		if(isset($_SESSION['project'])) {
+        if(!isset($_POST['project']) and $_POST['project'] != "") return;
 
-			$apppath = explode("/",str_replace("\\","/", APPPATH));
-			$apppath[count($apppath)-2] = $_SESSION['project'];
-			$root = implode("/",$apppath);
-
-		} else {
-
-			$root = APPPATH;	
-		}
+		$apppath = explode("/",str_replace("\\","/", APPPATH));
+		$apppath[count($apppath)-2] = $_POST['project'];
+		$root = implode("/",$apppath);
 
 		if( file_exists($root . $_POST['file'])) {
 

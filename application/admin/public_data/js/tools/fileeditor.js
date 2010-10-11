@@ -15,11 +15,11 @@
  function file_open (file) {
 
 	var ext = file.substring(file.length-4);
-	
+
 	//disable image editing
 	if(ext == ".png" || ext == ".jpg" || ext == "jpeg" || ext == ".gif" )
 		return false;
-	 
+
     var ext  = file.split('.')[file.split('.').length-1];
     var item = file.substr(file.split('/')[0].length+1);
     var obj = $('#js_list a[rel='+file+']');
@@ -33,7 +33,8 @@
 
         obj.addClass('selected');
 
-        $.post(ROOT+'tools/fileeditor/ajax/fileget',"file="+item, function (content) {
+        $.post(ROOT+'tools/fileeditor/ajax/fileget',"file="+item+"&project="+$("#currentprojectname").attr("rel"), 
+        function (content) {
 
             var new_file= {id: item, text: content, syntax: ext, title: item};
             editAreaLoader.openFile('editor', new_file);
@@ -41,7 +42,6 @@
         });
     }
  }
- 
 
  /***	Edit area
  ********************************************************/
@@ -53,7 +53,7 @@
     if(obj.hasClass('selected'))    obj.removeClass('selected');
 
     return true;
-  }
+ }
  
  function trigger_file_close(el) {
 
@@ -68,16 +68,25 @@
 
     var file_name = window.frame_editor.editArea.curr_file;
 
-    $.post(ROOT+'tools/fileeditor/ajax/fileput',"file="+file_name+"&content="+escape(content), function (resp) {
+    $.ajax({
+    	type: 'POST',
+    	url: ROOT+'tools/fileeditor/ajax/fileput',
+    	data: {
+	    	"file"    : file_name,
+	    	"content" : content,
+	    	"project" : $("#currentprojectname").attr("rel")
+    	},
+    	success: function (resp) {
 
-        if(resp == '') {
+            if(resp == '') {
 
-            //delete edited status
-             window.frame_editor.editArea.files[file_name].edited = false;
-             $('#tab_browsing_list li.selected a.edited',window.frame_editor.document).removeClass('edited');
-        } else {
+                //delete edited status
+                 window.frame_editor.editArea.files[file_name].edited = false;
+                 $('#tab_browsing_list li.selected a.edited',window.frame_editor.document).removeClass('edited');
+            } else {
 
-            alert(resp);
+                alert(resp);
+            }
         }
     });
  }
@@ -408,7 +417,8 @@
  	 ********************************************************/
     $('#js_list').fileTree(
 
-    	{root: '/', script: ROOT+'tools/fileeditor/ajax/filetree',onLoad: context_menu},
+    	{root: '/', script: ROOT+'tools/fileeditor/ajax/filetree/'+$("#currentprojectname").attr("rel"),
+    	onLoad: context_menu},
     	function(file) {	file_open(file);	}
     );
 
