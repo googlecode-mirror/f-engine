@@ -22,4 +22,9 @@ Dbmanager:
 
 Other:
 	- minor bug fixing
+	
+	
+new in v0.4
+	- Fileeditor: Added basic file management 
+	- New project: Fixed diretory permissions
 
