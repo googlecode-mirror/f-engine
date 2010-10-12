@@ -52,8 +52,15 @@ class newcontroller extends Controller
 			}
 		}
 		/***	Forms	***/
-		
 		$data['fields'] = $this->db->list_tables();
+		
+		/***	Masterview confs	***/
+		$data['masterview'] = array();
+		require(APPPATH.'../'.$_SESSION['project'].'/config/masterview.php');
+		foreach($conf as $key=>$val) {
+			
+			$data['masterview'][] = $key;
+		}
 
 		/***	Load view	***/
 		$this->load->masterview('tools/newcontroller/newcontroller',$data,'newcontroller');

@@ -66,6 +66,24 @@ class fpreview extends Controller {
 				case 'libraries':
 							$handler = fopen($this->apppath.$_POST['file'], "r");
 							break;
+
+				case "masterview":
+
+							$content = file_get_contents($this->apppath."config/masterview.php");
+							$items = explode(";",$content);
+
+							foreach($items as $item) {
+
+								preg_match("/conf\[[\"']".$type[1]."[\"']]/i",$item,$matches);
+
+								if(count($matches) > 0) {
+
+									echo str_replace(array("\n"),array("<br />"),trim($item));
+									return;
+								}
+							}
+							return;
+
 				default:
 							return;
 			}

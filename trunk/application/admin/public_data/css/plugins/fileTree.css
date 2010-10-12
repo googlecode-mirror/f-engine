@@ -32,6 +32,7 @@ UL.jqueryFileTree A.selected {
 .jqueryFileTree LI.expanded { background: url(../../img/fileTree/folder_open.png) left top no-repeat; }
 .jqueryFileTree LI.file { background: url(../../img/fileTree/file.png) left top no-repeat; }
 .jqueryFileTree LI.wait { background: url(../../img/fileTree/spinner.gif) left top no-repeat; }
+.jqueryFileTree LI.conf { background: url(../../img/fileTree/brick.png) left top no-repeat; }
 /* File Extensions*/
 .jqueryFileTree LI.ext_3gp { background: url(../../img/fileTree/film.png) left top no-repeat; }
 .jqueryFileTree LI.ext_afp { background: url(../../img/fileTree/code.png) left top no-repeat; }

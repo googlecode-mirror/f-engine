@@ -10,11 +10,12 @@ class newform extends Model {
 	private $filename;
 
 	private $assets;
+	private $masterview;
 
 	public  $insert;
 	private $insert_vars;
 
-	public   $update;
+	public  $update;
 	private $update_vars;
 
 	public  $datagrid;
@@ -72,7 +73,6 @@ class newform extends Model {
     	 */
 		$path = explode('/',$this->post['url']) ? explode('/',$this->post['url']) : array($this->post['url']);
 
-		
 		if( trim($path[count($path)-1]) == "")
 			unset($path[count($path)-1]);
 
@@ -85,8 +85,7 @@ class newform extends Model {
 
 		if($this->foldername == '') 
 			$this->foldername = "unnamed";	
-		
-			
+	
 		/*
 		 * parse input data and set al required var values
 		 */
@@ -275,6 +274,9 @@ class newform extends Model {
 
     	if( isset($this->post['footer']) )
     		$this->assets['footer'] = str_replace("_view.php","","'footer/".implode("','",$this->post['footer'])."'");
+    		
+    	if( isset($this->post['masterview']) )
+    		$this->masterview = $this->post['masterview'];
     }
 
 	function set_datagrid_vars() {
@@ -316,6 +318,7 @@ class newform extends Model {
 			if(isset($this->post['edit_field_names']))		$data['new'] = true;
 
 			$data["assets"] = $this->assets;
+			$data["masterview"] = $this->masterview;
 
 			$i=0;
 			foreach( $data["data"] as $key => $val) {

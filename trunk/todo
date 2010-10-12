@@ -1,15 +1,11 @@
 Core & libraries:
     - Check URL Suffix compatibility
-    - Still many lorem ipsum to remove
     - Autogrow, whitespace issues
 
-new controller wizard:
-	- Select masterview profile 
-	
 Dbmanager:
 	- kill processes
 	- Advance index editor
 	- Edit user permissions
-	- New features and style redising in "operations"
+	- New features and style redesign in "operations"
 	- Import
 	- Show query execution time

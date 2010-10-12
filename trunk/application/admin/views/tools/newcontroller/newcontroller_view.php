@@ -315,12 +315,31 @@
 	</div>
 	<div id="assets" style="display: none;">
 		<ul class="btnTabs idTabs">
+			<li ><a href="#base">Base configuration</a></li>
 			<li ><a href="#javascript">Javascript</a></li>
 			<li ><a href="#css">Css</a></li>
 			<li ><a href="#header">Header</a></li>
 			<li ><a href="#footer">Footer</a></li>
 		</ul>
 		<input type="checkbox" class="checkbox" id="enable_preview" value="1" /> Enable file preview
+		<div id="base" class="rblock">
+			<div id="masterview_list" class="dir floatl" >
+				<ul class="jqueryFileTree">
+				<?php foreach($masterview as $item) { ?>
+					<li class="file conf">
+						<a rel="masterview/<?php echo $item;?>	">
+							<?php echo $item;?>			
+						</a>
+					</li>
+				<?php }//endforeach  ?>
+				</ul>
+			</div>
+			<div id="masterview_select" class="dir" >
+				<ul class="jqueryFileTree ui-sortable">
+					<li class="file conf"><?php echo $masterview[0];?><input type="hidden" value="<?php echo $masterview[0];?>" name="masterview"></li>
+				</ul>
+			</div>
+		</div>
 		<div id="javascript" class="rblock">
 			<div id="js_list" class="dir floatl" ></div>
 			<div id="js_select" class="dir" >
@@ -377,13 +396,12 @@
 		<div class="help">
 			<h1>Controller path</h1>
 			<p>
-				Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec ullamcorper, magna a sodales convallis, 
-				mi tellus varius felis, nec sodales justo nunc nec sem. Curabitur et enim.
+				Type the container folder where files will reside (If it does not exist it will be created).
+				<strong>Note: </strong> If selected folder has any file matching new files name they will be rewritted  
 			</p>
 			<h1>Action</h1>
 			<p>
-				Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec ullamcorper, magna a sodales convallis, 
-				mi tellus varius felis, nec sodales justo nunc nec sem. Curabitur et enim.
+				Choose between create files or just show their content in the screen
 			</p>
 		</div>
 	</div>

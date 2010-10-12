@@ -16,7 +16,7 @@
  ********************************************************/
 
  function preview (dir,rel_id) {
-	
+
 	$('ul li',$(dir)).not('.directory').each(function () {
 
 		$(this).hover(
@@ -67,15 +67,32 @@
  	var type = file.split('/')[0];
 	var ext  = file.split('.')[file.split('.').length-1];
  	var item = file.substr(type.length+1);
-	
- 	if($('#'+type+'_select ul input[value="'+item+'"]').length > 0)
-		$('#'+type+'_select ul input[value="'+item+'"]').parent().remove();
-	 else
-	 	$('#'+type+'_select ul').append(
-	 							'<li class="file ext_'+ext+'">'
-	 							+item
-	 							+'<input type="hidden" name="'+type+'[]" value="'+item+'" />'
-	 							+'</li>');	 							
+ 
+ 	if($('#'+type+'_select ul input[value="'+item+'"]').length > 0 && type != "masterview") {
+		
+ 		$('#'+type+'_select ul input[value="'+item+'"]').parent().remove();
+	 
+ 	} else {
+	 
+ 		if(type == "masterview") {
+
+ 			$('#'+type+'_select ul li').remove();
+ 			$('#'+type+'_select ul').append(
+						'<li class="file conf">'
+						+item
+						+'<input type="hidden" name="'+type+'" value="'+item+'" />'
+						+'</li>');
+
+ 		} else {
+
+ 			$('#'+type+'_select ul').append(
+						'<li class="file ext_'+ext+'">'
+						+item
+						+'<input type="hidden" name="'+type+'[]" value="'+item+'" />'
+						+'</li>');
+ 		}
+
+ 	}
  }
 
  function highlight (obj) {
@@ -259,6 +276,13 @@
 
  	/***	Filetrees
  	 ********************************************************/
+	 //masterview conf
+	 preview($("#masterview_list"),"enable_preview");
+	 $("#masterview_list ul li a").click(function () {
+
+		 add_item($(this).attr("rel"));
+	 });
+
 	//javascript
     $('#js_list').fileTree(
 
