@@ -25,6 +25,6 @@ class <?php echo $classname;?> extends Controller {
 			'content'=>$content
 		);
 
-		$this->load->masterview('<?php echo $view?>',$data,"default");
+		$this->load->masterview('<?php echo $view?>',$data,"<?php echo $masterview;?>");
 	}
 }

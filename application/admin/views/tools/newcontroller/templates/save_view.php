@@ -54,7 +54,7 @@ class save extends Controller {
 		} elseif(!IS_AJAX) {
 
 			$data = array( "error" => $validation["error_msg"] );
-			$this->load->masterview('<?php echo $view; ?>', $data, "default");
+			$this->load->masterview('<?php echo $view; ?>', $data, "<?php echo $masterview;?>");
 			
 		} else {
 

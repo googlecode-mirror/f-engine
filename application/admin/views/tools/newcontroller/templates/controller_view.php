@@ -13,6 +13,6 @@ class <?php echo $classname;?> extends Controller {
 			echo "\t\t\t'".$key."' => array(".$val."),\r\n";
  } ?>
 		);
-		$this->load->masterview("<?php echo $view; ?>",$data,"default");
+		$this->load->masterview("<?php echo $view; ?>",$data,"<?php echo $masterview;?>");
 	}
 }
