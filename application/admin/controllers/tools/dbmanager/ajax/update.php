@@ -7,7 +7,7 @@
  * @copyright	Copyright (c) 2010, Mikel Madariaga
  * @license		http://www.f-engine.net/userguide/license
  * @link		http://www.f-engine.net/
- * @since		Version 0.3
+ * @since		Version 0.4
  * @filesource
  */
 class update extends Controller 
@@ -34,8 +34,13 @@ class update extends Controller
 			$this->load->database("", FALSE, TRUE);
 		}
 	}
-	
+
 	function index() {
+		
+		echo "This script is not accesible directly";
+	}
+	
+	function ajax() {
 
 		$table = $_POST['table'];
         unset($_POST['table']);

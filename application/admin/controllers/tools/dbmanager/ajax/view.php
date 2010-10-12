@@ -7,7 +7,7 @@
  * @copyright	Copyright (c) 2010, Mikel Madariaga
  * @license		http://www.f-engine.net/userguide/license
  * @link			http://www.f-engine.net/
- * @since		Version 0.3
+ * @since		Version 0.4
  * @filesource
  */
 class view extends Controller 
@@ -17,8 +17,13 @@ class view extends Controller
 		parent::Controller();
 		$this->load->helper(array('url','form'));
 	}
-
-	function index($offset=0) {
+	
+	function index() {
+		
+		echo "This script is not accesible directly";
+	}
+	
+	function ajax($offset=0) {
 
 		//Set items per page var
 		$items_per_page = 10;	

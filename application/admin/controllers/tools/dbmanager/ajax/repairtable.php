@@ -7,7 +7,7 @@
  * @copyright	Copyright (c) 2010, Mikel Madariaga
  * @license		http://www.f-engine.net/userguide/license
  * @link		http://www.f-engine.net/
- * @since		Version 0.3
+ * @since		Version 0.4
  * @filesource
  */
 class repairtable extends Controller
@@ -32,8 +32,13 @@ class repairtable extends Controller
 
 		$this->load->dbutil() ;
 	}
-	
+
 	function index() {
+		
+		echo "This script is not accesible directly";
+	}
+	
+	function ajax() {
 		
 		if(!isset($_POST['table'])) return;
 		
