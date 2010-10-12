@@ -7,7 +7,7 @@
  * @copyright	Copyright (c) 2010, Mikel Madariaga
  * @license		http://www.f-engine.net/userguide/license
  * @link		http://www.f-engine.net/
- * @since		Version 0.3
+ * @since		Version 0.4
  * @filesource
  */
 class createtable extends Controller
@@ -16,10 +16,14 @@ class createtable extends Controller
 		
 		parent::Controller();
 		$this->load->helper('url');
-		session_start();
 	}
 	
 	function index() {
+		
+		echo "This script is not accesible directly";
+	}
+	
+	function ajax() {
 
         if(!isset($_POST['tablename']) || $_POST['tablename'] == '') return;
         if(!isset($_POST['tablefields'])) return;

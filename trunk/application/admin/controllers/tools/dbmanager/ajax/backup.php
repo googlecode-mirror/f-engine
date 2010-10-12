@@ -7,7 +7,7 @@
  * @copyright	Copyright (c) 2010, Mikel Madariaga
  * @license		http://www.f-engine.net/userguide/license
  * @link		http://www.f-engine.net/
- * @since		Version 0.3
+ * @since		Version 0.4
  * @filesource
  */
 class backup extends Controller 
@@ -37,8 +37,7 @@ class backup extends Controller
 	}
 	
 	function index() {
-		
-		
+
 		$backup_query = "select ".$_POST["backup_query"][0]." from ".$_POST['table']." ".$_POST["backup_query"][1];
 		
 		if($_POST['format'] == "browser") {
