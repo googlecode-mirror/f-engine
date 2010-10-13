@@ -376,6 +376,8 @@
 	<div style="clear:both;padding-top:15px;">
 		<form method="post" action="<?php  echo site_url().'tools/dbmanager/ajax/backup';?>">
 			<input type="hidden" name="table" value="<?php echo isset($_POST['table']) ? $_POST['table'] : "";?>" />
+			<input type="hidden" name="project" value="<?php echo isset($_POST['project']) ? $_POST['project'] : $projectname;?>" />
+			<input type="hidden" name="dbconf" value="<?php echo isset($_POST['dbconf']) ? $_POST['dbconf'] : $dbconf;?>" />
 
 			<div id="tables" style="clear:both;">
 				<div style="width:320px;float:left;">
@@ -398,8 +400,8 @@
 				</div>
 				<div style="float:left;">
 					<select multiple="multiple" size="4" name="tables[]" style="display:none;">
-                        <?php foreach($dbfields as $field):?>
-                            <option value="<?php  echo $field?>"><?php  echo $field?></option>
+                        <?php foreach($tables as $table):?>
+                            <option value="<?php  echo $table;?>"><?php  echo $table;?></option>
                         <?php endforeach;?>
 					</select>
 				</div>

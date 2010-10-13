@@ -68,10 +68,13 @@ class dbmanager extends Controller
 			return;
 		}
 
+		$data["projectname"] = $_SESSION['project'];
+		$data["dbconf"] = $active_group;
+
 		/***	table list and details	***/
 		$data['details'] = $this->db->query("SHOW TABLE STATUS FROM ".$db[$active_group]["database"])->result();
 		
-		$data["dbfields"] = array();
+		$data["tables"] = array();
 		foreach($data['details'] as $table) {
 			
 			$data["tables"][] = $table->Name;
