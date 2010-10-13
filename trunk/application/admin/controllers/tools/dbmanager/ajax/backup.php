@@ -38,8 +38,11 @@ class backup extends Controller
 	
 	function index() {
 
-		$backup_query = "select ".$_POST["backup_query"][0]." from ".$_POST['table']." ".$_POST["backup_query"][1];
-		
+		if(isset($_POST["backup_query"]))
+			$backup_query = "select ".$_POST["backup_query"][0]." from ".$_POST['table']." ".$_POST["backup_query"][1];
+		else
+			$backup_query = "";
+
 		if($_POST['format'] == "browser") {
 
 			if($_POST['witch'] == 'this') {

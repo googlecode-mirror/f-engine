@@ -234,7 +234,7 @@ class view extends Controller
         $data['createtable'] = $tmp->$field;
 
 		/*** backup tab ***/
-		$data['dbfields'] = $listables;
+		$data['tables'] = $listables;
 		$this->load->view('tools/dbmanager/data', $data);
 	}
 

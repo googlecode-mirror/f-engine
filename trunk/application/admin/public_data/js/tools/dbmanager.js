@@ -5,7 +5,7 @@
  * @copyright	Copyright (c) 2010, Mikel Madariaga
  * @license		http://www.f-engine.net/userguide/license
  * @link		http://www.f-engine.net/
- * @since		Version 0.3
+ * @since		Version 0.4
  * @filesource
  */
 
@@ -1110,10 +1110,19 @@ function seeFullContent() {
 
     }).click(function () {
 
-    	var content = $(this).prev().attr("title");
-    	$(this).prev().attr("title","");
-    	$(this).prev().html(content);
-    	$(this).remove();
+    	var cell = $(this).prev();
+    	var content = cell.attr("title");
+    	
+    	$(this).fadeOut();
+    	cell.fadeOut(function () {
+
+    		cell.attr("title","");
+    		cell.html(content);
+    		cell.next().remove();
+    		
+    		cell.fadeIn("fast");
+    	});
+
 
     });
 }
