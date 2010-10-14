@@ -3,6 +3,7 @@ Core & libraries:
     - Autogrow, whitespace issues
 
 Dbmanager:
+	- Port a lot of checks from query controller to js 
 	- kill processes
 	- Advance index editor
 	- Edit user permissions

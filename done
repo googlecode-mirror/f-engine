@@ -1,11 +1,15 @@
 New in v0.4
 	- Fileeditor: 
-		- Added basic file management 
+		- Added basic file management
+	- Dbmanager
+		- Performance improvements
+		- Added some effect 
 	- New project: 
 		- Fixed diretory permissions
 	- new controller wizard:
-		- Select masterview profile
+		- Masterview profile selectable
     	- Some lorem ipsum removed
+    
 
 New in v0.3
 

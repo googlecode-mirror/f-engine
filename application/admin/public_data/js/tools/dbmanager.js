@@ -349,6 +349,7 @@ function loadContent (msg) {
 	//tabs
 	$('#tableContent ul.idTabs').each(function () {	$.idTabs(this,$.idTabs.settings);	});
 
+	//Load maximize/minimize events
 	maximize();
 	
 	/*** exam :: pagination ***/
@@ -854,6 +855,9 @@ function init_paginationLinks() {
 
     	$("#exam-results a.refresh:eq(0)").click();
     });
+
+	//set scroll
+	$('html,body').animate({scrollTop: (parseInt($("#forms h2 a").offset().top))}, 1000);
 }
 
 /*** init backup ***/
