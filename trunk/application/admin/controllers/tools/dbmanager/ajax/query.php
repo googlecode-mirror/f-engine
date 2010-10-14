@@ -16,20 +16,6 @@ class query extends Controller
 
 		parent::Controller();
 		session_start();
-
-		$project = $_POST['project'] != "" ? $_POST['project'] : $_SESSION['project'];
-		if(isset($project)) {
-
-			require(APPPATH.'../'.$project.'/config/database.php');
-			if(isset($_POST["dbconf"]) and isset($db[$_POST["dbconf"]]))
-				$this->load->database($db[$_POST["dbconf"]]);
-			else
-				$this->load->database($db[$active_group]);
-
-		} else {
-
-			$this->load->database();	
-		}
 	}
 
 	function index() {
@@ -41,7 +27,6 @@ class query extends Controller
 
 		if(!isset($_POST['sql'])) return;
 
-		$list_tables = $this->db->list_tables();
 
 		$patterns = array(
 			'/["\'][^,]*["\']/i',
@@ -63,8 +48,9 @@ class query extends Controller
              count($delete) > 0 || count($drop) > 0 ||
              count($create) > 0 || count($alter) > 0)) {
 
-           $this->db->query($_POST["sql"]);
-           echo "Affected rows: ".$this->db->affected_rows();
+			$this->init_db();
+			$this->db->query($_POST["sql"]);
+			echo "Affected rows: ".$this->db->affected_rows();
 
         } elseif(count($show) > 0) {   
            
@@ -72,6 +58,7 @@ class query extends Controller
            
         } else {
 
+			$list_tables = $_POST["tables"];
         	$tablelist = array_map("strtolower",$list_tables);
         	$sql_segments = explode(" ", str_replace(array("`", "(", ")",",","\n")," ",$dummy_query));
 
@@ -102,6 +89,24 @@ class query extends Controller
         		echo "<!--exam-->";
         	}
         }
+	}
+	
+	function init_db () {
+
+		echo "init";
+		$project = $_POST['project'] != "" ? $_POST['project'] : $_SESSION['project'];
+		if(isset($project)) {
+
+			require(APPPATH.'../'.$project.'/config/database.php');
+			if(isset($_POST["dbconf"]) and isset($db[$_POST["dbconf"]]))
+				$this->load->database($db[$_POST["dbconf"]]);
+			else
+				$this->load->database($db[$active_group]);
+
+		} else {
+
+			$this->load->database();	
+		}
 	}
 }
 ?>

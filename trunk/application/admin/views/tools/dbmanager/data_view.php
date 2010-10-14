@@ -93,6 +93,9 @@
 					<textarea  style="min-height:50px; padding:3px; max-height: 300px; width:450px;" class="expanding" id="sqlquery" name="sql"></textarea>
 				<?php }//endif ?>
 				</div>
+		        <?php foreach($tables as $table):?>
+              		<input type="hidden" name="tables[]" value="<?php  echo $table;?>" />
+                <?php endforeach;?>
                 <input type="submit" value="Run query" style="margin-left:375px;" />
 
                 <div id="sqlResult" style="display:none;width:460px;">

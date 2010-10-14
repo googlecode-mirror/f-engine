@@ -25,7 +25,7 @@ class view extends Controller
 	
 	function ajax($offset=0) {
 
-		//Set items per page var
+		//Set default items per page
 		$items_per_page = 10;	
 
 		if(isset($_POST['project'])) {
@@ -46,9 +46,6 @@ class view extends Controller
 
 		//get target table
 		$currentable = $_POST["table"];
-
-		// Set query limit/offset	
-		$items_per_page = $items_per_page;
 
 		//show edit and delete buttons
 		$actions = true;
@@ -91,8 +88,16 @@ class view extends Controller
 				$orderby = " ";
 			}
 
-			// Fetch the total number of DB rows
-			$total_rows = $this->db->query($query_nolimit)->num_rows();
+			//disable item count (pagination) when the query has "order by rand()"
+			if(strpos($query_nolimit,"rand()")) {
+	
+				$total_rows = $items_per_page;
+
+			} else {
+
+				$itemCountSql = "select count(*) as itemNum from (".$query_nolimit.") as tmp";
+				$total_rows = $this->db->query($itemCountSql)->row()->itemNum;
+			}
 
 			// Run query
 			if($_POST["action"] == 'refresh')  {
