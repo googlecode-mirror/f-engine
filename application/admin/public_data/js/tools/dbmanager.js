@@ -9,8 +9,6 @@
  * @filesource
  */
 
-$("#content-wrapper").css("width","100%");
-
 //onload
 $(document).ready(function () {
 
@@ -348,6 +346,9 @@ function loadContent (msg) {
 	if(msg  != "undefined" || msg != undefined)
 		$('#tableContent').html(msg);
 
+	
+	$("#content-wrapper").css("width","100%");
+	
 	//tabs
 	$('#tableContent ul.idTabs').each(function () {	$.idTabs(this,$.idTabs.settings);	});
 
@@ -827,6 +828,7 @@ function init_paginationLinks() {
 					loading();
 					debug = xhr.responseText;
 					resp = debug.substring(debug.indexOf("<body"),debug.indexOf("</body"));
+					resp = resp.replace("select count(*) as itemNum from (","").replace(") as tmp","");
 
                     $("#exam-results > table, #exam-results > div#content").replaceWith(resp);
                     $("#exam-results div.pagination").hide();
@@ -1149,7 +1151,7 @@ function maximize () {
 			'top' : 0,
 			'left' : '-' + $('#contenidos').offset().left + "px",
 			'width' : $(document).width(),
-			'height' : $(document).height()
+			/*'height' : $(document).height()*/
 		});
 
 		$('#contenidos div.leftFrame').hide();
