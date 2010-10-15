@@ -26,7 +26,7 @@ class view extends Controller
 	function ajax($offset=0) {
 
 		//Set default items per page
-		$items_per_page = 10;	
+		$items_per_page = 20;	
 
 		if(isset($_POST['project'])) {
 
@@ -83,6 +83,12 @@ class view extends Controller
 
 				$orderby = " ORDER BY ".$_POST["orderby"]." ";
 
+				
+			} elseif(isset($_POST["query"]) && stripos($_POST["query"],"order") !== false) {	
+
+				$orderby = " ";
+				echo preg_replace("/(.*)order\sby\b(.*)limit(.*)$/i",'${2}',$_POST["query"]);
+				
 			} else {
 
 				$orderby = " ";

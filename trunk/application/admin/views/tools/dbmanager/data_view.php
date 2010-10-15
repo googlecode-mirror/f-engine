@@ -347,7 +347,7 @@
 			</select>
         </div>
         <center>
-        	<input type="button" class="cancel" value="cancel" />
+        	<input type="button" class="cancel" value="Cancel" />
             <input type="button" id="sendField" value="Send" />
         </center>
         </form>
@@ -435,7 +435,7 @@
 				<br />
 				<input type="checkbox" name="drop" value="1" /> Add drop table
 				<br />
-				<input type="checkbox" name="notexists" value="1" /> Add if not exists
+				<input type="checkbox" checked="checked" name="notexists" value="1" /> Add if not exists
 				<br /><br />
 				<input type="submit" />
 
