@@ -9,6 +9,8 @@
  * @filesource
  */
 
+$("#content-wrapper").css("width","100%");
+
 //onload
 $(document).ready(function () {
 
@@ -857,7 +859,7 @@ function init_paginationLinks() {
     });
 
 	//set scroll
-	$('html,body').animate({scrollTop: (parseInt($("#forms h2 a").offset().top))}, 1000);
+	//$('html,body').animate({scrollTop: (parseInt($("#forms h2 a").offset().top))}, 1000);
 }
 
 /*** init backup ***/
@@ -968,8 +970,8 @@ function initTab_sql() {
                     }
                     
         		} else if(response.substring(0,11) == "<!--exam-->") {
+        			
         			//select table and fire query
-
             		if($('ul.jqueryFileTree a.selected').length == 0) {
 
             			//highlight table
@@ -1117,14 +1119,14 @@ function seeFullContent() {
     	var cell = $(this).prev();
     	var content = cell.attr("title");
     	
-    	$(this).fadeOut();
-    	cell.fadeOut(function () {
+    	$(this).fadeOut("fast");
+    	cell.animate({opacity: 0.1}, 300,function () {
 
     		cell.attr("title","");
     		cell.html(content);
     		cell.next().remove();
     		
-    		cell.fadeIn("fast");
+    		cell.css("opacity",1);//fadeIn("fast");
     	});
 
 
