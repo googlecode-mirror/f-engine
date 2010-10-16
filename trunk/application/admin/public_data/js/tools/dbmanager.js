@@ -994,13 +994,14 @@ function initTab_sql() {
                 	$("#exam-results div.pagination").hide();
                 	$("#exam-results > table").hide();
                 	$("#exam-results > table, #exam-results > div#content").hide();
- 
-                	//fire query
-                	$('#sqlResult').hide();
 
+                	$('#sqlResult').hide();
             		$("#current_query span").text(newquery);
             		loading();
 
+            		//reset old order by 
+            		$("#exam-results th").removeClass("desc").removeClass("asc");
+            		
             		targetPage = ROOT+"/tools/dbmanager/ajax/view/";
             		var querySegments = $("#current_query > span").text().split("limit");
 
@@ -1013,6 +1014,7 @@ function initTab_sql() {
             			}
             		}
 
+            		//fire query
             		$("#exam-results a.refresh:eq(0)").attr("href",targetPage);
             		$("#exam-results a.refresh:eq(0)").click();
 
@@ -1124,7 +1126,7 @@ function seeFullContent() {
     	$(this).fadeOut("fast");
     	cell.animate({opacity: 0.1}, 300,function () {
 
-    		cell.attr("title","");
+    		cell.attr("title","").css("white-space","pre-line");
     		cell.html(content);
     		cell.next().remove();
     		

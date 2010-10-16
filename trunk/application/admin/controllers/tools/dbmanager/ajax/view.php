@@ -59,6 +59,7 @@ class view extends Controller
 			$query_str = str_ireplace("limit","LIMIT",$_POST["query"]);
 			$query_array = explode("LIMIT", $query_str);
 			$query_nolimit = $query_array[0];
+			$query_nolimit = preg_replace("/;\s*$/i","",$query_nolimit);
 
 			//redefine offset and limit if is sent
 			if(isset($query_array[1])) {
@@ -82,16 +83,24 @@ class view extends Controller
 				$query_nolimit = $query_nolimit[0];	
 
 				$orderby = " ORDER BY ".$_POST["orderby"]." ";
+				$query_str = $query_nolimit.$orderby." LIMIT ".$offset.",".$items_per_page;
 
-				
 			} elseif(isset($_POST["query"]) && stripos($_POST["query"],"order") !== false) {	
 
-				$orderby = " ";
-				echo preg_replace("/(.*)order\sby\b(.*)limit(.*)$/i",'${2}',$_POST["query"]);
+				preg_match("/order\sby\s\w* (asc|desc)/i",$query_nolimit,$match);
+
+				if(count($match) > 0) {
+
+					$tmp = trim(preg_replace("/order\sby\s/i","",$match[0]));
+					$orderby = $tmp;
+					$query_orderby = explode(" ",$tmp);
+				} 
+				
+				$query_str = $query_nolimit;
 				
 			} else {
 
-				$orderby = " ";
+				$query_str = $_POST["query"];
 			}
 
 			//disable item count (pagination) when the query has "order by rand()"
@@ -101,25 +110,33 @@ class view extends Controller
 
 			} else {
 
+				//skip errors
+				$this->db->skip_errors = TRUE;
 				$itemCountSql = "select count(*) as itemNum from (".$query_nolimit.") as tmp";
-				$total_rows = $this->db->query($itemCountSql)->row()->itemNum;
+				$rs = $this->db->query($itemCountSql);
+
+				if(!is_string($rs)) {
+
+					$total_rows = $rs->row()->itemNum;
+
+				} else {
+
+					$total_rows = $this->db->query($query_nolimit)->num_rows();
+				}
+				
+				$this->db->skip_errors = FALSE;
 			}
 
 			// Run query
 			if($_POST["action"] == 'refresh')  {
 
-				if(stripos($_POST["query"],"limit") !== false) {
+				if(stripos($query_str,"limit") !== false) {
 
-					$query_str = str_ireplace(array("limit","order"),array("LIMIT","ORDER"),$_POST["query"]);
-					$tmp = explode("LIMIT", $query_str); 
-					$tmp2 = explode("ORDER", $tmp[0]);
-					$sql = $tmp2[0].$orderby."LIMIT ".$tmp[1];
-
-					$query = $this->db->query($sql);
+					$query = $this->db->query($query_str);
 
 				} else {
 
-					list($actions, $pagination) = $this->showActions($_POST["query"],$listables);
+					list($actions, $pagination) = $this->showActions($query_str,$listables);
 
 					if($actions == false) {
 
@@ -133,7 +150,7 @@ class view extends Controller
 
 					} else {
 
-						$sql = preg_replace("/;\s*$/i","",$_POST["query"]).$orderby." LIMIT ".$items_per_page;
+						$sql = preg_replace("/;\s*$/i","",$query_str)." LIMIT ".$items_per_page;
 					}
 
 					$query = $this->db->query($sql);
@@ -141,7 +158,7 @@ class view extends Controller
 
 			} else {
 
-				$query = $this->db->query($query_nolimit.$orderby." LIMIT ".$offset.",".$items_per_page);
+				$query = $this->db->query($query_str);
 			}
 
 			$sql = $this->db->last_query();
@@ -220,6 +237,12 @@ class view extends Controller
 						'paginate'	=> $paginate,
 						'orderby' => isset($_POST["orderby"]) ? explode(" ",$_POST["orderby"]) : false
 		);
+		
+		if(isset($query_orderby)) {
+
+			//replace default orderby
+			$data['exam']['orderby'] = $query_orderby;
+		}
 
 		$data["actions"] = $actions;
 
