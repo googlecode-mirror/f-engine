@@ -1,0 +1,208 @@
+<h1>Reserved Names</h1>
+<p>
+    In order to help out, F-engine uses a series of functions and names in its operation. Because of this, some names cannot be used by a developer. Following is a list of reserved names that cannot be used.
+</p>
+<h3>Controller names</h3>
+<p>
+    Since your controller classes will extend the main application controller you
+    must be careful not to name your functions identically to the ones used by that class, otherwise your local functions
+    will override them.  The following
+    is a list of reserved names.  Do not name your controller functions any of these:
+</p>
+<ul>
+    <li>
+        Controller
+    </li>
+    <li>
+        CI_Base
+    </li>
+    <li>
+        _ci_initialize
+    </li>
+</ul>
+<p>
+    <br/>
+    If you are running PHP 4 there are some additional reserved names. These ONLY apply if you are running PHP 4.
+</p>
+<ul>
+    <li>
+        CI_Loader
+    </li>
+    <li>
+        config
+    </li>
+    <li>
+        database
+    </li>
+    <li>
+        dbutil
+    </li>
+    <li>
+        dbforge
+    </li>
+    <li>
+        file
+    </li>
+    <li>
+        helper
+    </li>
+    <li>
+        helpers
+    </li>
+    <li>
+        language
+    </li>
+    <li>
+        library
+    </li>
+    <li>
+        model
+    </li>
+    <li>
+        plugin
+    </li>
+    <li>
+        plugins
+    </li>
+    <li>
+        script
+    </li>
+    <li>
+        view
+    </li>
+    <li>
+        masterview
+    </li>
+    <li>
+        vars
+    </li>
+    <li>
+        _ci_assign_to_models
+    </li>
+    <li>
+        _ci_autoloader
+    </li>
+    <li>
+        _ci_init_class
+    </li>
+    <li>
+        _ci_is_instance
+    </li>
+    <li>
+        _ci_load
+    </li>
+    <li>
+        _ci_load_class
+    </li>
+    <li>
+        _ci_object_to_array
+    </li>
+</ul>
+<h3>Functions</h3>
+<ul>
+    <li>
+        is_really_writable()
+    </li>
+    <li>
+        load_class()
+    </li>
+    <li>
+        get_config()
+    </li>
+    <li>
+        config_item()
+    </li>
+    <li>
+        show_error()
+    </li>
+    <li>
+        show_404()
+    </li>
+    <li>
+        log_message()
+    </li>
+    <li>
+        _exception_handler()
+    </li>
+    <li>
+        get_instance()
+    </li>
+</ul>
+<h3>Variables</h3>
+<ul>
+    <li>
+        $config
+    </li>
+    <li>
+        $mimes
+    </li>
+    <li>
+        $lang
+    </li>
+</ul>
+<h3>Constants</h3>
+<ul>
+    <li>
+        EXT
+    </li>
+    <li>
+        FCPATH
+    </li>
+    <li>
+        SELF
+    </li>
+    <li>
+        BASEPATH
+    </li>
+    <li>
+        APPPATH
+    </li>
+    <li>
+    	PUBLIC_DATA
+    </li>
+    <li>
+    	IS_AJAX
+    </li>
+    <li>
+        CI_VERSION
+    </li>
+    <li>
+        FE_VERSION
+    </li>
+    <li>
+        FILE_READ_MODE
+    </li>
+    <li>
+        FILE_WRITE_MODE
+    </li>
+    <li>
+        DIR_READ_MODE
+    </li>
+    <li>
+        DIR_WRITE_MODE
+    </li>
+    <li>
+        FOPEN_READ
+    </li>
+    <li>
+        FOPEN_READ_WRITE
+    </li>
+    <li>
+        FOPEN_WRITE_CREATE_DESTRUCTIVE
+    </li>
+    <li>
+        FOPEN_READ_WRITE_CREATE_DESTRUCTIVE
+    </li>
+    <li>
+        FOPEN_WRITE_CREATE
+    </li>
+    <li>
+        FOPEN_READ_WRITE_CREATE
+    </li>
+    <li>
+        FOPEN_WRITE_CREATE_STRICT
+    </li>
+    <li>
+        FOPEN_READ_WRITE_CREATE_STRICT
+    </li>
+</ul>
