@@ -114,6 +114,7 @@ class view extends Controller
 				$this->db->skip_errors = TRUE;
 				$itemCountSql = "select count(*) as itemNum from (".$query_nolimit.") as tmp";
 				$rs = $this->db->query($itemCountSql);
+				$this->db->skip_errors = FALSE;
 
 				if(!is_string($rs)) {
 
@@ -123,8 +124,6 @@ class view extends Controller
 
 					$total_rows = $this->db->query($query_nolimit)->num_rows();
 				}
-				
-				$this->db->skip_errors = FALSE;
 			}
 
 			// Run query
