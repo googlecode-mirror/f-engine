@@ -1,0 +1,141 @@
+/* main
+---------------------------------------------------------------------------------*/
+
+.rblock {
+
+	margin-top: 	10px;
+	clear:both;
+}
+
+.dir {
+
+	background:#FFFFFF none repeat scroll 0 0;
+	border-color:#BBBBBB;
+	border-style:solid;
+	border-width:1px;
+	height:250px;
+	overflow:auto;
+	padding:5px;
+	margin:0px 5px;
+	width:45%;
+}
+
+.help {
+
+	background:#FFFFEF none repeat scroll 0 0;
+	border-color:#BBBBBB;
+	border-style:solid;
+	border-width:1px;
+	height:250px;
+	overflow:auto;
+	padding:5px;
+	margin:0px 5px;
+}
+
+.help h1 {
+
+	color: #222222;
+	padding-left: 20px;
+	font-weight: bold;
+	font-size:small;
+	background-image: url(../../../img/wizard/help.png);
+	background-repeat: no-repeat;
+}
+
+.help p {
+	
+	text-align: justify;
+}
+
+.floatl {
+
+	float:left;
+}
+
+.buttons {
+	
+	clear:both;
+}
+
+
+/* database fields
+---------------------------------------------------------------------------------*/
+fieldset {
+
+    margin-top:-9px;
+	width:510px;
+}
+
+ul.dbheader {
+    font-weight: bold;
+}
+
+ul.dbheader,
+ul.dbfldlst {
+    margin: 0px 0px 0px -40px;
+}
+
+ul.dbheader li,
+ul.dbfldlst li{
+ 
+    text-align: left;
+    list-style: none;
+    height: 30px;
+	clear: both;
+}
+
+ul.dbheader div div,
+ul.dbfldlst div div {
+ 
+    width: 45px;
+    float:left;
+}
+
+ul.dbfldlst div.row {
+ 
+    /*overflow:auto;*/
+	padding-bottom:5px;
+}
+
+ul.dbheader div.enlarge,
+ul.dbfldlst div.enlarge {
+ 
+ 	width: 115px;
+	padding-bottom: 5px;
+}
+
+div.enlarge input {
+ 
+    width: 100px!important;
+}
+
+ul.dbheader li.edit input,
+ul.dbfldlst li.edit input {
+ 
+    width: 43px;
+	background-color: #FFFFCD;
+}
+
+ul.dbheader li.edit div.enlarge input,
+ul.dbfldlst li.edit div.enlarge input {
+ 
+    width: 103px;
+}
+
+.db_fields input {
+	
+	width: 360px;
+}
+
+input.checkbox {
+	
+	width: 10px;
+	background-color: transparent;
+	padding: 0;
+	border: 0;
+}
+
+span.rel_title:hover {
+	
+	cursor:pointer;
+}
