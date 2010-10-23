@@ -1,3 +1,10 @@
+New in v0.4.2
+	- Dbmanager:
+		- Bugfixing in pagination for certain queries
+		- Little usability/design upgrade
+		- Added processlist autorefresh 
+		- A few warning/info message added
+
 New in v0.4
 	- Fileeditor: 
 		- Added basic file management
