@@ -1,0 +1,44 @@
+New in v0.4.2
+	- Dbmanager:
+		- Bugfixing in pagination for certain queries
+		- Little usability/design upgrade
+		- Added processlist autorefresh 
+		- A few warning/info message added
+
+New in v0.4
+	- Fileeditor: 
+		- Added basic file management
+	- Dbmanager
+		- Performance improvements
+		- Added some effect 
+	- New project: 
+		- Fixed diretory permissions
+	- new controller wizard:
+		- Masterview profile selectable
+    	- Some lorem ipsum removed
+    
+
+New in v0.3
+
+	Core:
+		- added backup feature to mysqli driver
+
+	New form wizard:
+		- Some short tag replaced with standard php sintax
+		- Multidatabase feature added for datagrids
+		- Pagination by default in datagrids
+
+	Dbmanager:
+		- Now its posible to define and switch between all your databases
+		- Bugfixing in edit/delete record when the table has not any defined indexes 
+		- It does not set/read project/database from session anymore. Now its posible to have project independent tabs/windows opened in your browser 
+		- Bugfixing in sql tab
+		- Improved pagination
+		- Add fields at the end/begining of the table or after a selected field
+		- New table detail tab
+		- Added processes/permissions tabs
+		- Improved backups
+		- New feature: Expand truncate content in datagrid 
+
+	Other:
+		- minor bug fixing

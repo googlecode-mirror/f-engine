@@ -1,0 +1,14 @@
+Core & libraries:
+    - Check URL Suffix compatibility
+    - Autogrow, many whitespace issues
+
+Dbmanager:
+	- kill processes
+	- Advance index editor
+	- Edit user permissions
+	- New features and style redesign in "operations"
+	- Import feature
+	- Show query execution time
+	
+FIle editor:
+	- Library template	
