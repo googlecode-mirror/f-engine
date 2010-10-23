@@ -93,7 +93,6 @@ class query extends Controller
 	
 	function init_db () {
 
-		echo "init";
 		$project = $_POST['project'] != "" ? $_POST['project'] : $_SESSION['project'];
 		if(isset($project)) {
 

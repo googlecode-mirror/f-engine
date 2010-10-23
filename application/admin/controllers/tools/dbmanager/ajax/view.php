@@ -12,6 +12,8 @@
  */
 class view extends Controller 
 {
+	private $isView = false;
+	
 	function view() {
 
 		parent::Controller();
@@ -47,7 +49,7 @@ class view extends Controller
 		//get target table
 		$currentable = $_POST["table"];
 
-		//show edit and delete buttons
+		//show edit/delete buttons
 		$actions = true;
 
 		//database table list
@@ -61,7 +63,7 @@ class view extends Controller
 			$query_nolimit = $query_array[0];
 			$query_nolimit = preg_replace("/;\s*$/i","",$query_nolimit);
 
-			//redefine offset and limit if is sent
+			//redefine offset and limit if are sent
 			if(isset($query_array[1])) {
 
 				@list($newOffset,$newLimit) = explode(",",$query_array[1]);
@@ -100,7 +102,7 @@ class view extends Controller
 				
 			} else {
 
-				$query_str = $_POST["query"];
+				$query_str = $query_nolimit." LIMIT ".$offset.",".$items_per_page;
 			}
 
 			//disable item count (pagination) when the query has "order by rand()"
@@ -243,7 +245,8 @@ class view extends Controller
 			$data['exam']['orderby'] = $query_orderby;
 		}
 
-		$data["actions"] = $actions;
+		$data["actions"] = $this->isView? false : $actions;
+		$data["isView"] = $this->isView;
 
         if(!isset($_POST['fullLoad'])) {
 
@@ -281,6 +284,7 @@ class view extends Controller
         if(isset($query->View)) {
 
         	$row = "Create View";
+        	$this->isView = true;
  
         } else {
 

@@ -73,10 +73,10 @@ class dbmanager extends Controller
 
 		/***	table list and details	***/
 		$data['details'] = $this->db->query("SHOW TABLE STATUS FROM ".$db[$active_group]["database"])->result();
-		
+
 		$data["tables"] = array();
 		foreach($data['details'] as $table) {
-			
+
 			$data["tables"][] = $table->Name;
 		}
 

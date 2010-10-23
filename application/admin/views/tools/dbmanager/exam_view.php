@@ -18,8 +18,18 @@
     <table border="0" cellpadding="0" cellspacing="1" style="width:100%;margin-top:10px;">
         <tr>
         	<?php if(isset($actions) && $actions == true && count($exam['query']->result()) > 0) { ?>
-            <th width="50px" class="actions">
-                <center>Actions</center>
+            <th width="<?php echo $exam['primary'] == "" ? 80:50; ?>px" class="actions">
+                <center>
+                	<?php if($exam['primary'] == "") { ?>
+                	
+                		<img 
+                		alt="This table has not any index defined. Record edition could throw unexpected results" 
+                		title="This table has not any index defined. Record edition could throw unexpected results"
+                		style="vertical-align:text-top;" src="<?php echo public_data("img/tools/table_error.png");?>" />
+                	
+                	<?php }//endif?>
+                	Actions 
+                </center>
             </th>
              <?php }// end if ?>
 

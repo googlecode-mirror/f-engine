@@ -19,6 +19,8 @@ $(document).ready(function () {
 	initTab_sql();
 	$('#tableContent textarea.expanding').autogrow();
 	maximize();
+	expandTablelist();
+	processList();
 });
 
 /***	Switch database configuration
@@ -797,7 +799,7 @@ function recordEditEvents () {
 	});
 }
 
-/*** init exam tab, pagination and refresh buttons ***/
+/*** init exam tab, pagination and refresh button events ***/
 function init_paginationLinks() {
 
 	$('#exam-results div.pagination a').click( function () {
@@ -834,6 +836,12 @@ function init_paginationLinks() {
                     $("#exam-results div.pagination").hide();
                 }  
 		});
+		
+		if(parseInt($(this).offset().top) > 300) {
+
+			//set scroll
+			$('html,body').animate({scrollTop: (parseInt($("#forms h2 a").offset().top))}, 800);
+		}
 
 		return false;
 	});
@@ -859,9 +867,6 @@ function init_paginationLinks() {
 
     	$("#exam-results a.refresh:eq(0)").click();
     });
-
-	//set scroll
-	//$('html,body').animate({scrollTop: (parseInt($("#forms h2 a").offset().top))}, 1000);
 }
 
 /*** init backup ***/
@@ -1186,4 +1191,110 @@ function maximize () {
 			$("#maximize").click();
 		}
 	});
+}
+
+var collapseId;
+function expandTablelist() {
+
+	/*** set html/styles ***/
+
+	var node = $("#db_list").next();
+	
+	var dummy = $("div.autogrow-dummy").clone();
+	dummy.attr("class","dblist-dummy");
+	
+	$("div.autogrow-dummy").after(dummy);
+
+	node.css({
+		"visibility":"visible",
+		"display":"none",
+		"position" : "absolute",
+		"margin" : "1px 0 0 6px",
+		"left" : $("div.leftFrame > form").width() -50,
+		"top" : $("div.leftFrame > form").offset().top - node.height() -2
+	}).attr("id","expandTableList");
+	
+	$("div.frame").after(node);
+
+	
+	/*** add events ***/
+
+	$("#expandTableList img.right").click(function () {
+
+		$("div.dblist-dummy").html($("ul.jqueryFileTree").clone());
+		var width = $("div.dblist-dummy").width()+10;
+
+		$("div.frame").animate({"width":width},400,"swing", function () {
+
+			$("#expandTableList").css("width",$("#db_list").next().width());
+			$("#expandTableList img.right").addClass("oculto");
+			$("#expandTableList img.left").removeClass("oculto");
+		});
+		
+		var arrow = $("#expandTableList");
+		width = width - arrow.width();
+		arrow.animate({"left":width},450,"swing");
+	});
+	
+	$("#expandTableList img.left").click(function () {
+
+		$("div.dblist-dummy").html($("ul.jqueryFileTree").clone());
+		var width = 150;
+
+		$("div.frame").animate({"width":width},400,"swing", function () {
+
+			$("#expandTableList").css("width",$("#db_list").next().width());
+			$("#expandTableList img.right").removeClass("oculto");
+			$("#expandTableList img.left").addClass("oculto");
+		});
+		
+		var arrow = $("#expandTableList");
+		width = width - arrow.width();
+		arrow.animate({"left":width},350,"swing");
+	});
+	
+	
+	$("div.leftFrame").hover(function () {
+		
+		$("#expandTableList").fadeIn(1000);
+		clearTimeout(collapseId);
+		
+	}, function () {
+		
+		collapseId = setTimeout("collapseTableList()",700);
+	});	
+}
+
+
+function collapseTableList () {
+
+	$("#expandTableList").fadeOut(600);
+	$("#expandTableList img.left").click();
+}
+
+/*** auto refresh precessList event ***/
+function processList() {
+
+	if($("#autorefresh:checked").length > 0) {
+
+		$.ajax({ type: "POST",
+	  		 url: $("#autorefresh").parent().attr('action'),
+	  		 data: {
+					"dbconf" :	$("select[name=db_conf]").attr("value"),
+					"project" : $("#currentprojectname").attr("rel")
+			},
+			success: function(msg) {
+
+				$("#processes table").replaceWith(msg);
+				$("#processes table th").animate({"opacity":0.5}, function () {
+					
+					$(this).animate({"opacity":1});
+				})
+			}
+		});
+	}
+
+	if($("#autorefresh").length > 0) {
+		setTimeout("processList()",4000);
+	}
 }
