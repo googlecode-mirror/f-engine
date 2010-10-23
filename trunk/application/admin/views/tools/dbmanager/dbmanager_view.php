@@ -4,6 +4,7 @@
 		<div class="newTable">
 			<a href="<?php  echo site_url();?>tools/dbmanager/ajax/newtable">Create a new table</a>
 		</div>
+
 		<div class="frame">
 			<form action="<?php  echo site_url();?>tools/dbmanager/ajax/view" method="post">
 				<div id="db_list" class="floatl">
@@ -20,9 +21,13 @@
 					<?php } //endif ?>
 					</ul>
 				</div>
+				<div style="width:32px;height:16px; position: absolute; visibility: hidden;">
+					<img class="oculto left" src="<?php echo public_data("img/tools/arrow_left.png"); ?>" style="padding-right:10px;" />
+					<img class="right" src="<?php echo public_data("img/tools/arrow_right.png"); ?>" style="padding-right:10px;" />
+				</div>
 			</form>
-			<div id="db_fields" class="expand floatl"></div>
 		</div>
+	
 		<form action="<?php echo site_url("tools/dbmanager/");?>" method="post">
 		<?php if(count($db_conf) > 1) { ?>
 			<div style="padding:2px;text-align:center;">

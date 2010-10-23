@@ -148,6 +148,7 @@
             <a href="#tsql">Sql</a>
         </li>
     </ul>
+    
     <div id="tfields" style="clear: both; display: block; padding-top: 15px; padding-left: 10px;">
         <table>
             <tbody>
@@ -164,9 +165,11 @@
                     <th>
                         Extra
                     </th>
+                    <?php if(!$isView) { ?>
                     <th>
                         Actions
                     </th>
+                    <?php } //endif ?>
                 </tr>
 
             <?php foreach ($structure as $field): ?>
@@ -183,6 +186,7 @@
                     <td>
                         <?php  echo $field->Extra?>&nbsp;
                     </td>
+                    <?php if(!$isView) { ?>
                     <td class="edit">
                         <center>
                             <form method="post" action="<?php  echo site_url();?>tools/dbmanager/ajax/altertable/editfield" style="float:left;">
@@ -202,14 +206,17 @@
                             </form>
                         </center>
                     </td>
+                    <?php } //endif  ?>
                 </tr>
             <?php endforeach;?>
             </tbody>
         </table>
+        <?php if(!$isView) { ?>
         <a class="addfield" href="#" style="display: block; margin-top: 10px;">
         	<img src="<?php echo public_data();?>img/tools/add.png" alt="" />
         	Add new field(s)
         </a>
+        <?php } //endif ?>
     </div>
     <div id="newField" style="display:none;">
         <form method="post" action="<?php  echo site_url();?>tools/dbmanager/ajax/altertable/addfield" >
@@ -498,32 +505,12 @@
 
 </div>
 <div id="processes" style="clear:both;">
-	<table>
-	<thead>
-		<th>Id</th>
-		<th>User</th>
-		<th>Host</th>
-		<th>db</th>
-		<th>Command</th>
-		<th>Time</th>
-		<th>State</th>
-		<th>Info</th>
-	</thead>
-	<tbody>
-	<?php foreach($processes as $process) { ?>
-	<tr style="vertical-align:top;">
-		<td><?php echo $process->Id?></td>
-		<td><?php echo $process->User?></td>
-		<td><?php echo $process->Host?></td>
-		<td><?php echo $process->db?></td>
-		<td><?php echo $process->Command?></td>
-		<td><?php echo $process->Time?></td>
-		<td><?php echo $process->State?></td>
-		<td><?php echo $process->Info?></td>
-	</tr>
-	<?php }//endforeach ?>
-	</tbody>
-	</table>
+	
+	<form method="post" action="<?php echo site_url("tools/dbmanager/ajax/processes");?>">
+		<input type="checkbox" id="autorefresh" name="autorefresh" /> Autorefresh
+	</form>
+	<?php $this->load->view("tools/dbmanager/processes");?>
+
 </div>
 <div id="permissions" style="clear:both;">
 
