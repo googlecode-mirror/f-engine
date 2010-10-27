@@ -41,6 +41,15 @@ var filter = {
 };
 
 filter.items = $('#db_list ul li');
+
+//disable enter button
+$('input.filter').bind('keypress', function(e) {
+    if(e.keyCode==13) {
+           return false;
+    }
+});
+
+
 $('input.filter').bind('keyup', function () {
 
 	if (this.value.length > filter.length) {
