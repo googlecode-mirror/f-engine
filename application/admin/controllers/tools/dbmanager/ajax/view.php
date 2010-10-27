@@ -129,6 +129,8 @@ class view extends Controller
 			}
 
 			// Run query
+			list($actions, $pagination) = $this->showActions($query_str,$listables);
+
 			if($_POST["action"] == 'refresh')  {
 
 				if(stripos($query_str,"limit") !== false) {
@@ -137,17 +139,9 @@ class view extends Controller
 
 				} else {
 
-					list($actions, $pagination) = $this->showActions($query_str,$listables);
-
-					if($actions == false) {
-
-						$actions = false;
-					}
-
 					if($pagination == false) {
 
 						$sql = $_POST["query"];
-						$pagination = false;
 
 					} else {
 
