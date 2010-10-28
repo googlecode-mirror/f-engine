@@ -327,6 +327,8 @@ class view extends Controller
 		);
 		$dummy_query = preg_replace($patterns, "", trim($query));
 
+		//count(*)
+		preg_match("/\s*count\(/i",$dummy_query,$count);
 		//show
 		preg_match("/^\s*show\s*/i",$dummy_query,$show);
 		//group by
@@ -355,7 +357,7 @@ class view extends Controller
 
 		} elseif (count($groupby) > 0 || count($having)  > 0  || count($join) > 0 || 
 		  count($union)   > 0 || count($multidb) > 1  || count($multiselect) > 1  || 
-		  count($multifrom) > 1 ) {
+		  count($multifrom) > 1 || count($count) > 0 ) {
 
 			return array(false,true);
 
