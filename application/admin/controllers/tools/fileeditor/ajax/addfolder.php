@@ -27,6 +27,7 @@ class addfolder extends Controller {
 
         if(mkdir($dir.$filename, 0777)) {
 
+        	chmod($dir.$filename,0777);
         	echo $filename;
         }
 	}

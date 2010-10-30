@@ -131,6 +131,7 @@ class view extends Controller
 			// Run query
 			list($actions, $pagination) = $this->showActions($query_str,$listables);
 
+			$this->benchmark->mark('query_execution_time_start'); 
 			if($_POST["action"] == 'refresh')  {
 
 				if(stripos($query_str,"limit") !== false) {
@@ -155,6 +156,9 @@ class view extends Controller
 
 				$query = $this->db->query($query_str);
 			}
+
+			$this->benchmark->mark('query_execution_time_end');
+			$execution_time = $this->benchmark->elapsed_time('query_execution_time_start', 'query_execution_time_end'); 
 
 			$sql = $this->db->last_query();
 
@@ -185,7 +189,12 @@ class view extends Controller
 			$total_rows = $this->db->count_all($currentable);
 
 			// Run the query
+			$this->benchmark->mark('query_execution_time_start');
 			$query = $this->db->get($_POST['table'], $items_per_page, $offset);
+			
+			$this->benchmark->mark('query_execution_time_end');
+			$execution_time = $this->benchmark->elapsed_time('query_execution_time_start', 'query_execution_time_end'); 
+
 			$sql = $this->db->last_query();
 
 			// Now let's get the field names				
@@ -222,7 +231,6 @@ class view extends Controller
 			$paginate = $this->pagination->create_links();
 		}
 
-
 		$data['exam'] = array(
 						'title'	=>  'View Data',
 						'query'		=> $query,
@@ -230,9 +238,10 @@ class view extends Controller
 						'fields'	=> $fields,
 						'primary'	=> $primary,
 						'paginate'	=> $paginate,
-						'orderby' => isset($_POST["orderby"]) ? explode(" ",$_POST["orderby"]) : false
+						'orderby' => isset($_POST["orderby"]) ? explode(" ",$_POST["orderby"]) : false,
+						'execution_time' => $execution_time
 		);
-		
+
 		if(isset($query_orderby)) {
 
 			//replace default orderby

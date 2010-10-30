@@ -38,17 +38,19 @@ class addfile extends Controller {
 			$cname = array_shift(explode(".",$segments[count($segments)-1]));
 
 			$content = "<?php\r\n".$this->load->view("tools/fileeditor/templates/model",array("classname" => $cname),true)."\r\n?>";
-			
-			
+
 		} else {
-			
+
 			$content = "";
 		}
 
         if(file_put_contents($dir.$filename, $content) !== false) {
         	
+        	chmod($dir.$filename,0777);
         	echo $filename;
         }
+        
+        
 	}
 }
 ?>
