@@ -826,7 +826,7 @@ function init_paginationLinks() {
 		  		 data: {
 						"table"	 :	$('#db_list .jqueryFileTree a.selected').text(), 
 						"dbconf" :	$("select[name=db_conf]").attr("value"),
-						"query"	 :	$.trim($("#current_query").text()),
+						"query"	 :	$.trim($("#current_query span:eq(0)").text()),
 						"action" :	$(this).attr("class"),
 						"orderby" : orderby,
 						"project" : $("#currentprojectname").attr("rel")
@@ -973,7 +973,7 @@ function initTab_sql() {
 
                     if( $("#db_list li a.selected").length == 0 ) {
 
-                    	$("#current_query span").text(newquery);
+                    	$("#current_query span:eq(0)").text(newquery);
                     	loading();
 
                     	//hide old results and pagination
@@ -1010,14 +1010,14 @@ function initTab_sql() {
                 	$("#exam-results > table, #exam-results > div#content").hide();
 
                 	$('#sqlResult').hide();
-            		$("#current_query span").text(newquery);
+            		$("#current_query span:eq(0)").text(newquery);
             		loading();
 
             		//reset old order by 
             		$("#exam-results th").removeClass("desc").removeClass("asc");
             		
             		targetPage = ROOT+"/tools/dbmanager/ajax/view/";
-            		var querySegments = $("#current_query > span").text().split("limit");
+            		var querySegments = $("#current_query > span:eq(0)").text().split("limit");
 
             		if(querySegments.length > 1) {
 

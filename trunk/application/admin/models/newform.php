@@ -45,7 +45,7 @@ class newform extends Model {
     	$this->datagrid_vars = array();
     	$this->delete = array();
     	$this->delete_vars = array();
-    	
+
     	$this->files = array();
 
     	//f-engine instance
