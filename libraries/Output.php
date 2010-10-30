@@ -299,7 +299,13 @@ class CI_Output {
 		$CI =& get_instance();	
 		$path = $CI->config->item('cache_path');
 	
-		$cache_path = ($path == '') ? BASEPATH.'cache/' : $path;
+		$cache_path = ($path == '') ? BASEPATH.'cache/fullpage/'.APPNAME : $path;
+
+		if ( ! is_dir($cache_path))
+		{
+			mkdir($cache_path, 0777, true);
+			chmod($cache_path, 0777);
+		}
 		
 		if ( ! is_dir($cache_path) OR ! is_really_writable($cache_path))
 		{
