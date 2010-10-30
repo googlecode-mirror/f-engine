@@ -1,3 +1,12 @@
+New in v0.5
+	- Core:
+		- Cache library ported from Kohana framework
+		- Added APPNAME constant
+	- Bbmanager:
+		- Bugfixing
+	- Filemanager:
+		- New folder/file permissions fixed
+
 New in v0.4.2
 	- Dbmanager:
 		- Bugfixing in pagination for certain queries

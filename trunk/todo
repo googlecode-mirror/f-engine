@@ -1,14 +1,16 @@
 Core & libraries:
     - Check URL Suffix compatibility
     - Autogrow, many whitespace issues
+    - Mod database cache 
 
 Dbmanager:
-	- kill processes
+	- kill processes feature
 	- Advance index editor
 	- Edit user permissions
 	- New features and style redesign in "operations"
 	- Import feature
-	- Show query execution time
-	
-FIle editor:
-	- Library template	
+	- Backup: set timelimit to 0
+	- Backup: Memory usange optimizations
+
+File editor:
+	- Library template

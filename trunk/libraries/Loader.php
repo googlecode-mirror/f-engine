@@ -25,7 +25,7 @@ class CI_Loader extends Loader {
 		$this->_ci_is_php5 = (floor(phpversion()) >= 5) ? TRUE : FALSE;
 		$this->_ci_view_path = APPPATH.'views/';
 		$this->_ci_ob_level  = ob_get_level();
-				
+	
 		log_message('debug', "Loader Class Initialized");
 	}
 
@@ -53,34 +53,16 @@ class CI_Loader extends Loader {
 		return $this->_ci_load(array('_ci_view' => $view.'_view', '_ci_vars' => $this->_ci_object_to_array($vars), '_ci_return' => $return));
 	}
 
-	function f_view($file, $index, $data=array(),$wrapper = '', $return = FALSE) {
-
-		if(!file_exists(APPPATH.'mvconf/'.$file.EXT))
-			show_error('Unable to load requested file: '.APPPATH.'mvconf/'.$file.EXT);
-
-		require(APPPATH.'mvconf/'.$file.EXT);
-		foreach($conf[$index] as $key=> $val) {
-
-			if($val == "")	unset($conf[$index][$key]);
-		}
-
-		if($wrapper == '') {
-			$wrapper = isset($conf["wrapper"]) ? $conf[$index]["wrapper"] : "wrapper";
-		}
-
-		$this->view($wrapper, array_merge($conf[$index], $data), $return);	
-	}
-
 	function masterview($view, $data=array(),$extra = 'default', $return = FALSE) {
 
 		if(!file_exists(APPPATH.'config/masterview'.EXT))
 			show_error('Unable to load requested file: '.APPPATH.'config/masterview'.EXT);
 
 		if(!is_array($extra)) {
-		
+
 			$index = $extra;		
 		}	
-			
+
 		require(APPPATH.'config/masterview'.EXT);
 		foreach($conf[$index] as $key=> $val) {
 
@@ -94,6 +76,31 @@ class CI_Loader extends Loader {
 		$data["view"] = $view;
 		$this->view($wrapper, array_merge($conf[$index], $data), $return);	
 	}
-	
+
+	function cache ($driver = '', $conf = array(), $return = false) {
+
+		// Grab the super object
+		$CI =& get_instance();
+
+		// Do we even need to load the database class?
+		if (class_exists('CI_Cache') AND $return == false AND isset($CI->cache) AND is_object($CI->cache))
+		{
+			return FALSE;
+		}	
+
+		require_once(BASEPATH.'cache/cache'.EXT);
+
+		// Load the DB class
+		if($return) {
+
+			return new CI_Cache($driver, $conf);
+
+		} else {
+
+			// Initialize the cache variable.  Needed to prevent   
+			// reference errors with some configurations
+			$CI->cache = '';
+			$CI->cache = new CI_Cache($driver, $conf);		}
+	}
 }
 /* End of file Loader.php */
