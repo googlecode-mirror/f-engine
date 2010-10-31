@@ -1,24 +1,24 @@
 div.leftFrame {
-	
+
 	width: 170px;
 	float:left;
 }
 
 div.newTable {
-		
+
 	padding-top: 10px;
 	padding-bottom: 12px;
 	padding-left: 15px;
 }
 
 div.newTable a {
-	
+
 	color: black;
 	font-weight: bold;
 }
 
 div.newTable a:hover {
-	
+
 	color: #2F3B6F;
 }
 
@@ -124,7 +124,6 @@ div#tableContent table a:hover {
 	background-color: transparent;
 }
 
-
 div#tableContent table {
 
 	background-color: #efefef;
@@ -135,6 +134,13 @@ div#tableContent th {
 	background-color: #eee;
 	font-weight: bold;
 	padding: 6px;
+	text-align: left;
+}
+
+div#tableContent tr.thead td {
+
+	background-color: #eee!important;
+	font-weight: bold;
 	text-align: left;
 }
 

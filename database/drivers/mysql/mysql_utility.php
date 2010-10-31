@@ -119,7 +119,7 @@ class CI_DB_mysql_utility extends CI_DB_utility {
 				if ($i++ % 2)
 				{ 		
 					if(isset($ifnotexists) and $ifnotexists == true)
-						$output .= str_replace("`$table`","`$table` IF NOT EXISTS ",$val).';'.$newline.$newline;
+						$output .= str_replace("`$table`","IF NOT EXISTS `$table`",$val).';'.$newline.$newline;
 					else
 						$output .= $val.';'.$newline.$newline;
 				}
@@ -206,12 +206,11 @@ class CI_DB_mysql_utility extends CI_DB_utility {
 
 					if($kont == 0) {
 
-						$output .= $newline.'INSERT INTO '.$table.' ('.$field_str.') VALUES ('.$val_str.')';
+						$output .= $newline.'INSERT INTO '.$table.' ('.$field_str.') VALUES '.$newline.'('.$val_str.')';
 
 					} elseif($kont % 25 == 0) {
 
-						$output .= ','.$newline.'('.$val_str.');'.$newline;
-						$output .= $newline.$newline.'INSERT INTO '.$table.' ('.$field_str.') VALUES ('.$val_str.')';
+						$output .= ';'.$newline.$newline.'INSERT INTO '.$table.' ('.$field_str.') VALUES '.$newline.'('.$val_str.')';
 
 					} else {
 
@@ -222,11 +221,11 @@ class CI_DB_mysql_utility extends CI_DB_utility {
 
 				} else {
 
-					$output .= 'INSERT INTO '.$table.' ('.$field_str.') VALUES ('.$val_str.');'.$newline;
+					$output .= 'INSERT INTO '.$table.' ('.$field_str.') VALUES '.$newline.'('.$val_str.');'.$newline;
 				}
 			}
 
-			if(isset($extended) and $extended == true and ($kont) % 25 == 0) {
+			if(isset($extended) and $extended == true and ($kont) % 25 != 0) {
 
 				$output .= ';';
 			}

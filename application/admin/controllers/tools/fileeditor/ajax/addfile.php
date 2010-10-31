@@ -39,6 +39,13 @@ class addfile extends Controller {
 
 			$content = "<?php\r\n".$this->load->view("tools/fileeditor/templates/model",array("classname" => $cname),true)."\r\n?>";
 
+		} elseif(substr($filename,0,11) == "/libraries/") {	
+
+			$segments = explode("/",substr($filename,11));
+			$cname = array_shift(explode(".",$segments[count($segments)-1]));
+
+			$content = "<?php\r\n".$this->load->view("tools/fileeditor/templates/library",array("classname" => $cname),true)."\r\n?>";
+
 		} else {
 
 			$content = "";
