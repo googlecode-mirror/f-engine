@@ -55,7 +55,7 @@
 
 	$conf['dbmanager'] =  array (
 							'js'  		=> array ( 'jquery/jquery.js','jquery/plugins/idTabs.js','jquery/plugins/autogrow.js','tools/dbmanager.js',
-													'jquery/plugins/ui.core.js','jquery/plugins/ui.sortable.js' ),
+													'jquery/plugins/ui.core.js','jquery/plugins/ui.sortable.js','jquery/plugins/ajaxfileupload.js' ),
 							'css' 		=> array ( 'default.css','tools/dbmanager.css','common/tabs.css','plugins/fileTree.css' ),
 							'header'	=> 'header/dbmanager',
 							'footer'	=> 'footer/main',

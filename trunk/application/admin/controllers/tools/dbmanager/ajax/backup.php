@@ -13,9 +13,10 @@
 class backup extends Controller 
 {
 	function backup() {
-		
+
 		parent::Controller();
-		
+
+		set_time_limit(0);
 		session_start();
 
 		$project = $_POST["project"] != "" ? $_POST["project"] : $_SESSION["project"]; 
@@ -32,10 +33,10 @@ class backup extends Controller
 
 			$this->load->database();	
 		}
-		
+
 		$this->load->dbutil();
 	}
-	
+
 	function index() {
 
 		if(isset($_POST["backup_query"]))
@@ -109,6 +110,8 @@ class backup extends Controller
 					'extended'	  => isset($_POST['extended']) ? true : false,
 					'ifnotexists' => isset($_POST['notexists']) ? true : false
 	              ); 
+	              
+	              $filename = $_POST['table'];
 
 			} elseif($_POST['witch'] == 'All') {
 
@@ -120,6 +123,8 @@ class backup extends Controller
 					'extended'	  => isset($_POST['extended']) ? true : false,
 					'ifnotexists' => isset($_POST['notexists']) ? true : false
 	              ); 
+	              
+	              $filename = $_POST["dbconf"];
 
 			} else if($_POST['witch'] == 'custom') {
 
@@ -134,6 +139,8 @@ class backup extends Controller
 					'extended'	  => isset($_POST['extended']) ? true : false,
 					'ifnotexists' => isset($_POST['notexists']) ? true : false
 	              );
+	              
+	              $filename = $_POST["dbconf"];
 			}
 
 			if($_POST['witch'] == 'this')
@@ -141,9 +148,12 @@ class backup extends Controller
            	else
            		$backup =& $this->dbutil->backup($prefs);
 
+           	
+           	$backup .= "\n ";
+           	
             // Load the download helper and send the file to your desktop
             $this->load->helper('download');
-            force_download('mybackup.'.$_POST['compression'], $backup);
+            force_download($filename.'.'.$_POST['compression'], $backup);
 			
 			
 		} elseif($_POST['format'] == "xml") {
@@ -152,6 +162,8 @@ class backup extends Controller
 
             //select databases to be backuped
 			if($_POST['witch'] == 'this') {
+				
+				$filename = $_POST['table'];
 
 				if($_POST["backup_query"][0] != '')
 					$query = $this->db->query($backup_query);
@@ -172,6 +184,8 @@ class backup extends Controller
 
 			} elseif ($_POST['witch'] == 'All') {
 
+				$filename = $_POST['dbconf'];
+				
 				$dbs = $this->db->list_tables();
                 $backup = '<?xml version="1.0" encoding="utf-8" ?>
                            <root>';
@@ -194,6 +208,8 @@ class backup extends Controller
 
 			} elseif ($_POST['witch'] == 'custom') {
 
+				$filename = $_POST['dbconf'];
+				
                 $backup = '<?xml version="1.0" encoding="utf-8" ?>
                            <root>';
 
@@ -223,7 +239,7 @@ class backup extends Controller
 
             } elseif ($_POST['compression'] == 'zip') {
 
-                $filename = 'mybackup.xml.'.$_POST['compression'];
+                $filename = $filename.'.xml.'.$_POST['compression'];
 
                 $this->load->library('zip');
                 $this->zip->add_data('mybackup.xml', $backup);
@@ -231,7 +247,7 @@ class backup extends Controller
 
             } else {
 
-                $filename = 'mybackup.xml.gz';
+                $filename = $filename.'.xml.gz';
                 $backup = gzencode($backup);
             }
 
@@ -252,19 +268,19 @@ class backup extends Controller
 
             if($_POST['compression'] == 'txt') {
 
-                $filename = 'mybackup.csv';
+                $filename = $_POST['table'].'.csv';
 
             } elseif ($_POST['compression'] == 'zip') {
 
-                $filename = 'mybackup.csv.'.$_POST['compression'];
+                $filename = $_POST['table'].'.csv.'.$_POST['compression'];
 
                 $this->load->library('zip');
-                $this->zip->add_data('mybackup.csv', $backup);
+                $this->zip->add_data($_POST['table'].'.csv', $backup);
                 $backup = $this->zip->get_zip();
 
             } else {
 
-                $filename = 'mybackup.csv.gz';
+                $filename = $_POST['table'].'.csv.gz';
                 $backup = gzencode($backup);
             }
 

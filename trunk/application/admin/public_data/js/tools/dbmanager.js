@@ -886,17 +886,28 @@ function initTab_backup () {
         switch($(this).attr('value')) {
 
             case "custom":   
-                    $('#tables select[name="tables[]"]').show();
+
+            		if($('#format input[name=format]:eq(3)').attr("value") == "csv")
+            			$('#format input[name=format]:eq(1)').click();
+
+            		$('#format input[name=format]:eq(3)').attr("disabled","disabled");
+            		$('#tables select[name="tables[]"]').show();
                     $('#tables input[name=backup_query[]]:eq(0)').parent().parent().hide();
                     break;
-   
+
             case "All":
+
+            		if($('#format input[name=format]:eq(3)').attr("value") == "csv")
+	        			$('#format input[name=format]:eq(1)').click();
+
+            		$('#format input[name=format]:eq(3)').attr("disabled","disabled");
                 	$('#tables select[name="tables[]"]').hide();
                 	$('#tables input[name=backup_query[]]:eq(0)').parent().parent().hide();
             		break;
 
             default:
 
+            		$('#format input[name=format]:eq(3)').removeAttr("disabled");
                     $('#tables select[name="tables[]"]').hide();
             		$('#tables input[name=backup_query[]]:eq(0)').parent().parent().show();
             		break;
@@ -937,7 +948,9 @@ function initTab_backup () {
 					if($('#tfields tr:gt(0)').length > 7)
 						response = response.replace(" VALUES ","<BR>VALUES ");
 					$('div#result code',form).html(response);
-					$('#backup ul li:eq(3)').click();
+
+					$("#backup a[href=#result]").parent().show();
+					$('#backup ul li:eq(4)').click();
 
 				}, error: function (xhr, ajaxOptions, thrownError){
 
@@ -1306,4 +1319,51 @@ function processList() {
 	if($("#autorefresh").length > 0) {
 		setTimeout("processList()",4000);
 	}
+}
+
+/***
+ * 
+ * Import tab file upload
+ */
+function ajaxFileUpload()
+{
+	$("#backup_error").hide();
+	$("#buttonUpload").text("Uploading...").attr("disabled","disabled");
+
+	$.ajaxFileUpload({
+		
+		url:ROOT+"tools/dbmanager/ajax/import",
+		secureuri:false,
+		fileElementId:'fileToUpload',
+		success: function (data, status) {
+
+			var resp =  data.body.innerHTML;
+
+			if(resp != "" && resp.indexOf("error")) {
+
+				resp = resp.replace(/\n/g,"<BR>");
+
+				$("#backup_error").show();
+				$("#backup_error").html(resp);
+
+			} else {
+
+				window.location.reload();
+			}
+
+			$("#buttonUpload").text("Upload").removeAttr("disabled");
+		},
+		error: function (data, status, e)
+		{
+			var resp  = data.body.innerHTML;
+			resp = resp.substring(resp.indexOf("<body"),resp.indexOf("</body"));
+			resp = resp.replace(/\n/g,"<BR>");
+			$("#backup_error").show();
+			$("#backup_error").html(resp);
+
+			$("#buttonUpload").text("Upload").removeAttr("disabled");
+		}
+	});
+
+	return false;
 }

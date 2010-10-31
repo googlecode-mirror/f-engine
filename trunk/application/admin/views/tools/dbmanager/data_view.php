@@ -380,6 +380,9 @@
 	        <a href="#options">Options</a>
 	    </li>
 		<li>
+	        <a href="#import">Import</a>
+	    </li>
+		<li style="display:none;">
 	        <a href="#result">Output</a>
 	    </li>
 	</ul>
@@ -423,7 +426,7 @@
 				<hr style="color:#eee;" />
 				<input type="radio" name="format" value="txt" checked="checked" />Txt file<br />
 				<input type="radio" name="format" value="xml" />Xml file<br />
-				<input type="radio" name="format" value="csv" />Csv file<br /><br />
+				<input type="radio" name="format" value="csv" disabled="disabled" />Csv file<br /><br />
 				<select name="compression">
 					<option value="txt" selected="selected">No</option>
 					<option value="zip">zip</option>
@@ -453,6 +456,11 @@
 				</code>
 				<br style="clear:both;" />
 			</div>
+			<div id="import">
+				<input id="fileToUpload" type="file" size="24" name="fileToUpload" class="input">
+				<button class="button" id="buttonUpload" onclick="return ajaxFileUpload();">Upload</button>
+				<code id="backup_error" style="display:none;"></code>
+			</div>
 		</form>
 	</div>
 
@@ -475,31 +483,52 @@
 <div id="details" style="clear:both;">
 
 	<table>
-	<thead>
-		<th>Name</th>
-		<th>Length</th>
-		<th>Engine</th>
-		<th>Collation</th>
-		<th>Rows</th>
-		<!-- <th>Auto increment</th>
-		<th>Comment</th> -->
-	</thead>
-	<tbody>
-	<?php foreach($details as $data) { ?>
-	<tr>
-		<td><?php echo $data->Name ?></td>
-		<?php if(1024*1024 < $data->Data_length) { ?>
-			<td><?php echo round($data->Data_length/1024/1024,1) ?> mb</td>
-		<?php } else { ?>
-			<td><?php echo round($data->Data_length/1024,1) ?> kb</td>
-		<?php }//endif ?>
-		<td><?php echo $data->Engine ?></td>
-		<td><?php echo $data->Collation ?></td>
-		<td><?php echo $data->Rows ?></td>
-		<!-- <td><?php echo $data->Auto_increment ?></td>
-		<td><?php echo $data->Comment ?></td> -->
-	</tr>
-	<?php }//endforeach?>
+		<thead>
+			<th>Name</th>
+			<th>Length</th>
+			<th>Engine</th>
+			<th>Collation</th>
+			<th>Rows</th>
+			<!-- <th>Auto increment</th>
+			<th>Comment</th> -->
+		</thead>
+		<tbody>
+		<?php
+			$total_legth = 0;
+			$total_rows = 0;
+		?>
+		<?php foreach($details as $data) { ?>
+		<tr>
+			<td><?php echo $data->Name ?></td>
+			<?php if(1024*1024 < $data->Data_length) { ?>
+				<td><?php echo round($data->Data_length/1024/1024,1) ?> mb</td>
+			<?php } else { ?>
+				<td><?php echo round($data->Data_length/1024,1) ?> kb</td>
+			<?php }//endif ?>
+			<td><?php echo $data->Engine ?></td>
+			<td><?php echo $data->Collation ?></td>
+			<td><?php echo $data->Rows ?></td>
+			<!-- <td><?php echo $data->Auto_increment ?></td>
+			<td><?php echo $data->Comment ?></td> -->
+		</tr>
+		<?php
+			$total_legth += $data->Data_length;
+			$total_rows += $data->Rows;
+	
+			}//endforeach
+		?>
+		<tr class="thead">
+			<td><strong>Total:</strong></td>
+			<?php if(1024*1024 < $total_legth) { ?>
+				<td><strong><?php echo round($total_legth/1024/1024,1) ?> mb</strong></td>
+			<?php } else { ?>
+				<td><strong><?php echo round($total_legth/1024,1) ?></strong></td>
+			<?php }//endif ?>
+				
+			<td></td>
+			<td></td>
+			<td><strong><?php echo $total_rows; ?></strong></td>
+		</tr>
 	</tbody>
 	</table>
 

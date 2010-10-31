@@ -8,9 +8,6 @@ Dbmanager:
 	- Advance index editor
 	- Edit user permissions
 	- New features and style redesign in "operations"
-	- Import feature
-	- Backup: set timelimit to 0
-	- Backup: Memory usange optimizations
 
 File editor:
 	- Library template

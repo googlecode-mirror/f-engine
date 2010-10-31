@@ -4,6 +4,7 @@ New in v0.5
 		- Added APPNAME constant
 	- Bbmanager:
 		- Bugfixing
+		- Added Import feature
 	- Filemanager:
 		- New folder/file permissions fixed
 
