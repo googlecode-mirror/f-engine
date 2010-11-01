@@ -19,6 +19,10 @@
 		}
 	?>
 
+	<?php if(substr($_SERVER["REQUEST_URI"],-1) != "/" or strpos($_SERVER["HTTP_HOST"], "www.") !== false)  { ?>
+		<link rel=”canonical” href=”<?php echo str_replace("www.","", site_url(implode("/",$this->uri->segments)) ); ?>” />
+	<?php }//endif ?>
+
 	<meta name="application-name" content="F-engine"/>
 	<meta name="application-url" content="<?php echo site_url();?>"/>
 
@@ -28,12 +32,18 @@
 
 			if(!is_array($css))	$css = array($css);
 
-		    foreach($css as $link_css) { ?>
-				<link href="<?php echo base_url();?>public_data/css/<?php echo $link_css?>" rel="stylesheet" type="text/css" media="screen, projection" />
-			<?php  
-		    } //endforeach; 
-		    
-	    }//endif			
+			$fe_output_conf = $this->config->item('compact');
+			if($fe_output_conf["css"] == true) {
+				?>
+					<link href="<?=public_data("compact.php");?>?css=<?=implode(",",$css)?>" rel="stylesheet" type="text/css" media="screen, projection" />
+				<? 
+			} else {
+			    foreach($css as $link_css) { ?>
+					<link href="<?php echo base_url();?>public_data/css/<?php echo $link_css?>" rel="stylesheet" type="text/css" media="screen, projection" />
+				<?php  
+			    } //endforeach; 
+			}
+	    }//endif		
 	    ?>
 	<!--/css -->
 
@@ -52,7 +62,7 @@
 <body>
 	<div id="content-wrapper">
 		<!-- page content -->
-			
+
 			<?php
 				if(isset($header))	{  
 					if(is_array($header)) {
@@ -66,9 +76,9 @@
 			<div id="contenidos">
 				<?php if(isset($view)) 	{  $this->load->view($view);	} ?>
 			</div>
-			
+
 			<?php
-				if(isset($footer))	{  
+				if(isset($footer))	{
 					if(is_array($footer)) {
 						foreach($footer as $item)	$this->load->view($item);
 					} else {
@@ -77,17 +87,53 @@
 				}
 			?>	
 		<!-- /page content -->
-	
+
 		<!-- javascript -->
 		<?php  if(isset($js)) {
 
 			if(!is_array($js))	$js = array($js);
-			
-			foreach($js as $lk_js){ ?>
-				<script src="<?php echo base_url();?>public_data/js/<?php echo $lk_js;?>"	type="text/javascript"></script>
-			<?php 
-			}
-	    }			
+
+			if($fe_output_conf["js"] == true) {
+
+				$external = array();
+				$local = array();
+
+				foreach($js as $item) {
+
+					if(preg_match("/^(https?:\/\/)?[a-z\-_]*\.[a-z]{0,5}.*\.js/i", $item)) {
+
+						$external[] = $item;
+
+					} else {
+
+						$local[] = $item;
+					}
+				} 
+
+				if(count($external) > 0) {
+
+					foreach($external as $lk_js) {
+					?>
+						<script src="<?php echo $lk_js;?>" type="text/javascript"></script>
+					<?php
+					} //endforeach
+				}
+				
+				if(count($local)) {
+			?>
+					<script src="<?=public_data("compact.php");?>?js=<?=implode(",",$local)?>" type="text/javascript"></script>
+			<? 
+				} 
+
+			} else {
+
+				foreach($js as $lk_js){ 
+				?>
+					<script src="<?php echo public_data("js/".$lk_js);?>" type="text/javascript"></script>
+				<?php
+				} //endforeach
+			} //endif 
+	    } //endif  
 	    ?>
 	    <script type="text/javascript">
 			window.onload = function(){

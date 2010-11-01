@@ -83,7 +83,7 @@ div#tableContent a#minimize:hover {
 
 div#tableContent #exam-results th.desc center {
 	
-	background-image:url(../../img/tools/bullet_arrow_down.png);
+	background-image:url(img/tools/bullet_arrow_down.png);
 	background-position:left bottom;
 	background-repeat:no-repeat;
 	padding-left:18px; 
@@ -91,7 +91,7 @@ div#tableContent #exam-results th.desc center {
 
 div#tableContent #exam-results th.asc center {
 	
-	background-image:url(../../img/tools/bullet_arrow_up.png);
+	background-image:url(img/tools/bullet_arrow_up.png);
 	background-position:left bottom;
 	background-repeat:no-repeat;
 	padding-left:18px; 

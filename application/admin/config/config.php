@@ -332,7 +332,6 @@ $config['time_reference'] = 'local';
 */
 $config['rewrite_short_tags'] = FALSE;
 
-
 /*
 |--------------------------------------------------------------------------
 | Reverse Proxy IPs
@@ -346,6 +345,29 @@ $config['rewrite_short_tags'] = FALSE;
 */
 $config['proxy_ips'] = '';
 
+/*
+|--------------------------------------------------------------------------
+| Combine and compact css and javascript files
+|--------------------------------------------------------------------------
+| Combined files are a way to reduce the number of HTTP requests and 
+| speed up your web page load time by combining all scripts into a single file.
+| You can also add an expires or a cache-control header to make thesee components 
+| cacheable on browser. This avoids unnecessary HTTP requests on subsequent page views.
+|
+| Enabling compress option, the time it takes to transfer an HTTP request and response 
+| across the network can be significantly reduced.
+| 
+| Warning:
+| - You may need to modify image references into compacted stylesheets as it takes 
+| base_url() as css location.
+| - Certain javascript libraries may not load properly when compacting.
+*/
+$config['compact'] = array(
+	"css" => true,
+	"js"  => false,
+	"cachetime" => 0, //hours
+	"compress" => true
+);
 
 /* End of file config.php */
 /* Location: ./system/application/config/config.php */
