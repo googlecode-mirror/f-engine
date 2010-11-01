@@ -2,18 +2,20 @@ New in v0.5
 	- Core:
 		- Cache library ported from Kohana framework
 		- Added APPNAME constant
+		- Css/Js combiner and compressor to speedup pages
 	- Bbmanager:
 		- Bugfixing
 		- Added Import feature
 	- Filemanager:
 		- New folder/file permissions fixed
+		- Library template
 
 New in v0.4.2
 	- Dbmanager:
 		- Bugfixing in pagination for certain queries
 		- Little usability/design upgrade
 		- Added processlist autorefresh 
-		- A few warning/info message added
+		- A few more warning/info message handler
 
 New in v0.4
 	- Fileeditor: 
@@ -26,8 +28,7 @@ New in v0.4
 	- new controller wizard:
 		- Masterview profile selectable
     	- Some lorem ipsum removed
-    
-
+ 
 New in v0.3
 
 	Core:

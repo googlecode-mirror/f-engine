@@ -1,6 +1,6 @@
 ul.btnTabs {
 	
-	background-image:		url("../../img/tabs/background.png");
+	background-image:		url("img/tabs/background.png");
 	background-position:	center bottom;
 	background-repeat:		repeat-x;
 	list-style-type:		none;
@@ -10,7 +10,7 @@ ul.btnTabs {
 
 ul.btnTabs li {
 	
-	background-image:		url("../../img/tabs/tab-brd.png");
+	background-image:		url("img/tabs/tab-brd.png");
 	padding:				6px 2px 3px 6px;
 	float:					left;
 	background-repeat:		no-repeat;
@@ -18,7 +18,7 @@ ul.btnTabs li {
 	
 ul.btnTabs li a {
 	
-	background-image:		url("../../img/tabs/tab-background.png");
+	background-image:		url("img/tabs/tab-background.png");
 	padding:				6px 10px 3px 6px;
 	background-position:	right top;
 	background-repeat:		repeat-x;

@@ -101,7 +101,7 @@ h4 {
 	
 	text-align:				left;
 	padding:				0;
-	background:				#6D7FC2 url("../img/fnd-azul1.png") repeat-x;
+	background:				#6D7FC2 url("img/fnd-azul1.png") repeat-x;
 }
 
 
@@ -132,7 +132,7 @@ h4 {
 	list-style-type:		none;
 	background-color:		#3a4798;
 	border-top:				1px solid #29399A;
-	background-image:		url(../img/fnd-azul1.png);
+	background-image:		url(img/fnd-azul1.png);
 	background-position:	0 -50px;
 }
 
@@ -155,7 +155,7 @@ h4 {
 #menu li a,
 #submenu li a {
 
-	background-image:		url(../img/fnd-azul1.png);
+	background-image:		url(img/fnd-azul1.png);
 	background-position:	0 -50px;
 	text-decoration:		none;
 	color:					#B3BEEE;

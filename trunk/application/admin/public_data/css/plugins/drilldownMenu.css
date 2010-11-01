@@ -14,7 +14,7 @@ div.menuContainner div.ddMenu {
 
 div.menuContainner div.header {
 
-	background: transparent url(../../img/drilldownmenu/bg_date_picker_select.gif)  no-repeat scroll left top;
+	background: transparent url(img/drilldownmenu/bg_date_picker_select.gif)  no-repeat scroll left top;
 	width:100%
 }
 
@@ -22,7 +22,7 @@ div.menuContainner div.header div.title{
 
 	font-weight: bold;
 	padding: 2px 25px 2px 10px;
-	background: url(../../img/drilldownmenu/bg_date_picker_select_rt.gif) no-repeat scroll right top;
+	background: url(img/drilldownmenu/bg_date_picker_select_rt.gif) no-repeat scroll right top;
 
 }
 
@@ -67,12 +67,12 @@ div.menuContainner .ddMenu ul.visible li.selected {
 
 div.menuContainner div.ddMenu ul.visible > li.parent {
 
-	background: url(../../img/drilldownmenu/icon_arrow_right.gif) no-repeat right;
+	background: url(img/drilldownmenu/icon_arrow_right.gif) no-repeat right;
 }
 
 div.menuContainner div.ddMenu ul.visible.active > li.parent:hover {
 
-	background: #4e92c8 url(../../img/drilldownmenu/icon_arrow_right_hover.gif) no-repeat right;
+	background: #4e92c8 url(img/drilldownmenu/icon_arrow_right_hover.gif) no-repeat right;
 }
 
 div.menuContainner div.ddMenu ul.visible > li a {

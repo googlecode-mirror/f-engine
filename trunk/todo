@@ -2,12 +2,11 @@ Core & libraries:
     - Check URL Suffix compatibility
     - Autogrow, many whitespace issues
     - Mod database cache 
+    - Ajax layer
+    - New view class
 
 Dbmanager:
 	- kill processes feature
 	- Advance index editor
 	- Edit user permissions
 	- New features and style redesign in "operations"
-
-File editor:
-	- Library template

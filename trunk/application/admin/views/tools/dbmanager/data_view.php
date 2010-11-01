@@ -153,6 +153,11 @@
         <table>
             <tbody>
                 <tr>
+                    <?php if(!$isView) { ?>
+                    <th>
+                        Actions
+                    </th>
+                    <?php } //endif ?>
                     <th>
                         Field
                     </th>
@@ -165,27 +170,10 @@
                     <th>
                         Extra
                     </th>
-                    <?php if(!$isView) { ?>
-                    <th>
-                        Actions
-                    </th>
-                    <?php } //endif ?>
                 </tr>
 
             <?php foreach ($structure as $field): ?>
                 <tr>
-                    <td>
-                        <?php  echo $field->Field?>
-                    </td>
-                    <td>
-                        <?php  echo $field->Type?>&nbsp;
-                    </td>
-                    <td>
-                        <?php  echo $field->Null?>&nbsp;
-                    </td>
-                    <td>
-                        <?php  echo $field->Extra?>&nbsp;
-                    </td>
                     <?php if(!$isView) { ?>
                     <td class="edit">
                         <center>
@@ -207,6 +195,18 @@
                         </center>
                     </td>
                     <?php } //endif  ?>
+                    <td>
+                        <?php  echo $field->Field?>
+                    </td>
+                    <td>
+                        <?php  echo $field->Type?>&nbsp;
+                    </td>
+                    <td>
+                        <?php  echo $field->Null?>&nbsp;
+                    </td>
+                    <td>
+                        <?php  echo $field->Extra?>&nbsp;
+                    </td>
                 </tr>
             <?php endforeach;?>
             </tbody>
@@ -458,7 +458,8 @@
 			</div>
 			<div id="import">
 				<input id="fileToUpload" type="file" size="24" name="fileToUpload" class="input">
-				<button class="button" id="buttonUpload" onclick="return ajaxFileUpload();">Upload</button>
+				<button class="button" id="buttonUpload" onclick="return ajaxFileUpload();">Upload</button><br />
+				* Upload max size:  <?php echo ini_get("upload_max_filesize"); ?>
 				<code id="backup_error" style="display:none;"></code>
 			</div>
 		</form>
