@@ -21,6 +21,8 @@ $(document).ready(function () {
 	maximize();
 	expandTablelist();
 	processList();
+	
+	$("#db_list input.filter").focus();
 });
 
 /***	Switch database configuration
@@ -1149,9 +1151,13 @@ function seeFullContent() {
 
     	var cell = $(this).prev();
     	var content = cell.attr("title");
-    	
+
     	$(this).fadeOut("fast");
     	cell.animate({opacity: 0.1}, 300,function () {
+
+    		if(cell.attr("title").length > 300) {
+    			cell.css({"display":"block","width":"300px"});
+    		}
 
     		cell.attr("title","").css("white-space","pre-line");
     		cell.html(content);
