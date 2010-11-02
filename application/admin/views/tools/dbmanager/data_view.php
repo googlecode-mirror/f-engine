@@ -481,7 +481,7 @@
 </div>
 <?php } else {?>
 
-<div id="details" style="clear:both;">
+<div id="details" style="clear:both;display:none;">
 
 	<table>
 		<thead>
@@ -534,7 +534,7 @@
 	</table>
 
 </div>
-<div id="processes" style="clear:both;">
+<div id="processes" style="clear:both;display:none;">
 	
 	<form method="post" action="<?php echo site_url("tools/dbmanager/ajax/processes");?>">
 		<input type="checkbox" id="autorefresh" name="autorefresh" /> Autorefresh
@@ -542,7 +542,7 @@
 	<?php $this->load->view("tools/dbmanager/processes");?>
 
 </div>
-<div id="permissions" style="clear:both;">
+<div id="permissions" style="clear:both;display:none;">
 
 	<?php if(is_array($permissions)) { ?>
 		<table>

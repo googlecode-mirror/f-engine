@@ -1,12 +1,21 @@
 Core & libraries:
     - Check URL Suffix compatibility
     - Autogrow, many whitespace issues
-    - Mod database cache 
+    - Remove database cache 
     - Ajax layer
     - New view class
+    - Autoremap option
+    - Cache garbage collector
+    - Plugins: Widgets, tools, appz
 
 Dbmanager:
 	- kill processes feature
 	- Advance index editor
 	- Edit user permissions
 	- New features and style redesign in "operations"
+	- Import zip/gzip backups
+	- Add date to database backups
+	- .sql file extension for txt backups
+	
+New form wizard:
+	- Create model option
