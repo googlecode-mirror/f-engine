@@ -65,7 +65,7 @@ $config['public_data'] = "public_data";
 */
 $config['compact'] = array(
 	"css" => true,
-	"js"  => false,
+	"js"  => true,
 	"cachetime" => 0, //hours
 	"compress" => true
 );

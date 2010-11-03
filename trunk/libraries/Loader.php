@@ -72,9 +72,64 @@ class CI_Loader extends Loader {
 		if(!isset($wrapper)) {
 			$wrapper = isset($conf["wrapper"]) ? $conf[$index]["wrapper"] : "wrapper";
 		}
+		
+		$data = array_merge($conf[$index], $data);
+
+		/*** set javascript files ***/
+		if(isset($data["js"]) and count($data["js"]) > 0) {
+
+			require(APPPATH.'config/config'.EXT);
+	
+			if(!is_array($data["js"]))	$data["js"] = array($data["js"]);
+			if(count($data["js"]) > 0 and $config['compact']['js']) {
+				
+				$external_js = array();
+				$local_js = array();
+				$tmp_js = array();
+
+				$i=0;
+				foreach($data["js"] as $item) {
+
+					if(strstr($item,"#")) {
+
+						$external_js[$i] = str_replace("#",public_data("js")."/",$item);
+
+					} elseif(preg_match("/^(https?:\/\/)?[a-z\-_]*\.[a-z]{0,5}.*\.js/i", $item)) {
+
+						$external_js[$i] = $item;
+
+					} else {
+
+						if(isset($local_js[$i-1])) {
+
+							$local_js[$i-1] .= ",".$item;
+							continue;
+
+						} else {
+
+							$local_js[$i] = $item;
+						}
+					}
+					$i++;
+				} //endforeach
+			}
+			
+			if(count($external_js) > 0) {
+	
+				$data["js"] = array(
+					"remote" => $external_js,
+					"local" => $local_js
+				);
+			} else {
+			
+				$data["js"] = array(
+					"local" => $local_js
+				);
+			}
+		}
 
 		$data["view"] = $view;
-		$this->view($wrapper, array_merge($conf[$index], $data), $return);	
+		$this->view($wrapper, $data, $return);	
 	}
 
 	function cache ($driver = '', $conf = array(), $return = false) {

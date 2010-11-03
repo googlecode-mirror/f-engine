@@ -91,48 +91,19 @@
 		<!-- javascript -->
 		<?php  if(isset($js)) {
 
-			if(!is_array($js))	$js = array($js);
+			for($i=0; $i <= count($js); $i++) {
 
-			if($fe_output_conf["js"] == true) {
-
-				$external = array();
-				$local = array();
-
-				foreach($js as $item) {
-
-					if(preg_match("/^(https?:\/\/)?[a-z\-_]*\.[a-z]{0,5}.*\.js/i", $item)) {
-
-						$external[] = $item;
-
-					} else {
-
-						$local[] = $item;
-					}
-				} 
-
-				if(count($external) > 0) {
-
-					foreach($external as $lk_js) {
-					?>
-						<script src="<?php echo $lk_js;?>" type="text/javascript"></script>
-					<?php
-					} //endforeach
-				}
-				
-				if(count($local)) {
-			?>
-					<script src="<?=public_data("compact.php");?>?js=<?=implode(",",$local)?>" type="text/javascript"></script>
-			<? 
-				} 
-
-			} else {
-
-				foreach($js as $lk_js){ 
+				if(isset($js["local"][$i])) {
 				?>
-					<script src="<?php echo public_data("js/".$lk_js);?>" type="text/javascript"></script>
+					<script src="<?php echo public_data("compact.php");?>?js=<?php echo $js["local"][$i];?>" type="text/javascript"></script>
 				<?php
-				} //endforeach
-			} //endif 
+				} else {
+				?>
+					<script src="<?php echo $js["remote"][$i];?>" type="text/javascript"></script>
+				<?php
+				} //endif
+
+			} //endforeach
 	    } //endif  
 	    ?>
 	    <script type="text/javascript">

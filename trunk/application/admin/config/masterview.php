@@ -78,7 +78,7 @@
 
 	$conf['fileeditor'] =  array (
 		'js'  		=> array (	'jquery/jquery.js','jquery/plugins/fileTree.js','jquery/plugins/contextmenu.js',
-                                'editarea/edit_area_full.js','tools/fileeditor.js' ),
+                                '#editarea/edit_area_full.js','tools/fileeditor.js' ),
 		'css' 		=> array (  'default.css','tools/default.css','plugins/fileTree.css',
                               	'tools/fileeditor.css','plugins/contextmenu.css'),
 		'header'	=> 'header/dbmanager',
