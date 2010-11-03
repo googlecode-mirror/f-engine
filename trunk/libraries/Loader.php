@@ -112,18 +112,23 @@ class CI_Loader extends Loader {
 					}
 					$i++;
 				} //endforeach
-			}
-			
-			if(count($external_js) > 0) {
-	
-				$data["js"] = array(
-					"remote" => $external_js,
-					"local" => $local_js
-				);
+				
+				if(count($external_js) > 0) {
+		
+					$data["js"] = array(
+						"remote" => $external_js,
+						"local" => $local_js
+					);
+				} else {
+				
+					$data["js"] = array(
+						"local" => $local_js
+					);
+				}
 			} else {
 			
 				$data["js"] = array(
-					"local" => $local_js
+					"local" => $data["js"]
 				);
 			}
 		}
