@@ -424,7 +424,7 @@
 			<div id="format">
 				<input type="radio" name="format" value="browser" />Just show in browser<br />
 				<hr style="color:#eee;" />
-				<input type="radio" name="format" value="txt" checked="checked" />Txt file<br />
+				<input type="radio" name="format" value="txt" checked="checked" />Text file<br />
 				<input type="radio" name="format" value="xml" />Xml file<br />
 				<input type="radio" name="format" value="csv" disabled="disabled" />Csv file<br /><br />
 				<select name="compression">

@@ -1,5 +1,9 @@
 <?php
-
+	/***
+	 * This script combines and compacts css and javascript files
+	 * to reduce the number of HTTP requests and speed up 
+	 * web page load time
+	 */
 	define('BASEPATH',realpath(dirname(__FILE__))."/../../");
 	include(realpath(dirname(__FILE__))."/../config/config.php");
 
@@ -35,13 +39,15 @@
 
 	foreach($files as $file) {
 
-		if(file_exists(realpath(dirname(__FILE__))."/".$prefix.$file)) {
+		$filename = realpath(dirname(__FILE__)."/".$prefix.$file);
 
-			include($prefix.$file);
+		if(file_exists($filename) and strstr($filename, realpath(dirname(__FILE__)))) {
+
+			include($filename);
 
 		} else {
 
-			echo "/* request file not found: ".$prefix.$file." */";
+			echo "\n/* file not found: ".$filename." */\n";
 		}
 	}
 

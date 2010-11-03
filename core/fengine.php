@@ -41,7 +41,7 @@
 
 // CI Version
 define('CI_VERSION',	'1.7.2');
-define('FE_VERSION',	'0.2');
+define('FE_VERSION',	'0.5');
 
 /*
  * ------------------------------------------------------

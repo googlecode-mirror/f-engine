@@ -4,7 +4,7 @@ class <?php echo $classname;?> extends Controller {
 	function <?php echo $classname;?>() {
 
 		parent::Controller();
-		$this->load->helper('url');
+		$this->load->helper(array('url'));
 	}
 	
 	function index() {
