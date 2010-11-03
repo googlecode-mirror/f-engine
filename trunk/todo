@@ -1,10 +1,7 @@
 Core & libraries:
     - Check URL Suffix compatibility
     - Autogrow, many whitespace issues
-    - Remove database cache 
     - Ajax layer
-    - New view class
-    - Autoremap option
     - Cache garbage collector
     - Plugins: Widgets, tools, appz
 

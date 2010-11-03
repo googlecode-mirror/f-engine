@@ -16,7 +16,7 @@ class backup extends Controller
 
 		parent::Controller();
 
-		set_time_limit(0);
+		@set_time_limit(0);
 		session_start();
 
 		$project = $_POST["project"] != "" ? $_POST["project"] : $_SESSION["project"]; 

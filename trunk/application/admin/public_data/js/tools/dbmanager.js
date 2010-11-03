@@ -1225,12 +1225,12 @@ var collapseId;
 function expandTablelist() {
 
 	/*** set html/styles ***/
-
 	var node = $("#db_list").next();
-	
+
+	$("div.autogrow-dummy").children().remove()
 	var dummy = $("div.autogrow-dummy").clone();
 	dummy.attr("class","dblist-dummy");
-	
+
 	$("div.autogrow-dummy").after(dummy);
 
 	node.css({
@@ -1241,16 +1241,19 @@ function expandTablelist() {
 		"left" : $("div.leftFrame > form").width() -50,
 		"top" : $("div.leftFrame > form").offset().top - node.height() -2
 	}).attr("id","expandTableList");
-	
+
 	$("div.frame").after(node);
 
-	
 	/*** add events ***/
-
 	$("#expandTableList img.right").click(function () {
 
-		$("div.dblist-dummy").html($("ul.jqueryFileTree").clone());
+		$("div.dblist-dummy").html($("ul.jqueryFileTree:eq(0)").clone());
 		var width = $("div.dblist-dummy").width()+10;
+
+		if(width < $("div.frame").width()) {
+
+			return;
+		}
 
 		$("div.frame").animate({"width":width},400,"swing", function () {
 
@@ -1258,15 +1261,15 @@ function expandTablelist() {
 			$("#expandTableList img.right").addClass("oculto");
 			$("#expandTableList img.left").removeClass("oculto");
 		});
-		
+
 		var arrow = $("#expandTableList");
 		width = width - arrow.width();
 		arrow.animate({"left":width},450,"swing");
 	});
-	
+
 	$("#expandTableList img.left").click(function () {
 
-		$("div.dblist-dummy").html($("ul.jqueryFileTree").clone());
+		$("div.dblist-dummy").html($("ul.jqueryFileTree:eq(0)").clone());
 		var width = 150;
 
 		$("div.frame").animate({"width":width},400,"swing", function () {
@@ -1275,24 +1278,28 @@ function expandTablelist() {
 			$("#expandTableList img.right").removeClass("oculto");
 			$("#expandTableList img.left").addClass("oculto");
 		});
-		
+
 		var arrow = $("#expandTableList");
 		width = width - arrow.width();
 		arrow.animate({"left":width},350,"swing");
 	});
-	
-	
+
 	$("div.leftFrame").hover(function () {
-		
-		$("#expandTableList").fadeIn(1000);
-		clearTimeout(collapseId);
-		
+
+		$("div.dblist-dummy").html($("#db_list ul.jqueryFileTree:eq(0)").clone());
+		var width = $("div.dblist-dummy").width();
+
+		if($("#db_list").width() < width) {
+
+			$("#expandTableList").fadeIn(1000);
+			clearTimeout(collapseId);
+		}
+
 	}, function () {
-		
+
 		collapseId = setTimeout("collapseTableList()",700);
 	});	
 }
-
 
 function collapseTableList () {
 
@@ -1315,7 +1322,7 @@ function processList() {
 
 				$("#processes table").replaceWith(msg);
 				$("#processes table th").animate({"opacity":0.5}, function () {
-					
+
 					$(this).animate({"opacity":1});
 				})
 			}
@@ -1338,7 +1345,7 @@ function ajaxFileUpload()
 
 	$.ajaxFileUpload({
 		
-		url:ROOT+"tools/dbmanager/ajax/import",
+		url:ROOT+"tools/dbmanager/ajax/import/"+$("#currentprojectname").attr("rel")+"/"+$("select[name=db_conf]").attr("value"),
 		secureuri:false,
 		fileElementId:'fileToUpload',
 		success: function (data, status) {

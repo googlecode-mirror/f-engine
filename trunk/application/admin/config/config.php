@@ -48,6 +48,30 @@ $config['public_data'] = "public_data";
 
 /*
 |--------------------------------------------------------------------------
+| Combine and compact css and javascript files
+|--------------------------------------------------------------------------
+| Combined files are a way to reduce the number of HTTP requests and 
+| speed up web page load time by combining all scripts into a single file.
+| You can also add an expires or a cache-control header to make thesee components 
+| cacheable on browser. This avoids unnecessary HTTP requests on subsequent page views.
+|
+| Enabling compress option, the time it takes to transfer an HTTP request and response 
+| across the network can be significantly reduced.
+| 
+| Warning:
+| - You may need to modify image references into compacted stylesheets as they will take 
+|   public_data() as css file location.
+| - Certain javascript libraries may not load properly when compacting.
+*/
+$config['compact'] = array(
+	"css" => true,
+	"js"  => false,
+	"cachetime" => 0, //hours
+	"compress" => true
+);
+
+/*
+|--------------------------------------------------------------------------
 | URI PROTOCOL
 |--------------------------------------------------------------------------
 |
@@ -145,35 +169,6 @@ $config['subclass_prefix'] = 'MY_';
 |
 */
 $config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-';
-
-
-/*
-|--------------------------------------------------------------------------
-| Enable Query Strings
-|--------------------------------------------------------------------------
-|
-| By default CodeIgniter uses search-engine friendly segment based URLs:
-| example.com/who/what/where/
-|
-| You can optionally enable standard query string based URLs:
-| example.com?who=me&what=something&where=here
-|
-| Options are: TRUE or FALSE (boolean)
-|
-| The other items let you set the query string "words" that will
-| invoke your controllers and its functions:
-| example.com/index.php?c=controller&m=function
-|
-| Please note that some of the helpers won't work as expected when
-| this feature is enabled, since CodeIgniter is designed primarily to
-| use segment based URLs.
-|*/
-
-$config['enable_query_strings'] = FALSE;
-$config['controller_trigger'] 	= 'c';
-$config['function_trigger'] 	= 'm';
-$config['directory_trigger'] 	= 'd'; // experimental not currently in use
-
 
 /*
 |--------------------------------------------------------------------------
@@ -344,30 +339,6 @@ $config['rewrite_short_tags'] = FALSE;
 |
 */
 $config['proxy_ips'] = '';
-
-/*
-|--------------------------------------------------------------------------
-| Combine and compact css and javascript files
-|--------------------------------------------------------------------------
-| Combined files are a way to reduce the number of HTTP requests and 
-| speed up your web page load time by combining all scripts into a single file.
-| You can also add an expires or a cache-control header to make thesee components 
-| cacheable on browser. This avoids unnecessary HTTP requests on subsequent page views.
-|
-| Enabling compress option, the time it takes to transfer an HTTP request and response 
-| across the network can be significantly reduced.
-| 
-| Warning:
-| - You may need to modify image references into compacted stylesheets as it takes 
-| base_url() as css location.
-| - Certain javascript libraries may not load properly when compacting.
-*/
-$config['compact'] = array(
-	"css" => true,
-	"js"  => false,
-	"cachetime" => 0, //hours
-	"compress" => true
-);
 
 /* End of file config.php */
 /* Location: ./system/application/config/config.php */

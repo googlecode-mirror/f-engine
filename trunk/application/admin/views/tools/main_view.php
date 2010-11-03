@@ -31,7 +31,7 @@
 
 <div class="preview">
 	<div class="newController" style="height:450px;">
-		<h1>New controller wizard</h1>
+		<h1>New form wizard</h1>
 		<p style="color:#333333;">
 		    Create database structure based web forms. <br />
 			Select fields, validation rules, assets (css and js files), etc.

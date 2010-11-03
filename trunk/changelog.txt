@@ -2,10 +2,15 @@ New in v0.5
 	- Core:
 		- Cache library ported from Kohana framework
 		- Added APPNAME constant
-		- Css/Js combiner and compressor to speedup pages
+		- Css/Js combiner/compressor to speedup pages
+		- Database cache removed 
+		- Querystring based url compatibility removed
+		- jQuery updated
 	- Bbmanager:
 		- Bugfixing
 		- Added Import feature
+	- New form wizard:
+		- Generates cleaner code now
 	- Filemanager:
 		- New folder/file permissions fixed
 		- Library template

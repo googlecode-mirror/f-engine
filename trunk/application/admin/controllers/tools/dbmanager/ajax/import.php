@@ -2,14 +2,19 @@
 class import extends Controller 
 {
 	function import() {
-		
+
 		parent::Controller();
 	}
-	
-	function index() {
 
-		set_time_limit(0);
+	function index($project, $dbconf) {
 
+		@set_time_limit(0);
+
+		/*** Load database ***/
+		require(APPPATH.'../'.$project.'/config/database.php');
+		$this->load->database($db[$dbconf]);
+
+		/*** Parse file ***/
 		$error = "";
 		$msg = "";
 		$fileElementName = 'fileToUpload';
@@ -54,11 +59,11 @@ class import extends Controller
 		} else {
 
 			$content = file_get_contents($_FILES['fileToUpload']['tmp_name']);
-			
+
 			$items = preg_split("/;(\r?\n|\r)/", $content);
-			
+
 			if(count($items) > 0) {
-				
+
 				$this->load->database();
 				foreach($items as $item) {
 
@@ -66,7 +71,7 @@ class import extends Controller
 						$this->db->query($item);
 				}
 			}
-			
+
 			@unlink($_FILES['fileToUpload']);		
 		}
 	}

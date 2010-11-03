@@ -10,10 +10,11 @@ class update extends Controller {
 
 	function index() {
 
-		$validation = $this->validate();
+		$this->_validate();
 
-		if ($validation['error_num'] == 0)
+		if (count($this->validation->_error_array) == 0)
 		{
+			/** update database	**/
 			$this->load->database();
 
 			<?php foreach($dbs as $db) {
@@ -60,49 +61,30 @@ class update extends Controller {
 				}	
 			}
 
-		} elseif(!IS_AJAX)  {
-
-			$data = array("error" => $validation["error_msg"]);
-			$this->load->masterview('<?php echo $view; ?>',$data,"<?php echo $masterview;?>");
-			
+		/*** validation error ***/
 		} else {
 		
-			//ajax response
-			if(function_exists('json_decode')) {
-
-				//PHP >= 5.2
-				echo json_encode($validation);
-
-			} else {
-
-				$this->load->library('json');
-				$this->phpJson = new Json();
-				echo $this->phpJson->encode($validation);
-			}	
+			if(IS_AJAX)
+				$this->load->masterview('<?php echo $view; ?>');
+			else
+				$this->load->view('<?php echo $view; ?>');
 		}
 	}
 
-	function validate () {
+	function _validate () {
 
 <?php foreach ($rules as $key => $val) { ?>
 		$rules['<?php echo $key?>'] = '<?php echo $val?>';<?php echo "\r\n";?>
 <?php }//endforeach ?>
-
 		$this->validation->set_rules($rules);
+		
+<?php foreach ($rules as $key => $val):?>
+		$fields['<?php  echo $key?>'] = '<?php  echo $key?>';
+<?php endforeach;?>
+		$this->validation->set_fields($fields);
 
-		if ($this->validation->run() == FALSE)
-		{
-			$validation = array(
+		$this->validation->set_error_delimiters('<div class="error">', '</div>');
 
-				"error_num" => count($this->validation->_error_array),
-				"error_msg"	=> $this->validation->_error_array
-			);
-
-		}	else	{
-
-			$validation = array('error_num' => 0, 'redirect' => <?php echo 'site_url().\''.$path?>');
-		}
-
-		return $validation;
+		$this->validation->run();
 	}
 }
