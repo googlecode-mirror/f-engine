@@ -91,19 +91,30 @@
 		<!-- javascript -->
 		<?php  if(isset($js)) {
 
-			for($i=0; $i <= count($js); $i++) {
-
-				if(isset($js["local"][$i])) {
-				?>
-					<script src="<?php echo public_data("compact.php");?>?js=<?php echo $js["local"][$i];?>" type="text/javascript"></script>
-				<?php
-				} else {
-				?>
-					<script src="<?php echo $js["remote"][$i];?>" type="text/javascript"></script>
-				<?php
-				} //endif
-
-			} //endforeach
+			if ($fe_output_conf["js"] == true) {
+				
+				for($i=0; $i <= count($js); $i++) {
+	
+					if(isset($js["local"][$i])) {
+					?>
+						<script src="<?php echo public_data("compact.php");?>?js=<?php echo $js["local"][$i];?>" type="text/javascript"></script>
+					<?php
+					} else {
+					?>
+						<script src="<?php echo $js["remote"][$i];?>" type="text/javascript"></script>
+					<?php
+					} //endif
+	
+				} //end for
+				
+			} else {
+				
+				for($i=0; $i <= count($js["local"]); $i++) {
+					?>
+						<script src="<?php echo public_data("js/".$js["local"][$i]);?>" type="text/javascript"></script>
+					<?php
+				}
+			}
 	    } //endif  
 	    ?>
 	    <script type="text/javascript">
