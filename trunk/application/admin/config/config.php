@@ -60,14 +60,24 @@ $config['public_data'] = "public_data";
 | 
 | Warning:
 | - You may need to modify image references into compacted stylesheets as they will take 
-|   public_data() as css file location.
-| - Certain javascript libraries may not load properly when compacting.
+|   public_data folder as css file location.
+| - Certain javascript libraries may not load properly when compacting (Usually those 
+|	ones that auto load their own plugins, tinyMce for example). You can skip any problematic
+|	script from been compacted adding '#' before script name. Example:
+|	
+|	$conf['fileeditor'] =  array (
+|		'js'  		=> array (	'jquery/jquery.js','jquery/plugins/fileTree.js',
+|                                '#editarea/edit_area_full.js'),
+|		'css' 		=> array (  'default.css'),
+|		'header'	=> 'header/default',
+|		'footer'	=> 'footer/default'
+|	);
 */
 $config['compact'] = array(
 	"css" => true,
 	"js"  => true,
 	"cachetime" => 0, //hours
-	"compress" => true
+	"compress" => false
 );
 
 /*
