@@ -90,7 +90,7 @@
 
 		<!-- javascript -->
 		<?php  if(isset($js)) {
-
+	
 			if ($fe_output_conf["js"] == true) {
 				
 				for($i=0; $i <= count($js); $i++) {
@@ -99,7 +99,7 @@
 					?>
 						<script src="<?php echo public_data("compact.php");?>?js=<?php echo $js["local"][$i];?>" type="text/javascript"></script>
 					<?php
-					} else {
+					} elseif(isset($js["remote"][$i])) {
 					?>
 						<script src="<?php echo $js["remote"][$i];?>" type="text/javascript"></script>
 					<?php
@@ -109,12 +109,33 @@
 				
 			} else {
 				
-				for($i=0; $i <= count($js["local"]); $i++) {
+				for($i=0; $i < count($js); $i++) {
+	
+					if(isset($js["local"][$i])) {
 					?>
 						<script src="<?php echo public_data("js/".$js["local"][$i]);?>" type="text/javascript"></script>
 					<?php
-				}
+					} elseif(isset($js["remote"][$i])) {
+					?>
+						<script src="<?php echo $js["remote"][$i];?>" type="text/javascript"></script>
+					<?php
+					} //endif
+	
+				} //end for*/
 			}
+			
+			if(isset($this->ajax)) {
+				?>
+				<script type="text/javascript">
+				/*<![CDATA[*/
+				<?php 
+				foreach($this->ajax->getAll() as $script) {	echo $script;	}		
+				?>
+				/*]]>*/
+				</script>
+				<?php 
+			} //endif ajax
+	
 	    } //endif  
 	    ?>
 	    <script type="text/javascript">

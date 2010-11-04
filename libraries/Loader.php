@@ -75,13 +75,20 @@ class CI_Loader extends Loader {
 		
 		$data = array_merge($conf[$index], $data);
 
-		/*** set javascript files ***/
+		/*** set javascript files and ajax events ***/
+		$fe =& get_instance();
+		if(isset($fe->ajax)) {
+			if(!in_array('jquery.js',$data["js"]))
+				$data["js"][] = 'jquery.js';
+		}
+
 		if(isset($data["js"]) and count($data["js"]) > 0) {
 
 			require(APPPATH.'config/config'.EXT);
 	
 			if(!is_array($data["js"]))	$data["js"] = array($data["js"]);
-			if(count($data["js"]) > 0 and $config['compact']['js']) {
+
+			if($config['compact']['js']) {
 				
 				$external_js = array();
 				$local_js = array();
@@ -94,7 +101,7 @@ class CI_Loader extends Loader {
 
 						$external_js[$i] = str_replace("#",public_data("js")."/",$item);
 
-					} elseif(preg_match("/^(https?:\/\/)?[a-z\-_]*\.[a-z]{0,5}.*\.js/i", $item)) {
+					} elseif(preg_match("/^(https?:\/\/)?[a-z\-_]*\.[a-z\.]{0,6}\/.*\.js/i", $item)) {
 
 						$external_js[$i] = $item;
 
