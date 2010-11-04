@@ -8,7 +8,7 @@
 		<div class="frame">
 			<form action="<?php  echo site_url();?>tools/dbmanager/ajax/view" method="post">
 				<div id="db_list" class="floatl">
-					<input class="filter" type="text" style="width:105px;" /> 
+					<input class="filter" type="text" style="width:103px;" /> 
 					<img src="<?php echo base_url();?>public_data/img/tools/validation.png" style="vertical-align:middle;">
 					<hr/>
 					<ul class="jqueryFileTree">

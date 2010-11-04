@@ -8,6 +8,9 @@
  * @since		Version 0.4
  * @filesource
  */
+jQuery.expr[':'].contains = function(a,i,m){
+     return jQuery(a).text().toUpperCase().indexOf(m[3].toUpperCase())>=0;
+};
 
 //onload
 $(document).ready(function () {
@@ -21,20 +24,19 @@ $(document).ready(function () {
 	maximize();
 	expandTablelist();
 	processList();
-	
+
 	$("#db_list input.filter").focus();
 });
 
 /***	Switch database configuration
  ********************************************************/
+$("select[name=db_conf]").change(function () {
 
-	$("select[name=db_conf]").change(function () {
+	var form = $(this).parent().parent();
+	$(form).attr("action",$(form).attr("action")+$(this).attr("value"));
 
-		var form = $(this).parent().parent();
-		$(form).attr("action",$(form).attr("action")+$(this).attr("value"));
-
-		form.submit();
-	});
+	form.submit();
+});
 
 /***	DB Table list filter
  ********************************************************/
@@ -50,7 +52,6 @@ $('input.filter').bind('keypress', function(e) {
            return false;
     }
 });
-
 
 $('input.filter').bind('keyup', function () {
 
@@ -129,7 +130,7 @@ function loadCreateTable (html) {
 
 	//tabs
 	$('#tableContent ul.idTabs').each(function () {	$.idTabs(this,$.idTabs.settings);	});
-	
+
 	$('#fields input[name=findex]').change(function () {
 
 		if($(this).attr('value') == "primary key") {
@@ -202,9 +203,9 @@ function loadCreateTable (html) {
                     break;     
         }
     });
-	
+
 	$('#addfield').click( function () {
-		
+
 		var str = $('#fields input[name=fname]').attr('value');
         str += ' ' + $('#fields select[name=ftype]').attr('value');
 
