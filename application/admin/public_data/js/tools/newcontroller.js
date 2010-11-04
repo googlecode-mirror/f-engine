@@ -8,6 +8,10 @@
  * @since		Version 0.3
  * @filesource
  */
+ jQuery.expr[':'].contains = function(a,i,m){
+     return jQuery(a).text().toUpperCase().indexOf(m[3].toUpperCase())>=0;
+ };
+
  var backup;
  var clipboard = false;
  var item;
@@ -20,7 +24,7 @@
 	$('ul li',$(dir)).not('.directory').each(function () {
 
 		$(this).hover(
-			
+
 			function () {
 
 				if($('#'+rel_id+':checked').length == 1) {
@@ -35,9 +39,9 @@
 					if(er.test($(this).children('a').attr('rel'))) {
 
 						$('#preview').html("<img src='"+BASE+"public_data/"+$(this).children('a').attr('rel')+"' />");
-						
+	
 					} else {
-						
+
 						$.ajax({ type: "POST",
 					  		 url: ROOT+"tools/newcontroller/ajax/fpreview",
 					  		 data: "file="+$(this).children('a').attr('rel'),
