@@ -7,7 +7,7 @@
  * @copyright	Copyright (c) 2010, Mikel Madariaga
  * @license		http://www.f-engine.net/userguide/license
  * @link		http://www.f-engine.net/
- * @since		Version 0.2
+ * @since		Version 0.5
  * @filesource
  */
 require('CI_Loader.php');
@@ -55,6 +55,7 @@ class CI_Loader extends Loader {
 
 	function masterview($view, $data=array(),$extra = 'default', $return = FALSE) {
 
+		define('MASTERVIEW', TRUE);
 		if(!file_exists(APPPATH.'config/masterview'.EXT))
 			show_error('Unable to load requested file: '.APPPATH.'config/masterview'.EXT);
 

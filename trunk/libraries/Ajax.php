@@ -27,8 +27,8 @@
  */
 class CI_Ajax {
 
-
 	var $link_counter;
+	var $button_counter;
 	var $code;
 	
 	var $fe;
@@ -37,60 +37,121 @@ class CI_Ajax {
 	function CI_Ajax() {
 
 		$this->fe =& get_instance();
-		$this->id = preg_replace("/[^a-zA-Z0-9]*/","",base64_encode(implode($this->fe->uri->segments)));
+		$this->id = substr(preg_replace("/[^a-zA-Z0-9]*/","",base64_encode(implode($this->fe->uri->segments).time())),0,15);
+
+		if($this->id == "") {
+			$this->id = preg_replace("/[^a-zA-Z0-9]*/","",base64_encode("home".time()));
+		}
 
 		$this->link_counter = 0;
+		$this->button_counter = 0;
 		$this->code = array();
 	}
 	
 	// --------------------------------------------------------------------
 
-	/**
-	 * Set a benchmark marker
-	 *
-	 * Multiple calls to this function can be made so that several
-	 * execution points can be timed
-	 *
-	 * @access	public
-	 * @param	string	$name	name of the marker
-	 * @return	void
-	 */
-	function link($text,$target="",$options = array())
+	function link($text,$target="",$update)
 	{
-
-		$id = "alnk".$this->link_counter."_".$this->id;
+		$id = "lnk".$this->link_counter."_".$this->id;
 		$html = "<a id='$id' href='#'>$text</a>";
-		$this->_ajaxLink($id,$target,$options);
+		$this->_ajaxLink($id,site_url($target),$update);
 
 		$this->link_counter++;
 
 		return $html;
 	}
 
-	function _ajaxLink($id,$target="",$options) {
+	function _ajaxLink($id,$target="",$update) {
 
-		$script = 'jQuery("'.$options["update"].'").html(html)';
-		$this->code[] = $this->_delegate($id,"click",site_url($target),$script);
-	}
+		$script = 'jQuery("'.$update.'").html(html)';
 
-	function _delegate($id,$event,$url,$script) {
-
-		/*return "jQuery('body').delegate('#$id','$event',function(){
-			jQuery.ajax({'url':'$url','cache':false,'type':'post','success':function(html){".$script."}});
-			return false;});\n";*/
-		
-		return "jQuery('#$id').live('$event',function(){
-			jQuery.ajax({'url':'$url','cache':false,'type':'post','success':function(html){".$script."}});
+		$this->code[] = "jQuery('#$id').live('click',function(){
+			jQuery.ajax({'url':'$target','cache':false,'type':'post','success':function(html){".$script."}});
 			return false;
 			});\n";
+	}
+	
+	function submitButton($text,$update) {
+
+		$id = "btn".$this->button_counter."_".$this->id;
+		$html = "<input type='submit' id='$id' value='$text'>";
+		$this->_ajaxSubmitButton($id,$update);
+
+		$this->link_counter++;
+
+		return $html;
+	}
+	
+	function _ajaxSubmitButton($id,$update) {
 		
+		$script = 'jQuery("'.$update.'").html(html)';
+
+		$this->code[] = "jQuery('#$id').live('click',function(){
+			jQuery.ajax({'url':jQuery(this).parents('form').attr('action'),'cache':false,'type':'post',
+			data: jQuery(this).parents('form').serialize(),
+			'success':function(html){".$script."}});
+			return false;
+			});\n";
+	}
+	
+	function element() {
+	
+	}
+	
+	function _element() {
+	
+	}
+	
+	function formElement() {
+	
+	
+	}
+	
+	function _formElement() {
+	
+	
 	}
 	
 	function getAll() {
 
 		return $this->code;
 	}
+	
+	function getString($check_jquery = false) {
 
+		$output = "<script type='text/javascript'>\n/*<![CDATA[*/\n";
+
+		if($check_jquery) {
+			$output .= $this->checkJquery();
+			$output .= "window.onload = function() {\n";
+		}
+
+		foreach($this->getAll() as $script) {	
+			$output .= $script;	
+		}
+
+		if($check_jquery) {
+			$output .= $this->checkJquery();
+			$output .= "}";
+		}
+
+		$output .= "\n/*]]>*/\n</script>";
+		return $output;
+	}
+
+	function checkJquery() {
+
+		$str = "if(typeof(jQuery) != 'function') {
+
+			var file = document.createElement('script');
+			file.src = '".public_data("js/jquery.js")."'
+			file.type = 'text/javascript';
+			document.getElementsByTagName('head')[0].appendChild(file);				
+		}";
+		
+		return $str;
+	}
+	
 	function __destruct() {
 	
 		//print_r($this->code);
