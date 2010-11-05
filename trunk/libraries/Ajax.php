@@ -29,6 +29,8 @@ class CI_Ajax {
 
 	var $link_counter;
 	var $button_counter;
+	var $element_counter;
+	var $formElement_counter;
 	var $code;
 	
 	var $fe;
@@ -45,9 +47,11 @@ class CI_Ajax {
 
 		$this->link_counter = 0;
 		$this->button_counter = 0;
+		$this->element_counter = 0;
+		$this->formElement_counter = 0;
 		$this->code = array();
 	}
-	
+
 	// --------------------------------------------------------------------
 
 	function link($text,$target="",$update)
@@ -94,23 +98,44 @@ class CI_Ajax {
 			});\n";
 	}
 	
-	function element() {
-	
-	}
-	
-	function _element() {
-	
+	function element($css_selector,$event = "click",$target,$update_selector) {
+
+		$script = 'jQuery("'.$update_selector.'").html(html)';
+
+		$this->code[] = "jQuery('$css_selector').live('$event',function(){
+			var attrs = $('$css_selector')[0].attributes;
+			var data = '';
+			var value = false;
+			for(var i=0;i<attrs.length;i++) {
+				if(data == '') {
+					data = attrs[i].nodeName + '=' + attrs[i].nodeValue;
+				} else {
+					data = data + '&' + attrs[i].nodeName + '=' + attrs[i].nodeValue;
+				}
+
+				if(attrs[i].nodeName == 'value' && attrs[i].nodeValue != '') { value = true }
+			}
+			if(value == false) {
+				if(data == '') {
+					data = 'value=' + $('$css_selector').attr('value');
+				} else {
+					data = data + '&' + 'value=' + $('$css_selector').attr('value');
+				}
+			}
+			jQuery.ajax({'url':'$target','cache':false,'type':'post',
+			'data': data,
+			'success':function(html){".$script."}});
+			return false;
+			});\n";
+		
+		$this->element_counter++;
 	}
 	
 	function formElement() {
 	
 	
 	}
-	
-	function _formElement() {
-	
-	
-	}
+
 	
 	function getAll() {
 
