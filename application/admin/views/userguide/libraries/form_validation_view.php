@@ -2,10 +2,6 @@
 <p>
     F-engine provides a comprehensive form validation and data prepping class that helps minimize the amount of code you'll write.
 </p>
-<p class="important">
-    <strong>Note:</strong>&nbsp; As of CodeIgniter 1.7.0, this Form Validation class supercedes the old Validation class, which is now deprecated.  We
-    have left the old class in the library so applications currently using it will not break, but you are encouraged to migrate to this new version.
-</p>
 <ul>
     <li>
         <a href="#overview">Overview</a>
@@ -162,7 +158,7 @@
     </samp>
     folder:
 </p>
-<textarea class="textarea" style="width:100%" cols="50" rows="30">
+<textarea class="textarea" style="width:100%" cols="50" rows="20">
     &lt;html>
     &lt;head>
     &lt;title>My Form&lt;/title>

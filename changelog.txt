@@ -8,6 +8,7 @@ New in v0.5
 		- jQuery version update
     	- New Ajax layer
     	- Added ajax option to pagination library
+    	- Documentation updated
 	- Bbmanager:
 		- Bugfixing
 		- Added Import feature

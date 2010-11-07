@@ -18,11 +18,11 @@ class userguide extends Controller {
 		$this->load->helper('url');
 	}
 	
-	function index()
+	function index($page = '')
 	{
 		$data = array();
 		
-		if(count($this->uri->params) != 0)
+		if($page != '')
 			$data['page'] = 'userguide/'.implode('/',$this->uri->params);
 
 		$this->load->masterview('userguide/main',$data,'userguide');
