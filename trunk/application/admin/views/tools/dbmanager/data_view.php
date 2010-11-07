@@ -538,6 +538,11 @@
 	
 	<form method="post" action="<?php echo site_url("tools/dbmanager/ajax/processes");?>">
 		<input type="checkbox" id="autorefresh" name="autorefresh" /> Autorefresh
+		<div style="padding-left:25px;display:none;">
+			Every 
+			<input type="text" name="senconds" id="seconds" value="10" style="width:30px;" />
+			seconds
+		</div>
 	</form>
 	<?php $this->load->view("tools/dbmanager/processes");?>
 

@@ -118,32 +118,32 @@ class CI_Output extends Output {
 			{
 				$output  = preg_replace("|</body>.*?</html>|is", '', $output);
 				if(!defined('MASTERVIEW') and isset($CI->ajax)) {
-					$output .= $CI->ajax->getString(true);
+					$output .= $CI->ajax->getString();
 				}
 				$output .= $CI->profiler->run();
 				$output .= '</body></html>';
 			}
 			else
 			{
-				if(!defined('MASTERVIEW') and isset($CI->ajax)) {
-					$output .= $CI->ajax->getString(true);
+				if(!defined('MASTERVIEW') and isset($CI->ajax) and $CI->ajax->itemNum() > 0) {
+					$output .= $CI->ajax->getString();
 				}
 				$output .= $CI->profiler->run();
 			}
 			
 		} else {
 		
-			if(!defined('MASTERVIEW') and isset($CI->ajax)) {
+			if(!defined('MASTERVIEW') and isset($CI->ajax) and $CI->ajax->itemNum() > 0) {
 
 				if (preg_match("|</body>.*?</html>|is", $output))
 				{
 					$output  = preg_replace("|</body>.*?</html>|is", '', $output);
-					$output .= $CI->ajax->getString(true);
+					$output .= $CI->ajax->getString();
 					$output .= '</body></html>';
-				}
-				else
-				{
-					$output .= $CI->ajax->getString(true);
+
+				} else {
+
+					$output .= $CI->ajax->getString();
 				}
 			}
 		}

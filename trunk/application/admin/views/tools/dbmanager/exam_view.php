@@ -62,6 +62,13 @@
                                 $exam_key = $exam_keys[0];
                                 $lcase_exam_key = strtolower($exam_keys[0]);
 
+                                foreach($exam["fields"] as $field) {
+
+                                	if(strtolower($field) == strtolower($exam_key)) {
+                                		$exam_key = $field;	
+                                	}
+                                }
+
                                 //multiple indexes ? 
                                 if(strpos($tmp[1],",")) {
                             ?>

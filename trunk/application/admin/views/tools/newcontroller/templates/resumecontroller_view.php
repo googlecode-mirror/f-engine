@@ -22,7 +22,7 @@ class <?php echo $classname;?> extends Controller {
 		$config['base_url'] = site_url("<?php echo $vpath;?>");
 		$config['total_rows'] = $this->db->f_select(array('<?php echo implode("','",$dbs);?>'),'count(*) as itemNum'<?php if(isset($where)) { echo ',$where'; } ?>)->row()->itemNum;
 		$config['per_page'] = '20';
-		$config['uri_segment'] = <?php echo substr_count($vpath, "/") + 2; ?>;
+		$config['ajax'] = "#fe-datagrid";
 
 		$this->pagination->initialize($config); 
 

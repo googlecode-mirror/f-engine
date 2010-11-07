@@ -5,7 +5,7 @@
  * @copyright	Copyright (c) 2010, Mikel Madariaga
  * @license		http://www.f-engine.net/userguide/license
  * @link		http://www.f-engine.net/
- * @since		Version 0.3
+ * @since		Version 0.5
  * @filesource
  */
  jQuery.expr[':'].contains = function(a,i,m){
@@ -277,6 +277,8 @@
  ********************************************************/
 
  $(document).ready(function() { 
+	 
+	$("#resume input.filter").focus();
 
  	/***	Filetrees
  	 ********************************************************/
@@ -360,7 +362,8 @@
 
 			$.each(filter.insert.items.not(":contains('"+this.value+"')"), function() {
 
-				if (!$(this).hasClass('oculto')) {	$(this).addClass('oculto');	}
+				if(!$("a",this).hasClass("selected"))
+					if (!$(this).hasClass('oculto')) {	$(this).addClass('oculto');	}
 			});
 
 		} else {
@@ -371,7 +374,8 @@
 			});
 			$.each(filter.insert.items.not(":contains('"+this.value+"')"), function() {
 
-				if (!$(this).hasClass('oculto')) {	$(this).addClass('oculto');	}
+				if(!$("a",this).hasClass("selected"))
+					if (!$(this).hasClass('oculto')) {	$(this).addClass('oculto');	}
 			});
 		}
 		filter.insert.length = this.value.length;
@@ -385,7 +389,8 @@
 
 			$.each(filter.edit.items.not(":contains('"+this.value+"')"), function() {
 
-				if (!$(this).hasClass('oculto')) {	$(this).addClass('oculto');	}
+				if(!$("a",this).hasClass("selected"))
+					if (!$(this).hasClass('oculto')) {	$(this).addClass('oculto');	}
 			});
 
 		} else {
@@ -395,8 +400,9 @@
 				if ($(this).hasClass('oculto')) {	$(this).removeClass('oculto');	}
 			});
 			$.each(filter.edit.items.not(":contains('"+this.value+"')"), function() {
-
-				if (!$(this).hasClass('oculto')) {	$(this).addClass('oculto');	}
+				
+				if(!$("a",this).hasClass("selected"))
+					if (!$(this).hasClass('oculto')) {	$(this).addClass('oculto');	}
 			});
 		}
 		filter.edit.length = this.value.length;
@@ -410,7 +416,8 @@
 
 			$.each(filter.resume.items.not(":contains('"+this.value+"')"), function() {
 
-				if (!$(this).hasClass('oculto')) {	$(this).addClass('oculto');	}
+				if(!$("a",this).hasClass("selected"))
+					if (!$(this).hasClass('oculto')) {	$(this).addClass('oculto');	}
 			});
 
 		} else {
@@ -420,14 +427,28 @@
 				if ($(this).hasClass('oculto')) {	$(this).removeClass('oculto');	}
 			});
 			$.each(filter.resume.items.not(":contains('"+this.value+"')"), function() {
-
-				if (!$(this).hasClass('oculto')) {	$(this).addClass('oculto');	}
+				
+				if(!$("a",this).hasClass("selected"))
+					if (!$(this).hasClass('oculto')) {	$(this).addClass('oculto');	}
 			});
 		}
 		filter.resume.length = this.value.length;
+	});	
+
+	$('input.filter').bind("blur",function () {
+
+		//trigger filter event in all filter boxes
+		filter.insert.length = $(this).attr("value").length +1;
+		filter.edit.length =  $(this).attr("value").length +1;
+		filter.resume.length =  $(this).attr("value").length +1;
+
+		//copy current search value to the other filter boxes
+		$("input.filter").attr("value",$(this).attr("value"));
+
+		//trigger filter in all boxes 
+		$("input.filter").trigger('keyup');
 	});
-	
-	
+
 	/***	Buttons		***/
 	//go to database fields  button
  	$('.go2db_fields').bind('click',function() {

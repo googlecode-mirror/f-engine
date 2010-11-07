@@ -44,26 +44,13 @@ class update extends Controller {
 			if(!IS_AJAX) {
 
 				redirect("<?php echo $path?>","refresh");
-
-			} else {
-			
-				//ajax response
-				if(function_exists('json_decode')) {
-	
-					//PHP >= 5.2
-					echo json_encode($validation);
-	
-				} else {
-	
-					$this->load->library('json');
-					$this->phpJson = new Json();
-					echo $this->phpJson->encode($validation);
-				}	
 			}
 
 		/*** validation error ***/
 		} else {
-		
+
+			$this->load->library("ajax");
+
 			if(IS_AJAX)
 				$this->load->masterview('<?php echo $view; ?>');
 			else

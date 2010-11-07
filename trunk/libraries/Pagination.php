@@ -31,11 +31,12 @@ class CI_Pagination {
 	var $per_page	 		= 10; // Max number of items you want shown per page
 	var $num_links			=  2; // Number of "digit" links to show before/after the currently viewed page
 	var $cur_page	 		=  0; // The current page being viewed
-	var $first_link   		= '&lsaquo; First';
+	var $first_link   		= '«';
 	var $next_link			= '&gt;';
 	var $prev_link			= '&lt;';
-	var $last_link			= 'Last &rsaquo;';
+	var $last_link			= '»';
 	var $uri_segment		= 3;
+	var $uri_param			= 1;
 	var $full_tag_open		= '';
 	var $full_tag_close		= '';
 	var $first_tag_open		= '';
@@ -52,6 +53,8 @@ class CI_Pagination {
 	var $num_tag_close		= '';
 	var $page_query_string	= FALSE;
 	var $query_string_segment = 'per_page';
+
+	var $ajax			= FALSE;
 
 	/**
 	 * Constructor
@@ -132,8 +135,15 @@ class CI_Pagination {
 		}
 		else
 		{
-			if ($CI->uri->segment($this->uri_segment) != 0)
-			{
+			if($this->uri_param > 0 and $CI->uri->param($this->uri_param) != 0) {
+
+				$this->cur_page = $CI->uri->param($this->uri_param);
+
+				// Prep the current page - no funny business!
+				$this->cur_page = (int) $this->cur_page;
+			
+			} elseif ($CI->uri->segment($this->uri_segment) != 0) {
+
 				$this->cur_page = $CI->uri->segment($this->uri_segment);
 
 				// Prep the current page - no funny business!
@@ -182,50 +192,109 @@ class CI_Pagination {
   		// And here we go...
 		$output = '';
 
-		// Render the "First" link
-		if  ($this->cur_page > ($this->num_links + 1))
-		{
-			$output .= $this->first_tag_open.'<a href="'.$this->base_url.'">'.$this->first_link.'</a>'.$this->first_tag_close;
-		}
+		if($this->ajax != false) {
 
-		// Render the "previous" link
-		if  ($this->cur_page != 1)
-		{
-			$i = $uri_page_number - $this->per_page;
-			if ($i == 0) $i = '';
-			$output .= $this->prev_tag_open.'<a href="'.$this->base_url.$i.'">'.$this->prev_link.'</a>'.$this->prev_tag_close;
-		}
+			$this->base_url = str_replace(site_url(),"",$this->base_url);
 
-		// Write the digit links
-		for ($loop = $start -1; $loop <= $end; $loop++)
-		{
-			$i = ($loop * $this->per_page) - $this->per_page;
-
-			if ($i >= 0)
+			$CI->load->library("ajax");
+			// Render the "First" link
+			if  ($this->cur_page > ($this->num_links + 1))
 			{
-				if ($this->cur_page == $loop)
+				//$this->base_url.'">'.$this->first_link.'</a>'.
+				$output .= $this->first_tag_open.$CI->ajax->link($this->first_link,$this->base_url,$this->ajax).$this->first_tag_close;
+			}
+
+			// Render the "previous" link
+			if  ($this->cur_page != 1)
+			{
+				$i = $uri_page_number - $this->per_page;
+				if ($i == 0) $i = '';
+				//'<a href="'.$this->base_url.$i.'">'.$this->prev_link.'</a>'
+				$output .= $this->prev_tag_open.$CI->ajax->link($this->prev_link,$this->base_url.$i,$this->ajax).$this->prev_tag_close;
+			}
+
+			// Write the digit links
+			for ($loop = $start -1; $loop <= $end; $loop++)
+			{
+				$i = ($loop * $this->per_page) - $this->per_page;
+	
+				if ($i >= 0)
 				{
-					$output .= $this->cur_tag_open.$loop.$this->cur_tag_close; // Current page
-				}
-				else
-				{
-					$n = ($i == 0) ? '' : $i;
-					$output .= $this->num_tag_open.'<a href="'.$this->base_url.$n.'">'.$loop.'</a>'.$this->num_tag_close;
+					if ($this->cur_page == $loop)
+					{
+						$output .= $this->cur_tag_open.$loop.$this->cur_tag_close; // Current page
+					}
+					else
+					{
+						$n = ($i == 0) ? '' : $i;
+						//'<a href="'.$this->base_url.$n.'">'.$loop.'</a>'
+						$output .= $this->num_tag_open.$CI->ajax->link($loop,$this->base_url.$i,$this->ajax).$this->num_tag_close;
+					}
 				}
 			}
-		}
 
-		// Render the "next" link
-		if ($this->cur_page < $num_pages)
-		{
-			$output .= $this->next_tag_open.'<a href="'.$this->base_url.($this->cur_page * $this->per_page).'">'.$this->next_link.'</a>'.$this->next_tag_close;
-		}
+			// Render the "next" link
+			if ($this->cur_page < $num_pages)
+			{
+				//'<a href="'.$this->base_url.($this->cur_page * $this->per_page).'">'.$this->next_link.'</a>'
+				$output .= $this->next_tag_open.$CI->ajax->link($this->next_link,$this->base_url.($this->cur_page * $this->per_page),$this->ajax).$this->next_tag_close;
+			}
 
-		// Render the "Last" link
-		if (($this->cur_page + $this->num_links) < $num_pages)
-		{
-			$i = (($num_pages * $this->per_page) - $this->per_page);
-			$output .= $this->last_tag_open.'<a href="'.$this->base_url.$i.'">'.$this->last_link.'</a>'.$this->last_tag_close;
+			// Render the "Last" link
+			if (($this->cur_page + $this->num_links) < $num_pages)
+			{
+				$i = (($num_pages * $this->per_page) - $this->per_page);
+				//'<a href="'.$this->base_url.$i.'">'.$this->last_link.'</a>'
+				$output .= $this->last_tag_open.$CI->ajax->link($this->last_link,$this->base_url.$i,$this->ajax).$this->last_tag_close;
+			}
+		
+		} else {
+		
+			// Render the "First" link
+			if  ($this->cur_page > ($this->num_links + 1))
+			{
+				$output .= $this->first_tag_open.'<a href="'.$this->base_url.'">'.$this->first_link.'</a>'.$this->first_tag_close;
+			}
+	
+			// Render the "previous" link
+			if  ($this->cur_page != 1)
+			{
+				$i = $uri_page_number - $this->per_page;
+				if ($i == 0) $i = '';
+				$output .= $this->prev_tag_open.'<a href="'.$this->base_url.$i.'">'.$this->prev_link.'</a>'.$this->prev_tag_close;
+			}
+	
+			// Write the digit links
+			for ($loop = $start -1; $loop <= $end; $loop++)
+			{
+				$i = ($loop * $this->per_page) - $this->per_page;
+	
+				if ($i >= 0)
+				{
+					if ($this->cur_page == $loop)
+					{
+						$output .= $this->cur_tag_open.$loop.$this->cur_tag_close; // Current page
+					}
+					else
+					{
+						$n = ($i == 0) ? '' : $i;
+						$output .= $this->num_tag_open.'<a href="'.$this->base_url.$n.'">'.$loop.'</a>'.$this->num_tag_close;
+					}
+				}
+			}
+	
+			// Render the "next" link
+			if ($this->cur_page < $num_pages)
+			{
+				$output .= $this->next_tag_open.'<a href="'.$this->base_url.($this->cur_page * $this->per_page).'">'.$this->next_link.'</a>'.$this->next_tag_close;
+			}
+	
+			// Render the "Last" link
+			if (($this->cur_page + $this->num_links) < $num_pages)
+			{
+				$i = (($num_pages * $this->per_page) - $this->per_page);
+				$output .= $this->last_tag_open.'<a href="'.$this->base_url.$i.'">'.$this->last_link.'</a>'.$this->last_tag_close;
+			}
 		}
 
 		// Kill double slashes.  Note: Sometimes we can end up with a double slash
