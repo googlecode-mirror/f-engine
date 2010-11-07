@@ -1,3 +1,4 @@
+<div id="fe-datagrid">
 <?php if($new == true) { ?>
 	<a href="<?php echo '<?php echo site_url("'.$uri.'/insert");?>'?>">Create new record</a><br /><br />
 <?php }//endif ?>
@@ -52,3 +53,4 @@ if(isset($pagination)) {
 	echo "<br />".$pagination;
 }
 ?>
+</div>

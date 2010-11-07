@@ -28,6 +28,11 @@ class save extends Controller
 
 	function index() {
 
+		if(count($_POST) == 0) {
+
+			die;
+		}
+
 		$this->newform->init($_POST);
 
 		/**

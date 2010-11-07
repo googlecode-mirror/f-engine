@@ -39,6 +39,8 @@ class save extends Controller {
 		/*** validation error ***/
 		} else {
 
+			$this->load->library("ajax");
+
 			if(IS_AJAX)
 				$this->load->view('<?php echo $view; ?>');
 			else

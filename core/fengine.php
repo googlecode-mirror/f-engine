@@ -246,7 +246,7 @@ else
 
 	// Call the requested method.
 	// Any URI segments present (besides the class/function) will be passed to the method for convenience
-	call_user_func_array(array(&$CI, $method), $RTR->uri->params);
+	call_user_func_array(array(&$CI, $method), array_slice($RTR->uri->params,1));
 	
 }
 

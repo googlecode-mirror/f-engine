@@ -3,23 +3,26 @@ New in v0.5
 		- Cache library ported from Kohana framework
 		- Added APPNAME constant
 		- Css/Js combiner/compressor to speedup pages
-		- Database cache removed 
+		- Codeigniter database cache removed 
 		- Querystring based url compatibility removed
-		- jQuery updated
+		- jQuery version update
+    	- New Ajax layer
+    	- Added ajax option to pagination library
 	- Bbmanager:
 		- Bugfixing
 		- Added Import feature
 	- New form wizard:
 		- Generates cleaner code now
+		- Rewritted to support the new ajax layer
 	- Filemanager:
 		- New folder/file permissions fixed
-		- Library template
+		- Added library template
 
 New in v0.4.2
 	- Dbmanager:
 		- Bugfixing in pagination for certain queries
 		- Little usability/design upgrade
-		- Added processlist autorefresh 
+		- Added processlist autorefresh feature
 		- A few more warning/info message handler
 
 New in v0.4

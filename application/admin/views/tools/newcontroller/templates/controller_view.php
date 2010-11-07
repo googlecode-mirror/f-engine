@@ -5,6 +5,7 @@ class <?php echo $classname;?> extends Controller {
 
 		parent::Controller();
 		$this->load->helper(array('url'));
+		$this->load->library("ajax");
 	}
 	
 	function index() {

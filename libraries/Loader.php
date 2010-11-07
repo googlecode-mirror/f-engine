@@ -78,7 +78,7 @@ class CI_Loader extends Loader {
 
 		/*** set javascript files and ajax events ***/
 		$fe =& get_instance();
-		if(isset($fe->ajax)) {
+		if(isset($fe->ajax) and $fe->ajax->itemNum() > 0) {
 			if(!in_array('jquery.js',$data["js"]))
 				$data["js"][] = 'jquery.js';
 		}

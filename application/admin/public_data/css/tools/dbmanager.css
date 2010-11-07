@@ -45,6 +45,7 @@ div#current_query {
 	border: 1px solid #F26D6D; 
 	background-color: #FAF799; 
 	padding: 2px;
+	display:block;
 }
 
 div#current_query span.meta {
@@ -52,6 +53,7 @@ div#current_query span.meta {
 	color:#333;
 	font-style: italic;
 	font-size:0.9em;
+	display:block;
 }
 
 div#tableContent {

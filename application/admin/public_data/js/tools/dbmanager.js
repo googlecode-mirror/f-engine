@@ -5,7 +5,7 @@
  * @copyright	Copyright (c) 2010, Mikel Madariaga
  * @license		http://www.f-engine.net/userguide/license
  * @link		http://www.f-engine.net/
- * @since		Version 0.4
+ * @since		Version 0.5
  * @filesource
  */
 jQuery.expr[':'].contains = function(a,i,m){
@@ -18,13 +18,13 @@ $(document).ready(function () {
 	$("div#id, div#tables").show();
 	$("div#id").children("div").show();
 	initTab_backup();
-	init_paginationLinks();
+	init_paginationLinks(); //refresh and order by buttons also
 	initTab_sql();
-	$('#tableContent textarea.expanding').autogrow();
 	maximize();
 	expandTablelist();
 	processList();
 
+	$('#tableContent textarea.expanding').autogrow();
 	$("#db_list input.filter").focus();
 });
 
@@ -88,10 +88,17 @@ $('#db_list a').each(function () {
 		$('ul.jqueryFileTree a.selected').removeClass('selected');
 		$(this).addClass('selected');
 
+		var values = "table="+$(this).text()+ "&dbconf=" + $("select[name=db_conf]").attr("value")+"&fullLoad=true&project="+$("#currentprojectname").attr("rel");
+		
+		if($("#exam-results a.refresh:eq(0)").hasClass("keepQuery")) {
+
+			values += "&query=" + $("#current_query span:eq(0)").text();
+		}
+		
 		$.ajax({ type: "POST",
 				 async: false,
 		  		 url: $('#forms form').attr('action'),
-		  		 data: "table="+$(this).text()+ "&dbconf=" + $("select[name=db_conf]").attr("value")+"&fullLoad=true&project="+$("#currentprojectname").attr("rel"),
+		  		 data: values,
 				 success: function(msg) {
 					loadContent(msg);		
 				 }
@@ -340,7 +347,7 @@ function pagination (html) {
             	if($("#exam-results > table tr").length == 2) {
             		$('#db_list ul li a.selected').click();
             	} else {
-                	$("#exam-results a.refresh:eq(0)").click();
+                	$("#exam-results aexpandContent:eq(0)").click();
             	}
 
             } else {
@@ -351,7 +358,7 @@ function pagination (html) {
         return false;
     });
     
-    seeFullContent();
+    expandContent();
     
 }
 
@@ -408,7 +415,7 @@ function loadContent (msg) {
         return false;
     });
 
-    seeFullContent();
+    expandContent();
 
     /*** sql ***/
     initTab_sql();
@@ -814,8 +821,10 @@ function recordEditEvents () {
 /*** init exam tab, pagination and refresh button events ***/
 function init_paginationLinks() {
 
+	//pagination and refresh buttons
 	$('#exam-results div.pagination a').click( function () {
 
+		console.log(this);
 		var orderby = '';
 
 		if( $("#exam-results th.desc").length > 0 )
@@ -985,7 +994,7 @@ function initTab_sql() {
         		var newquery = $("#query textarea").attr("value");
 
         		if(response == "<!--exam-->" && $('ul.jqueryFileTree a.selected').length == 0) {
-        			//table undetected, just fire the query
+        		//table undetected, just fire the query
 
                     if( $("#db_list li a.selected").length == 0 ) {
 
@@ -1000,25 +1009,25 @@ function initTab_sql() {
                     	$("#tableContent ul a[href=#exam]").click();
                     	$("#exam-results a.refresh:eq(0)").click();
                     }
+
+                
+        		} else if($('ul.jqueryFileTree a.selected').attr("title") != response.substring(11)) {
+        		//switch table and fire query
+        			
+        			var newtable = response.substring(11);
+        			$("#exam-results a.refresh:eq(0)").addClass("keepQuery");
+        			$("#current_query span:eq(0)").text(newquery);
+        			$('ul.jqueryFileTree a[title='+newtable+']').click();
                     
         		} else if(response.substring(0,11) == "<!--exam-->") {
+        		// keep table and fire query
         			
-        			//select table and fire query
-            		if($('ul.jqueryFileTree a.selected').length == 0) {
+                	//tab switch
+                	if($("#tableContent ul.idTabs li:eq(0)").hasClass("oculto")) {
+                		$("#tableContent ul.idTabs li:eq(0)").removeClass("oculto");
+                	}
 
-            			//highlight table
-	            		var newtable = response.substring(11);
-	            		$('ul.jqueryFileTree a[title='+newtable+']').click();
-
-            		} else {
-
-                    	//tab switch
-                    	if($("#tableContent ul.idTabs li:eq(0)").hasClass("oculto")) {
-                    		$("#tableContent ul.idTabs li:eq(0)").removeClass("oculto");
-                    	}
-
-                    	$("#tableContent ul.btnTabs a[href*=#exam]").click();
-            		}
+                	$("#tableContent ul.btnTabs a[href*=#exam]").click();
 
                 	//hide old results and pagination
                 	$("#exam-results div.pagination").hide();
@@ -1137,7 +1146,7 @@ function loading() {
 		$("#current_query > img").addClass("oculto");
 }
 
-function seeFullContent() {
+function expandContent() {
 
     /*** exam :: expand content ***/
     $('#exam-results tr:gt(0) td img.expand').hover(function () {
@@ -1309,29 +1318,59 @@ function collapseTableList () {
 }
 
 /*** auto refresh precessList event ***/
+var pl_timerId;
 function processList() {
+
+	$("#autorefresh").click(function () {
+
+		if($(this).not(":checked").length == 0) {
+
+			$("#seconds").parent().slideDown(function () {
+
+				$("#seconds").focus().select();
+			});
+			refreshProcessList();
+
+		} else {
+
+			clearTimeout(pl_timerId);
+			$("#seconds").parent().slideUp();
+		}
+	});
+}
+
+function refreshProcessList() {
+
+	$.ajax({ type: "POST",
+ 		 url: $("#autorefresh").parent().attr('action'),
+ 		 data: {
+				"dbconf" :	$("select[name=db_conf]").attr("value"),
+				"project" : $("#currentprojectname").attr("rel")
+		},
+		success: function(msg) {
+
+			$("#processes table").replaceWith(msg);
+			$("#processes table th").animate({"opacity":0.5}, function () {
+
+				$(this).animate({"opacity":1});
+			})
+		}
+	});
 
 	if($("#autorefresh:checked").length > 0) {
 
-		$.ajax({ type: "POST",
-	  		 url: $("#autorefresh").parent().attr('action'),
-	  		 data: {
-					"dbconf" :	$("select[name=db_conf]").attr("value"),
-					"project" : $("#currentprojectname").attr("rel")
-			},
-			success: function(msg) {
+		var timer = parseInt($("#seconds").attr("value").replace(/[^0-9]*/,""));
+		
+		if(timer == "" || timer == 0) {
+			
+			timer = 4000;
+			
+		} else {
+			
+			timer = timer * 1000;
+		}
 
-				$("#processes table").replaceWith(msg);
-				$("#processes table th").animate({"opacity":0.5}, function () {
-
-					$(this).animate({"opacity":1});
-				})
-			}
-		});
-	}
-
-	if($("#autorefresh").length > 0) {
-		setTimeout("processList()",4000);
+		pl_timerId = setTimeout("refreshProcessList()",timer);
 	}
 }
 

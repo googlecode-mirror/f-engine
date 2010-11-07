@@ -132,7 +132,7 @@ class view extends Controller
 			list($actions, $pagination) = $this->showActions($query_str,$listables);
 
 			$this->benchmark->mark('query_execution_time_start'); 
-			if($_POST["action"] == 'refresh')  {
+			if(isset($_POST["action"]) and $_POST["action"] == 'refresh')  {
 
 				if(stripos($query_str,"limit") !== false) {
 
