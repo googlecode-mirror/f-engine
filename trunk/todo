@@ -3,6 +3,7 @@ Core & libraries:
     - Autogrow, many whitespace issues
     - Cache garbage collector
     - Plugins: Widgets, tools, appz
+    - Integrate jquery ui in ajax library
 
 Dbmanager:
 	- kill processes feature

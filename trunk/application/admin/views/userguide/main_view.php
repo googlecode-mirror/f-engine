@@ -125,11 +125,17 @@
                 <li class="parent">
                     <a href="#">Class Reference</a>
                     <ul>
+						<li>
+                            <a href="<?php echo site_url();?>userguide/libraries/ajax">Ajax Class</a>
+                        </li>
                         <li>
                             <a href="<?php echo site_url();?>userguide/libraries/benchmark">Benchmarking Class</a>
                         </li>
                         <li>
                             <a href="<?php echo site_url();?>userguide/libraries/calendar">Calendaring Class</a>
+                        </li>
+						<li>
+                            <a href="<?php echo site_url();?>userguide/libraries/cache">Cache Class</a>
                         </li>
                         <li>
                             <a href="<?php echo site_url();?>userguide/libraries/cart">Cart Class</a>
@@ -150,7 +156,7 @@
                             <a href="<?php echo site_url();?>userguide/libraries/form_validation">Form Validation Class</a>
                         </li>
                         <li>
-                            <a href="<?php echo site_url();?>userguide/libraries/form_validation">FTP Class</a>
+                            <a href="<?php echo site_url();?>userguide/libraries/ftp">FTP Class</a>
                         </li>
                         <li>
                             <a href="<?php echo site_url();?>userguide/libraries/table">HTML Table Class</a>
@@ -321,28 +327,6 @@
                         </li>
                     </ul>
                 </li>
-				<!-- 
-				<li class="parent">
-                    <a href="#">Built in applications</a>
-                    <ul>
-                    	<li>
-                            <a href="<?php echo site_url();?>userguide/javascript/jquery">New form wizard</a>
-                        </li>
-                    	<li>
-                            <a href="<?php echo site_url();?>userguide/javascript/jquery">Mysql dbmanager</a>
-                        </li>
-                    	<li>
-                            <a href="<?php echo site_url();?>userguide/javascript/jquery">Javascript file packer</a>
-                        </li>
-                    	<li>
-                            <a href="<?php echo site_url();?>userguide/javascript/jquery">Css file minifier</a>
-                        </li>
-						<li>
-                            <a href="<?php echo site_url();?>userguide/javascript/jquery">File editor</a>
-                        </li>
-                    </ul>
-                </li>
-                 -->
                 <li class="parent">
                     <a href="#">Vendors</a>
                     <ul>
