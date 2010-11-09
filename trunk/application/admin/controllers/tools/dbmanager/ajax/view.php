@@ -55,6 +55,7 @@ class view extends Controller
 		//database table list
 		$listables = $this->db->list_tables();
 
+
 		/*** Exam tab ***/
 		if(isset($_POST["query"])) {
 
@@ -63,7 +64,10 @@ class view extends Controller
 			$query_nolimit = $query_array[0];
 			$query_nolimit = preg_replace("/;\s*$/i","",$query_nolimit);
 
-			//redefine offset and limit if are sent
+			//should we show actions and pagination ?
+			list($actions, $pagination) = $this->showActions($query_str,$listables);
+
+			//redefine offset and limit if they are sent
 			if(isset($query_array[1])) {
 
 				@list($newOffset,$newLimit) = explode(",",$query_array[1]);
@@ -97,40 +101,47 @@ class view extends Controller
 					$orderby = $tmp;
 					$query_orderby = explode(" ",$tmp);
 				} 
-				
+
 				$query_str = $query_nolimit;
-				
-			} else {
 
-				$query_str = $query_nolimit." LIMIT ".$offset.",".$items_per_page;
-			}
+			} elseif( isset($_POST["table"]) and $_POST["table"] != "" ) {
 
-			//disable item count (pagination) when the query has "order by rand()"
-			if(strpos($query_nolimit,"rand()")) {
-	
-				$total_rows = $items_per_page;
-
-			} else {
-
-				//skip errors
-				$this->db->skip_errors = TRUE;
-				$itemCountSql = "select count(*) as itemNum from (".$query_nolimit.") as tmp";
-				$rs = $this->db->query($itemCountSql);
-				$this->db->skip_errors = FALSE;
-
-				if(!is_string($rs)) {
-
-					$total_rows = $rs->row()->itemNum;
+				if($actions == false and $pagination == false) {
+					
+					$query_str = $query_nolimit;
 
 				} else {
-
-					$total_rows = $this->db->query($query_nolimit)->num_rows();
+					
+					$query_str = $query_nolimit." LIMIT ".$offset.",".$items_per_page;
 				}
+
+			} else {
+
+				$query_str = $query_nolimit;
+			}
+
+			
+			//skip errors
+			$this->db->skip_errors = TRUE;
+			$itemCountSql = "select count(*) as itemNum from (".$query_nolimit.") as tmp";
+			$rs = $this->db->query($itemCountSql);
+			$this->db->skip_errors = FALSE;
+
+			//disable item count (pagination) when query has "order by rand()"
+			if(strpos($query_nolimit,"rand()")) {
+			
+				$total_rows = $rs->row()->itemNum > $items_per_page ? $rs->row()->itemNum : $items_per_page;
+				
+			} elseif(!is_string($rs)) {
+
+				$total_rows = $rs->row()->itemNum;
+
+			} else {
+
+				$total_rows = $this->db->query($query_nolimit)->num_rows();
 			}
 
 			// Run query
-			list($actions, $pagination) = $this->showActions($query_str,$listables);
-
 			$this->benchmark->mark('query_execution_time_start'); 
 			if(isset($_POST["action"]) and $_POST["action"] == 'refresh')  {
 
@@ -173,7 +184,10 @@ class view extends Controller
 
 			} else {
 
-				$fields = $this->db->list_fields($_POST["table"]); 
+				if(isset($_POST["table"]))
+					$fields = $this->db->list_fields($_POST["table"]);
+				else 
+					$fields = array(); 
 			}
 
 			if($currentable != ""  && in_array(strtolower( array_shift( explode(",",$this->get_primary($currentable,false))) ) ,array_map("strtolower",$fields)) ) {
@@ -248,7 +262,7 @@ class view extends Controller
 			$data['exam']['orderby'] = $query_orderby;
 		}
 
-		$data["actions"] = $this->isView? false : $actions;
+		$data["actions"] = $this->isView ? false : $actions;
 		$data["isView"] = $this->isView;
 
         if(!isset($_POST['fullLoad'])) {
@@ -257,7 +271,7 @@ class view extends Controller
                return;
         }
 
-		/*** insert and structure tabs ***/
+		/*** get data for insert and structure tabs ***/
         if($currentable != '') {
 			$data['structure'] = $this->db->query('describe '.$currentable)->result();
         	$tmp = $this->db->query('SHOW CREATE TABLE '.$currentable)->row();
