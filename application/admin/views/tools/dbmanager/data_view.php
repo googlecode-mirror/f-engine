@@ -127,7 +127,7 @@
                         <?php if (!$field->Extra == "auto_increment"):?>
                             <textarea class="expanding" name="<?php  echo $field->Field;?>" style="margin:0; padding:3px; min-height:15px; height:15px; max-height: 120px; width:98%;"></textarea>
                         <?php else:?>
-                            <textarea name="<?php  echo $field->Field;?>" style="margin:0; padding:3px; height:15px; width:98%;" disabled="disabled">Primary key - auto increment </textarea>
+                            <textarea name="<?php  echo $field->Field;?>" style="margin:0; padding:3px; height:15px; width:98%;" class="primary" disabled="disabled">Primary key - auto increment </textarea>
                         <?php endif;?>
 		            </td>
 		        </tr>

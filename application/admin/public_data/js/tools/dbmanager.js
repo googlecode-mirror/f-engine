@@ -21,10 +21,10 @@ $(document).ready(function () {
 	init_paginationLinks(); //refresh and order by buttons also
 	initTab_sql();
 	maximize();
+	$('#tableContent textarea.expanding').autogrow();
 	expandTablelist();
 	processList();
 
-	$('#tableContent textarea.expanding').autogrow();
 	$("#db_list input.filter").focus();
 });
 
@@ -75,6 +75,10 @@ $('input.filter').bind('keyup', function () {
 		});
 	}
 	filter.length = this.value.length;
+
+}).bind("click",function () {
+
+	$(this).select();
 });
 
 /***	DB Table list item highlight
@@ -421,6 +425,20 @@ function loadContent (msg) {
     initTab_sql();
 
 	/*** insert :: submit ***/
+    $("textarea.primary").parent().hover(function () {
+
+    	if($("textarea",this).attr("disabled") == true)
+    		$("textarea",this).removeAttr("disabled").attr("value","");
+
+    }, function () {
+
+    	var txtArea = $("textarea",this);
+    	if(txtArea.attr("value") == "") {
+
+    		txtArea.attr({"value": "Primary key - auto increment ","disabled":"disabled"});
+    	}
+    });
+    
 	$('#insert form input[type="submit"]').click(function () {
 
 		var form = $(this).parent();
@@ -824,7 +842,6 @@ function init_paginationLinks() {
 	//pagination and refresh buttons
 	$('#exam-results div.pagination a').click( function () {
 
-		console.log(this);
 		var orderby = '';
 
 		if( $("#exam-results th.desc").length > 0 )
@@ -1248,8 +1265,8 @@ function expandTablelist() {
 		"display":"none",
 		"position" : "absolute",
 		"margin" : "1px 0 0 6px",
-		"left" : $("div.leftFrame > form").width() -50,
-		"top" : $("div.leftFrame > form").offset().top - node.height() -2
+		"left" : $("div.leftFrame > form").width() -55,
+		"top"  : $("div.leftFrame > form").offset().top - node.height() -2
 	}).attr("id","expandTableList");
 
 	$("div.frame").after(node);
@@ -1279,19 +1296,22 @@ function expandTablelist() {
 
 	$("#expandTableList img.left").click(function () {
 
-		$("div.dblist-dummy").html($("ul.jqueryFileTree:eq(0)").clone());
 		var width = 150;
 
-		$("div.frame").animate({"width":width},400,"swing", function () {
+		if($("div.frame").width() > width) {
 
-			$("#expandTableList").css("width",$("#db_list").next().width());
-			$("#expandTableList img.right").removeClass("oculto");
-			$("#expandTableList img.left").addClass("oculto");
-		});
+			$("div.frame").animate({"width":width},400,"swing", function () {
+	
+				$("#expandTableList").css("width",$("#db_list").next().width());
+				$("#expandTableList img.right").removeClass("oculto");
+				$("#expandTableList img.left").addClass("oculto");
+			});
+	
+			var arrow = $("#expandTableList");
+			width = width - arrow.width();
+			arrow.css({"left":width});
 
-		var arrow = $("#expandTableList");
-		width = width - arrow.width();
-		arrow.animate({"left":width},350,"swing");
+		}
 	});
 
 	$("div.leftFrame").hover(function () {
@@ -1313,7 +1333,10 @@ function expandTablelist() {
 
 function collapseTableList () {
 
-	$("#expandTableList").fadeOut(600);
+	if($("#expandTableList img.right").hasClass("oculto"))
+		$("#expandTableList").hide();
+	else
+		$("#expandTableList").fadeOut(600);
 	$("#expandTableList img.left").click();
 }
 

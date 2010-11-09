@@ -13,7 +13,7 @@
 	<div id="current_query">
 		<img class="oculto" src="<?php echo public_data();?>img/tools/preloader.gif" alt="loading" title="loading" style="vertical-align:sub;" />
 		<span><?php echo $exam["sql"];?></span>
-		<span class="meta">(~<?php echo $total_rows; ?> total, Query took <?php echo $exam["execution_time"]; ?> sec)</span>
+		<span class="meta">(~<?php echo isset($total_rows) ? $total_rows : count($exam['query']->result()); ?> total, Query took <?php echo $exam["execution_time"]; ?> sec)</span>
 	</div>
 
     <table border="0" cellpadding="0" cellspacing="1" style="width:100%;margin-top:10px;">

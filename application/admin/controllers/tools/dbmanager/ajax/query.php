@@ -52,10 +52,6 @@ class query extends Controller
 			$this->db->query($_POST["sql"]);
 			echo "Affected rows: ".$this->db->affected_rows();
 
-        } elseif(count($show) > 0) {   
-           
-        	echo "<!--exam-->";
-           
         } else {
 
 			$list_tables = $_POST["tables"];
@@ -90,7 +86,7 @@ class query extends Controller
         	}
         }
 	}
-	
+
 	function init_db () {
 
 		$project = $_POST['project'] != "" ? $_POST['project'] : $_SESSION['project'];
