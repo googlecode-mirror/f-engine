@@ -872,6 +872,7 @@ function init_paginationLinks() {
 
                     $("#exam-results > table, #exam-results > div#content").replaceWith(resp);
                     $("#exam-results div.pagination").hide();
+                    $("#current_query span:eq(1)").hide();
                 }  
 		});
 		
@@ -1010,8 +1011,8 @@ function initTab_sql() {
 
         		var newquery = $("#query textarea").attr("value");
 
-        		if(response == "<!--exam-->" && $('ul.jqueryFileTree a.selected').length == 0) {
         		//table undetected, just fire the query
+        		if(response == "<!--exam-->" && $('ul.jqueryFileTree a.selected').length == 0) {
 
                     if( $("#db_list li a.selected").length == 0 ) {
 
@@ -1027,18 +1028,18 @@ function initTab_sql() {
                     	$("#exam-results a.refresh:eq(0)").click();
                     }
 
-                
-        		} else if($('ul.jqueryFileTree a.selected').attr("title") != response.substring(11)) {
-        		//switch table and fire query
-        			
+                //switch table and fire query
+        		} else if(  response.substring(0,11) == "<!--exam-->" && response.substring(11) != "" && 
+        					$('ul.jqueryFileTree a.selected').attr("title") != response.substring(11)) {
+
         			var newtable = response.substring(11);
         			$("#exam-results a.refresh:eq(0)").addClass("keepQuery");
         			$("#current_query span:eq(0)").text(newquery);
         			$('ul.jqueryFileTree a[title='+newtable+']').click();
-                    
+                
+        		//keep table and fire query
         		} else if(response.substring(0,11) == "<!--exam-->") {
-        		// keep table and fire query
-        			
+
                 	//tab switch
                 	if($("#tableContent ul.idTabs li:eq(0)").hasClass("oculto")) {
                 		$("#tableContent ul.idTabs li:eq(0)").removeClass("oculto");
@@ -1074,6 +1075,20 @@ function initTab_sql() {
             		$("#exam-results a.refresh:eq(0)").attr("href",targetPage);
             		$("#exam-results a.refresh:eq(0)").click();
 
+            	//create/drop table queries
+        		} else if(response.substring(0,14) == "<!--refresh-->") {
+
+        			if(response.substring(14) != "") {
+
+        				/*** TODO:: refresh table list ***/
+        				$('#sqlResult code').html(response).parent().show();
+        				
+        			} else {
+        				
+        				document.location.href = document.location.href;
+        			}
+
+            	//show results (Usually for insert and updates) 
             	} else {
 
                 	$('#sqlResult code').html(response).parent().show();

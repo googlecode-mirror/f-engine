@@ -45,12 +45,23 @@ class query extends Controller
 
         if ( count($show) == 0 and (
              count($update) > 0 || count($insert) > 0 ||
-             count($delete) > 0 || count($drop) > 0 ||
-             count($create) > 0 || count($alter) > 0)) {
+             count($delete) > 0 || count($alter) > 0)) {
 
 			$this->init_db();
 			$this->db->query($_POST["sql"]);
 			echo "Affected rows: ".$this->db->affected_rows();
+
+        } elseif( count($show) == 0 and count($drop) > 0 ) {	
+			
+        	$this->init_db();
+			$this->db->query($_POST["sql"]);
+        	echo "<!--refresh-->";
+        	
+        } elseif( count($show) == 0 and count($create) > 0 ) {	
+			
+        	$this->init_db();
+			$this->db->query($_POST["sql"]);
+        	echo "<!--refresh-->Your SQL query has been executed successfully";
 
         } else {
 
