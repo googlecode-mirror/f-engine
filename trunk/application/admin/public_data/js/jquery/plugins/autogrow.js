@@ -17,8 +17,9 @@
  * 
  * F-engine modifications:
  * 
- * Adapted to ajax web pages, now it creates the div class autogrow-dummy once instead of one per call.
+ * Adapted for ajax web pages, now it creates containner div once instead of one per call.
  * Onload height detection fixed when text height is bigger or equal to textarea max_height.
+ * fixed unspaced long strings issues
  */
  
 (function(jQuery) {
@@ -104,7 +105,6 @@
 							'width'      : this.textarea.css('width'),
 							'padding'    : this.textarea.css('padding')
 							}).appendTo('body');
-			
 
 			// Strip HTML tags
 			var html = this.textarea.val().replace(/(<|>)/g, '');
@@ -118,10 +118,23 @@
 			{
 				html = html.replace(/\n/g, '<br />new');
 			}
-			
+
 			if (this.dummy.html() != html)
 			{
-				this.dummy.html(html);	
+				this.dummy.html("<span>" + html + "</span>");	
+				
+				//fix unespaced long strings
+				if(this.dummy.width()  < this.dummy.children("span").width()) {
+					
+					var dummyStr = "";
+					for(i=0; i < 22; i++) {
+						
+						dummyStr += "D";
+					}
+					dummyStr += " ";
+
+					this.dummy.html(html.replace(/[^\s]{20}/g,dummyStr));
+				}
 
 				if (this.max_height > 0 && (this.dummy.height() >= this.max_height))
 				{

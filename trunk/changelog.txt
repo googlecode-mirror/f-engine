@@ -18,6 +18,8 @@ New in v0.5
 	- Filemanager:
 		- New folder/file permissions fixed
 		- Added library template
+	- Javascript
+		- Autogrow jquery plugin unspaced long string issues fixed
 
 New in v0.4.2
 	- Dbmanager:
