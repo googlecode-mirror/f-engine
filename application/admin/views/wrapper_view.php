@@ -90,11 +90,25 @@
 
 		<!-- javascript -->
 		<?php  if(isset($js)) {
-	
+		
+			$kont = 0;
+			if(isset($js["local"])) {
+				foreach($js["local"] as $item) {
+					
+					$kont++;
+				}
+			}
+			if(isset($js["remote"])) {
+				foreach($js["remote"] as $item) {
+					
+					$kont++;
+				}
+			}
+		
 			if ($fe_output_conf["js"] == true) {
 				
 				for($i=0; $i <= count($js); $i++) {
-	
+		
 					if(isset($js["local"][$i])) {
 					?>
 						<script src="<?php echo public_data("compact.php");?>?js=<?php echo $js["local"][$i];?>" type="text/javascript"></script>
@@ -104,13 +118,13 @@
 						<script src="<?php echo $js["remote"][$i];?>" type="text/javascript"></script>
 					<?php
 					} //endif
-	
+		
 				} //end for
 				
 			} else {
-				
-				for($i=0; $i < count($js); $i++) {
-	
+		
+				for($i=0; $i < $kont; $i++) {
+		
 					if(isset($js["local"][$i])) {
 					?>
 						<script src="<?php echo public_data("js/".$js["local"][$i]);?>" type="text/javascript"></script>
@@ -120,24 +134,17 @@
 						<script src="<?php echo $js["remote"][$i];?>" type="text/javascript"></script>
 					<?php
 					} //endif
-	
+		
 				} //end for*/
 			}
 			
 			if(isset($this->ajax)) {
-				?>
-				<script type="text/javascript">
-				/*<![CDATA[*/
-				<?php 
-				foreach($this->ajax->getAll() as $script) {	echo $script;	}		
-				?>
-				/*]]>*/
-				</script>
-				<?php 
-			} //endif ajax
-	
-	    } //endif  
-	    ?>
+				echo $this->ajax->getString();	
+			}
+		
+		    } //endif  
+		    ?>
+
 	    <script type="text/javascript">
 			window.onload = function(){
 				for (i = 0; i < JS2EXEC.length; i++) JS2EXEC[i]();
