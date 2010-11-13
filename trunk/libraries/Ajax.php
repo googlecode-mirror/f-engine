@@ -32,6 +32,8 @@ class CI_Ajax {
 	var $element_counter;
 	var $timer_counter;
 
+	var $ui_counter;
+
 	var $code;
 	
 	var $fe;
@@ -52,6 +54,7 @@ class CI_Ajax {
 		$this->button_counter = 0;
 		$this->element_counter = 0;
 		$this->timer_counter = 0;
+		$this->ui_counter = 0;
 
 		$this->code = array();
 		$this->functions = array();
@@ -135,7 +138,7 @@ class CI_Ajax {
 			'success':function(html){".$success."}});
 			return false;
 			});\n";
-		
+
 		$this->element_counter++;
 	}
 
@@ -161,22 +164,56 @@ class CI_Ajax {
 		$this->timer_counter++;
 	}
 
+	function autocomplete($inputName,$target,$options =array()) {
+
+		$random = rand(0,100);
+
+		$this->code[] = '$("#'.$inputName."_".$random.'").autocomplete({
+            source: function(req, add){
+                $.ajax({
+                    url: "'.site_url($target).'",
+                    dataType: "json",
+                    type: "POST",
+                    data: req,
+                    success: function(data){
+                        if(data.response.length > 0){
+                           add(data.response);
+                        }
+                    }
+                });
+            }
+        });';
+		$this->ui_counter++;
+
+		return '<input type="text" name="'.$inputName.'" id="'.$inputName."_".$random.'" />';
+	}
+	
+	function datePicker($inputName) {
+
+		$random = rand(0,100);
+		$this->code[] = '$("#'.$inputName."_".$random.'").datepicker();';
+		$this->ui_counter++;
+
+		return '<input type="text" name="'.$inputName.'" id="'.$inputName."_".$random.'" />';
+	}
+
 	function itemNum() {
 
-		return ($this->element_counter + $this->link_counter + $this->button_counter + $this->timer_counter);
+		return ($this->element_counter + $this->link_counter + $this->button_counter 
+		+ $this->timer_counter + $this->ui_counter);
 	}
 
 	function getString() {
 
 		if(IS_AJAX == true) {
-		
+
 			$check_jquery = false;
-			
+
 		} else {
-			
+
 			$check_jquery = true;
 		}
-		
+
 		$output = "\n<script type='text/javascript'>\n/*<![CDATA[*/\n";
 
 		foreach($this->functions as $script) {	
@@ -202,22 +239,77 @@ class CI_Ajax {
 	function checkJquery() {
 
 		$time = time();
-		$str = "if(typeof(jQuery) != 'function') {
+		if($this->ui_counter > 0) {
 
-			var file = document.createElement('script');
-			file.src = '".public_data("js/jquery.js")."';
-			file.type = 'text/javascript';
-			document.getElementsByTagName('head')[0].appendChild(file);
+			$str = "
+			if(typeof(jQuery) != 'function') {
 
-			_".$time."();
+				var file = document.createElement('script');
+				file.src = '".public_data("js/jquery.js")."';
+				file.type = 'text/javascript';
+				document.getElementsByTagName('head')[0].appendChild(file);
+
+				var file = document.createElement('script');
+				file.src = '".public_data("js/jquery-ui.js")."';
+				file.type = 'text/javascript';
+				document.getElementsByTagName('head')[0].appendChild(file);
+
+				_".$time."();
+
+			} else {
+
+				_".$time."();
+			}\n
+
+			function checkCss_".$time."() {
+
+				var css = false;
+
+				$('link').each(function () { 
+					if($(this).attr('href').indexOf('jquery-ui.css') >= 0) {
+
+						css = true;
+					} 
+				});
+
+				if(!css) {
+
+					var file	= document.createElement('link');
+					file.href	= '".public_data("css/jquery-ui.css")."';
+					file.type	= 'text/css';
+					file.rel	= 'stylesheet';
+					file.media	= 'screen, projection';
+					document.getElementsByTagName('head')[0].appendChild(file);
+				}
+			}
+
+			function _".$time."() {
+
+				if(typeof(jQuery) != 'function' ||  typeof(jQuery().autocomplete) != 'function') { setTimeout('_".$time."()',700); return; }
+				checkCss_".$time."();
+			";
+		
 		} else {
+		
+			$str = "
+			if(typeof(jQuery) != 'function') {
 	
-			_".$time."();
-		}\n
-		function _".$time."() {
-
-			if(typeof(jQuery) != 'function') { setTimeout('_".$time."()',700); return; }
-		";
+				var file = document.createElement('script');
+				file.src = '".public_data("js/jquery.js")."';
+				file.type = 'text/javascript';
+				document.getElementsByTagName('head')[0].appendChild(file);
+	
+				_".$time."();
+			} else {
+		
+				_".$time."();
+			}\n
+			function _".$time."() {
+	
+				if(typeof(jQuery) != 'function') { setTimeout('_".$time."()',700); return; }
+				checkCss_".$time."();
+			";
+		}
 
 		return $str;
 	}

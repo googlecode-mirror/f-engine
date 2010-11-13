@@ -25,7 +25,7 @@ class CI_Loader extends Loader {
 		$this->_ci_is_php5 = (floor(phpversion()) >= 5) ? TRUE : FALSE;
 		$this->_ci_view_path = APPPATH.'views/';
 		$this->_ci_ob_level  = ob_get_level();
-	
+
 		log_message('debug', "Loader Class Initialized");
 	}
 
@@ -73,24 +73,24 @@ class CI_Loader extends Loader {
 		if(!isset($wrapper)) {
 			$wrapper = isset($conf["wrapper"]) ? $conf[$index]["wrapper"] : "wrapper";
 		}
-		
+
 		$data = array_merge($conf[$index], $data);
 
-		/*** set javascript files and ajax events ***/
-		$fe =& get_instance();
-		if(isset($fe->ajax) and $fe->ajax->itemNum() > 0) {
-			if(!in_array('jquery.js',$data["js"]))
-				$data["js"][] = 'jquery.js';
+		if(!function_exists("public_data")) {
+
+			$fe =& get_instance();
+			$fe->load->helper("url");
 		}
 
+		/*** set javascript files and ajax events ***/
 		if(isset($data["js"]) and count($data["js"]) > 0) {
 
 			require(APPPATH.'config/config'.EXT);
-	
+
 			if(!is_array($data["js"]))	$data["js"] = array($data["js"]);
 
 			if($config['compact']['js']) {
-				
+
 				$external_js = array();
 				$local_js = array();
 				$tmp_js = array();
@@ -120,21 +120,21 @@ class CI_Loader extends Loader {
 					}
 					$i++;
 				} //endforeach
-				
+
 				if(count($external_js) > 0) {
-		
+
 					$data["js"] = array(
 						"remote" => $external_js,
 						"local" => $local_js
 					);
 				} else {
-				
+
 					$data["js"] = array(
 						"local" => $local_js
 					);
 				}
 			} else {
-			
+
 				$data["js"] = array(
 					"local" => $data["js"]
 				);
@@ -154,7 +154,7 @@ class CI_Loader extends Loader {
 		if (class_exists('CI_Cache') AND $return == false AND isset($CI->cache) AND is_object($CI->cache))
 		{
 			return FALSE;
-		}	
+		}
 
 		require_once(BASEPATH.'cache/cache'.EXT);
 
@@ -168,7 +168,8 @@ class CI_Loader extends Loader {
 			// Initialize the cache variable.  Needed to prevent   
 			// reference errors with some configurations
 			$CI->cache = '';
-			$CI->cache = new CI_Cache($driver, $conf);		}
+			$CI->cache = new CI_Cache($driver, $conf);		
+		}
 	}
 }
 /* End of file Loader.php */
