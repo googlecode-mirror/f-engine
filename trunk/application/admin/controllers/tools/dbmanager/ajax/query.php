@@ -7,7 +7,7 @@
  * @copyright	Copyright (c) 2010, Mikel Madariaga
  * @license		http://www.f-engine.net/userguide/license
  * @link		http://www.f-engine.net/
- * @since		Version 0.4
+ * @since		Version 0.5
  * @filesource
  */
 class query extends Controller
@@ -19,14 +19,13 @@ class query extends Controller
 	}
 
 	function index() {
-		
+
 		echo "This script is not accesible directly";
 	}
-	
+
 	function ajax() {
 
 		if(!isset($_POST['sql'])) return;
-
 
 		$patterns = array(
 			'/["\'][^,]*["\']/i',
@@ -52,13 +51,13 @@ class query extends Controller
 			echo "Affected rows: ".$this->db->affected_rows();
 
         } elseif( count($show) == 0 and count($drop) > 0 ) {	
-			
+
         	$this->init_db();
 			$this->db->query($_POST["sql"]);
         	echo "<!--refresh-->";
-        	
+
         } elseif( count($show) == 0 and count($create) > 0 ) {	
-			
+
         	$this->init_db();
 			$this->db->query($_POST["sql"]);
         	echo "<!--refresh-->Your SQL query has been executed successfully";
@@ -79,7 +78,7 @@ class query extends Controller
         			if(strtolower($table) != $item) {
 
         				for($i=0; $i < count($list_tables); $i++) {
-       					
+
         					if(strtolower($item) == strtolower($list_tables[$i])) {
         						$table = $list_tables[$i];
         					}
