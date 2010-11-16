@@ -62,8 +62,8 @@ class CI_Ajax {
 
 	// --------------------------------------------------------------------
 
-	function link($text,$target="",$update)
-	{
+	function link($text,$target="",$update) {
+
 		$id = "lnk".$this->link_counter."_".$this->id;
 		$html = "<a id='$id' href='".site_url($target)."'>$text</a>";
 		$this->_ajaxLink($id,site_url($target),$update);
@@ -144,6 +144,7 @@ class CI_Ajax {
 
 	function timer($timer,$target,$update_selector) {
 
+		$target = site_url($target);
 		$time = rand();
 		$success = 'jQuery("'.$update_selector.'").html(html)';
 
@@ -164,11 +165,11 @@ class CI_Ajax {
 		$this->timer_counter++;
 	}
 
-	function autocomplete($inputName,$target,$options =array()) {
+	function autocomplete($input,$target,$options =array()) {
 
 		$random = rand(0,100);
 
-		$this->code[] = '$("#'.$inputName."_".$random.'").autocomplete({
+		$this->code[] = '$("'.$input.'").autocomplete({
             source: function(req, add){
                 $.ajax({
                     url: "'.site_url($target).'",
@@ -184,17 +185,13 @@ class CI_Ajax {
             }
         });';
 		$this->ui_counter++;
-
-		return '<input type="text" name="'.$inputName.'" id="'.$inputName."_".$random.'" />';
 	}
 	
-	function datePicker($inputName) {
+	function datePicker($input) {
 
 		$random = rand(0,100);
-		$this->code[] = '$("#'.$inputName."_".$random.'").datepicker();';
+		$this->code[] = '$("'.$input.'").datepicker();';
 		$this->ui_counter++;
-
-		return '<input type="text" name="'.$inputName.'" id="'.$inputName."_".$random.'" />';
 	}
 
 	function itemNum() {
@@ -307,7 +304,6 @@ class CI_Ajax {
 			function _".$time."() {
 	
 				if(typeof(jQuery) != 'function') { setTimeout('_".$time."()',700); return; }
-				checkCss_".$time."();
 			";
 		}
 

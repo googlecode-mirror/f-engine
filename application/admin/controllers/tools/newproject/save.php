@@ -98,7 +98,7 @@ class save extends Controller {
 		file_put_contents($pname."/config/database.php",$database);
 		redirect("","refresh");
 	}
-	
+
 	function run_folder ($xml,$pname,$debug=false) {
 
 		if($debug) print_r($xml);
