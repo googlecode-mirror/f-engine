@@ -83,25 +83,41 @@
 </div>
 
 <div id="sql" style="clear:both;">
-	<div style="clear: both; padding-top: 15px;">
+	<div style="clear: both;">
 		<div id="query">
-			<form method="post" action="<?php echo site_url()?>tools/dbmanager/ajax/query">
-				<div class="query">
-				<?php if (isset($_POST['table'])) { ?>
-					<textarea  style="min-height:50px; padding:3px; max-height: 300px; width:450px;" class="expanding" id="sqlquery" name="sql">SELECT * FROM (`<?php  echo $_POST['table']?>`)</textarea>
-				<?php } else { ?>
-					<textarea  style="min-height:50px; padding:3px; max-height: 300px; width:450px;" class="expanding" id="sqlquery" name="sql"></textarea>
-				<?php }//endif ?>
+			<form method="post" action="<?php echo site_url()?>tools/dbmanager/ajax/query" style="width:560px;">
+
+				<div class="query" style="float:left;min-width:400px;padding-left:4px;">
+
+					<?php if (isset($_POST['table'])) { ?>
+						<textarea  style="min-height:150px; padding:3px; max-height: 300px; width:380px;" class="expanding" id="sqlquery" name="sql">SELECT * FROM (`<?php  echo $_POST['table']?>`)</textarea>
+					<?php } else { ?>
+						<textarea  style="min-height:150px; padding:3px; max-height: 300px; width:550px;" class="expanding" id="sqlquery" name="sql"></textarea>
+					<?php }//endif ?>
+					<center><input type="submit" value="Run query" /></center>
 				</div>
-		        <?php foreach($tables as $table):?>
+
+				<?php if(isset($structure)) { ?>
+					<div style="width:150px;border:1px solid #ccc;float:left;margin-top:3px;padding:2px;overflow-x:hidden;">
+						
+						<ul class="jqueryFileTree">
+						<?php foreach($structure as $field){ ?>
+							<li class="file ext_bat">
+								<a title="<?php echo $field->Field;?>"><?php echo $field->Field;?></a>
+							</li>
+						<?php }//endforeach ?>
+						</ul>
+					</div>
+				<?php }//endif ?>
+				
+		        <?php foreach($tables as $table) {?>
               		<input type="hidden" name="tables[]" value="<?php  echo $table;?>" />
-                <?php endforeach;?>
-                <input type="submit" value="Run query" style="margin-left:375px;" />
+                <?php }//endforeach;?>
 
                 <div id="sqlResult" style="display:none;width:460px;">
 					<code></code>
 				</div>
-                
+
 			</form>
 		</div>
 	</div>
@@ -118,20 +134,20 @@
 				<th>Value</th>
 			</tr>
             
-	        <?php foreach($structure as $field):?>
+	        <?php foreach($structure as $field){ ?>
 		        <tr>
 		            <td>
-		                <span title="<?php  echo $field->Type;?>"><?php  echo $field->Field;?></span>
+		                <span title="<?php  echo $field->Type;?>"><?php echo $field->Field;?></span>
 		            </td>
 		            <td width="100%">
-                        <?php if (!$field->Extra == "auto_increment"):?>
+                        <?php if (!$field->Extra == "auto_increment") { ?>
                             <textarea class="expanding" name="<?php  echo $field->Field;?>" style="margin:0; padding:3px; min-height:15px; height:15px; max-height: 120px; width:98%;"></textarea>
-                        <?php else:?>
+                        <?php } else { ?>
                             <textarea name="<?php  echo $field->Field;?>" style="margin:0; padding:3px; height:15px; width:98%;" class="primary" disabled="disabled">Primary key - auto increment </textarea>
-                        <?php endif;?>
+                        <?php } //endif;?>
 		            </td>
 		        </tr>
-	        <?php endforeach;?>
+	        <?php } //endforeach;?>
             
 	    </table>
 		<input style="margin: 15px 0 0 300px;" type="submit" value="send">
