@@ -8,11 +8,8 @@
  * @since		Version 0.5
  * @filesource
  */
-jQuery.expr[':'].contains = function(a,i,m){
-     return jQuery(a).text().toUpperCase().indexOf(m[3].toUpperCase())>=0;
-};
 
-//onload
+/*** onload ***/
 $(document).ready(function () {
 
 	$("div#id, div#tables").show();
@@ -26,6 +23,37 @@ $(document).ready(function () {
 	processList();
 
 	$("#db_list input.filter").focus();
+});
+
+/*** jquery modifiers//extensions ***/
+jQuery.expr[':'].contains = function(a,i,m){
+     return jQuery(a).text().toUpperCase().indexOf(m[3].toUpperCase())>=0;
+};
+
+jQuery.fn.extend({
+	insertAtCaret: function(myValue){
+	  this.each(function(i) {
+	    if (document.selection) {
+	      this.focus();
+	      sel = document.selection.createRange();
+	      sel.text = myValue;
+	      this.focus();
+	    }
+	    else if (this.selectionStart || this.selectionStart == '0') {
+	      var startPos = this.selectionStart;
+	      var endPos = this.selectionEnd;
+	      var scrollTop = this.scrollTop;
+	      this.value = this.value.substring(0, startPos)+myValue+this.value.substring(endPos,this.value.length);
+	      this.focus();
+	      this.selectionStart = startPos + myValue.length;
+	      this.selectionEnd = startPos + myValue.length;
+	      this.scrollTop = scrollTop;
+	    } else {
+	      this.value += myValue;
+	      this.focus();
+	    }
+	  })
+	}
 });
 
 /***	Switch database configuration
@@ -105,7 +133,18 @@ $('#db_list a').each(function () {
 		  		 data: values,
 				 success: function(msg) {
 					loadContent(msg);		
-				 }
+				 },
+				 error: function (xhr, ajaxOptions, thrownError) {
+
+					debug = xhr.responseText;
+					resp = debug.substring(debug.indexOf("<body"),debug.indexOf("</body"));
+
+                    $("#exam-results > table, #exam-results > div#content").replaceWith(resp);
+                    $("#exam-results div.pagination").hide();
+                    $("#current_query span:eq(1)").hide();
+                    
+                    $("#tableContent ul.btnTabs li:eq(0)").show().click()
+                 }  
 		});
     });
 });
@@ -452,6 +491,10 @@ function loadContent (msg) {
 				  		 data: "table="+$('#db_list ul.jqueryFileTree a.selected').text() + "&dbconf=" + $("select[name=db_conf]").attr("value") +"&fullLoad=true&project=" + $("#currentprojectname").attr("rel"),
 						 success: function(msg) {
 							loadContent(msg);		
+						 },
+						 error: function () {
+
+							 alert("error");
 						 }
 				});
 
@@ -868,7 +911,6 @@ function init_paginationLinks() {
 					loading();
 					debug = xhr.responseText;
 					resp = debug.substring(debug.indexOf("<body"),debug.indexOf("</body"));
-					resp = resp.replace("select count(*) as itemNum from (","").replace(") as tmp","");
 
                     $("#exam-results > table, #exam-results > div#content").replaceWith(resp);
                     $("#exam-results div.pagination").hide();
@@ -998,6 +1040,11 @@ function initTab_backup () {
 
 function initTab_sql() {
 
+	$("#query ul.jqueryFileTree a").click(function () {
+
+		$("#sqlquery").insertAtCaret($(this).text());		
+	});
+
     $('#query input').click(function () {
 
     	$("#sqlResult").hide();
@@ -1009,7 +1056,7 @@ function initTab_sql() {
         	data : form.serialize()+"&project=" + $("#currentprojectname").attr("rel") + "&dbconf=" + $("select[name=db_conf]").attr("value"),
         	success : function (response) {
 
-        		var newquery = $("#query textarea").attr("value");
+        		var newquery = $("#query textarea").attr("value").replace(/,(?=.*(from|where).*)/ig,", ");
 
         		//table undetected, just fire the query
         		if(response == "<!--exam-->" && $('ul.jqueryFileTree a.selected').length == 0) {
@@ -1094,8 +1141,9 @@ function initTab_sql() {
                 	$('#sqlResult code').html(response).parent().show();
             	}
 
-            }, error: function (xhr, ajaxOptions, thrownError){
+            }, error: function (xhr, ajaxOptions, thrownError) {
 
+            	alert("error");
 				debug = xhr.responseText;
 				response = debug.substring(debug.indexOf("<body"),debug.indexOf("</body"));
 
