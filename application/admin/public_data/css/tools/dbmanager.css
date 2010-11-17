@@ -54,6 +54,7 @@ div#current_query span.meta {
 	font-style: italic;
 	font-size:0.9em;
 	display:block;
+	padding-top:4px;
 }
 
 div#tableContent {
