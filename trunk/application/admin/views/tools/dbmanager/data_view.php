@@ -72,7 +72,8 @@
         	</a>
         	</div>
 			<div id="current_query" style="border:1px solid #f26d6d;background-color:#faf799;padding:2px;">
-				<img class="oculto" src="<?php echo public_data();?>img/tools/preloader.gif" alt="loading" title="loading" style="vertical-align:sub;" />
+				<img class="oculto" src="<?php echo public_data();?>img/tools/preloader.gif" alt="loading" title="loading" style="vertical-align:sub;float:left;" />
+				<span style="max-height:140px;overflow-y:scroll;display:block;"></span>
 				<span></span>
 			</div>
 			<div id="content"></div>
@@ -98,7 +99,7 @@
 				</div>
 
 				<?php if(isset($structure)) { ?>
-					<div style="width:150px;border:1px solid #ccc;float:left;margin-top:3px;padding:2px;overflow-x:hidden;">
+					<div style="max-height:150px;width:140px;border:1px solid #ccc;float:left;margin-top:3px;padding:2px;overflow-x:hidden;">
 						
 						<ul class="jqueryFileTree">
 						<?php foreach($structure as $field){ ?>

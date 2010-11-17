@@ -11,8 +11,8 @@
     </div>
 
 	<div id="current_query">
-		<img class="oculto" src="<?php echo public_data();?>img/tools/preloader.gif" alt="loading" title="loading" style="vertical-align:sub;" />
-		<span><?php echo preg_replace("/,(?=.*(from|where).*)/i",", ",$exam["sql"]);?></span>
+		<img class="oculto" src="<?php echo public_data();?>img/tools/preloader.gif" alt="loading" title="loading" style="vertical-align:sub;float:left;" />
+		<span style="max-height:140px;overflow-y:auto;display:block;"><?php echo preg_replace("/,(?=.*(from|where).*)/i",", ",$exam["sql"]);?></span>
 		<span class="meta">(~<?php echo isset($total_rows) ? $total_rows : count($exam['query']->result()); ?> total, Query took <?php echo $exam["execution_time"]; ?> sec)</span>
 	</div>
 

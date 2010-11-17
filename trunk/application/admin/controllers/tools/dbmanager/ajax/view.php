@@ -184,7 +184,7 @@ class view extends Controller
 
 			} else {
 
-				if(isset($_POST["table"]))
+				if(isset($_POST["table"]) and $_POST["table"] != "")
 					$fields = $this->db->list_fields($_POST["table"]);
 				else 
 					$fields = array(); 
@@ -214,6 +214,7 @@ class view extends Controller
 			// Now let's get the field names				
 			$primary = $this->get_primary($currentable);
 			if(!isset($primary))    $primary = false;
+			
 			$fields = $this->db->list_fields($currentable);
 		}
 
