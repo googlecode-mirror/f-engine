@@ -153,6 +153,34 @@ div#tableContent td {
 	padding: 6px;
 }
 
+/*** sql tab ***/
+div#query div.db_fields {
+	
+	display:none;
+	max-height:150px;
+	width:140px;
+	border:1px solid #ccc;
+	float:left;
+	margin-top:3px;
+	padding:2px;
+	overflow-x:hidden;
+}
+
+div#field_autocomplete {
+	
+	float:left;
+	background-color:white;
+	opacity:0.8;
+	max-height:150px;
+	width:140px;
+	border:1px solid #ccc;
+	margin-top:3px;
+	margin-left:3px;
+	padding:2px;
+	overflow-x:hidden;
+}
+
+
 /*** other tab ***/
 div#tableContent div#other h2 {
 

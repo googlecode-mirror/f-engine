@@ -54,6 +54,8 @@
 		this.max_height		  	= this.options.maxHeight || parseInt(jQuery(e).css('max-height'));;
 		this.textarea		  	= jQuery(e);
 		
+		this.val				= "";
+		
 		if(this.line_height == NaN)
 		  this.line_height = 0;
 
@@ -61,9 +63,7 @@
 		this.init();
 	};
 
-	jQuery.autogrow.fn = jQuery.autogrow.prototype = {
-    autogrow: '1.2.2'
-  };
+	jQuery.autogrow.fn = jQuery.autogrow.prototype = { autogrow: '1.2.2' };
 
 	jQuery.autogrow.fn.extend = jQuery.autogrow.extend = jQuery.extend;
 
@@ -90,7 +90,7 @@
 
 		startExpand: function() {				
 		  var self = this;
-			this.interval = window.setInterval(function() {self.checkExpand()}, 300);
+			this.interval = window.setInterval(function() {self.checkExpand()}, 500);
 		},
 
 		stopExpand: function() {
@@ -98,7 +98,16 @@
 		},
 
 		checkExpand: function() {
+
+			if(this.val == this.textarea.val()) {
+
+				return;
+
+			} else {
 				
+				this.val = this.textarea.val();
+			}
+
 			this.dummy.css({
 							'font-size'  : this.textarea.css('font-size'),
 							'font-family': this.textarea.css('font-family'),
@@ -107,7 +116,7 @@
 							}).appendTo('body');
 
 			// Strip HTML tags
-			var html = this.textarea.val().replace(/(<|>)/g, '');
+			var html = this.val.replace(/(<|>)/g, '');
 
 			// IE is different, as per usual
 			if ($.browser.msie)
@@ -122,7 +131,7 @@
 			if (this.dummy.html() != html)
 			{
 				this.dummy.html("<span>" + html + "</span>");	
-				
+
 				//fix unespaced long strings
 				if(this.dummy.width()  < this.dummy.children("span").width()) {
 					
