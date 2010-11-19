@@ -83,45 +83,35 @@
 	<?php }//endif ?>
 </div>
 
-<div id="sql" style="clear:both;">
-	<div style="clear: both;">
-		<div id="query">
-			<form method="post" action="<?php echo site_url()?>tools/dbmanager/ajax/query" style="width:560px;">
+<div id="sql" style="clear:both;display:table;width:560px;">
 
-				<div class="query" style="float:left;min-width:400px;padding-left:4px;">
+	<div id="query">
+		<form method="post" action="<?php echo site_url()?>tools/dbmanager/ajax/query">
 
-					<?php if (isset($_POST['table'])) { ?>
-						<textarea  style="min-height:150px; padding:3px; max-height: 300px; width:380px;" class="expanding" id="sqlquery" name="sql">SELECT * FROM (`<?php  echo $_POST['table']?>`)</textarea>
-					<?php } else { ?>
-						<textarea  style="min-height:150px; padding:3px; max-height: 300px; width:550px;" class="expanding" id="sqlquery" name="sql"></textarea>
-					<?php }//endif ?>
-					<center><input type="submit" value="Run query" /></center>
-				</div>
-
-				<?php if(isset($structure)) { ?>
-					<div style="max-height:150px;width:140px;border:1px solid #ccc;float:left;margin-top:3px;padding:2px;overflow-x:hidden;">
-						
-						<ul class="jqueryFileTree">
-						<?php foreach($structure as $field){ ?>
-							<li class="file ext_bat">
-								<a title="<?php echo $field->Field;?>"><?php echo $field->Field;?></a>
-							</li>
-						<?php }//endforeach ?>
-						</ul>
-					</div>
+			<div class="query" style="float:left;min-width:400px;padding-left:4px;">
+				<?php if (isset($_POST['table'])) { ?>
+					<textarea  style="min-height:150px; padding:3px; max-height: 300px; width:550px;" class="expanding" id="sqlquery" name="sql">SELECT * FROM (`<?php  echo $_POST['table']?>`)</textarea>
+				<?php } else { ?>
+					<textarea  style="min-height:150px; padding:3px; max-height: 300px; width:550px;" class="expanding" id="sqlquery" name="sql"></textarea>
 				<?php }//endif ?>
-				
-		        <?php foreach($tables as $table) {?>
-              		<input type="hidden" name="tables[]" value="<?php  echo $table;?>" />
+				<center><input type="submit" value="Run query" /></center>
+			</div>
+
+	        <?php foreach($tables as $table) {?>
+              	<input type="hidden" name="tables[]" value="<?php  echo $table;?>" />
                 <?php }//endforeach;?>
 
                 <div id="sqlResult" style="display:none;width:460px;">
-					<code></code>
-				</div>
+				<code></code>
+			</div>
+			<div id="field_autocomplete" class="oculto">
+				<img src="<?php echo public_data("img/tools/help2.png");?>" style="vertical-align:sub;" /> 
+				<strong>Table fields</strong>
+			</div>
 
-			</form>
-		</div>
+		</form>
 	</div>
+
 </div>
 
 <?php if(isset($structure)) { ?>	
