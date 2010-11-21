@@ -13,18 +13,20 @@
 class view extends Controller 
 {
 	private $isView = false;
-	
+	private $createTable = false;
+
 	function view() {
 
 		parent::Controller();
 		$this->load->helper(array('url','form'));
+		//$this->output->enable_profiler = true;
 	}
-	
+
 	function index() {
-		
+
 		echo "This script is not accesible directly";
 	}
-	
+
 	function ajax($offset=0) {
 
 		//Set default items per page
@@ -54,7 +56,6 @@ class view extends Controller
 
 		//database table list
 		$listables = $this->db->list_tables();
-
 
 		/*** Exam tab ***/
 		if(isset($_POST["query"])) {
@@ -107,11 +108,11 @@ class view extends Controller
 			} elseif( isset($_POST["table"]) and $_POST["table"] != "" ) {
 
 				if($actions == false and $pagination == false) {
-					
+
 					$query_str = $query_nolimit;
 
 				} else {
-					
+
 					$query_str = $query_nolimit." LIMIT ".$offset.",".$items_per_page;
 				}
 
@@ -120,7 +121,6 @@ class view extends Controller
 				$query_str = $query_nolimit;
 			}
 
-			
 			//skip errors
 			$this->db->skip_errors = TRUE;
 			$itemCountSql = "select count(*) as itemNum from (".$query_nolimit.") as tmp";
@@ -129,9 +129,9 @@ class view extends Controller
 
 			//disable item count (pagination) when query has "order by rand()"
 			if(strpos($query_nolimit,"rand()")) {
-			
+
 				$total_rows = $rs->row()->itemNum > $items_per_page ? $rs->row()->itemNum : $items_per_page;
-				
+
 			} elseif(!is_string($rs)) {
 
 				$total_rows = $rs->row()->itemNum;
@@ -205,7 +205,7 @@ class view extends Controller
 			// Run the query
 			$this->benchmark->mark('query_execution_time_start');
 			$query = $this->db->get($_POST['table'], $items_per_page, $offset);
-			
+
 			$this->benchmark->mark('query_execution_time_end');
 			$execution_time = $this->benchmark->elapsed_time('query_execution_time_start', 'query_execution_time_end'); 
 
@@ -214,19 +214,19 @@ class view extends Controller
 			// Now let's get the field names				
 			$primary = $this->get_primary($currentable);
 			if(!isset($primary))    $primary = false;
-			
+
 			$fields = $this->db->list_fields($currentable);
 		}
 
 		if(isset($pagination) && $pagination === false) {
-			
+
 			$paginate = '';
 			$data = array(
 				'offset' => 0,
 			);
 
 		} else {
-			
+
 			$this->load->library('pagination');
 
 			// Pagination
@@ -241,7 +241,7 @@ class view extends Controller
 							'first_link'	 => '«',
 							'last_link'		 => '»'
 			);
-	
+
 			$this->pagination->initialize($data);
 			$paginate = $this->pagination->create_links();
 		}
@@ -268,8 +268,8 @@ class view extends Controller
 
         if(!isset($_POST['fullLoad'])) {
 
-               $this->load->view('tools/dbmanager/exam',$data);
-               return;
+			$this->load->view('tools/dbmanager/exam',$data);
+			return;
         }
 
 		/*** get data for insert and structure tabs ***/
@@ -279,9 +279,9 @@ class view extends Controller
         }
 
         $field = "Create Table";
- 
+
         if(!isset($tmp->$field)) {
-        	
+
         	$field = "Create View";
         }
 
@@ -296,14 +296,21 @@ class view extends Controller
 
     	if($table == '') return '';	
 
-        $sql = "SHOW CREATE TABLE ".$table;
-        $query = $this->db->query($sql)->row();
+    	if(!$this->createTable) {
+
+    		$sql = "SHOW CREATE TABLE ".$table;
+        	$query = $this->createTable = $this->db->query($sql)->row();
+
+    	} else {
+
+    		$query = $this->createTable;
+    	}
 
         if(isset($query->View)) {
 
         	$row = "Create View";
         	$this->isView = true;
- 
+
         } else {
 
         	$row = "Create Table";
@@ -325,21 +332,21 @@ class view extends Controller
         }
 
         if(isset($primary)) {
-            
+
         	if($concat_type)
         		return "primary|".$primary;
         	else
         		return $primary;
         }
-        
+
         if(isset($unique)) {
-            
+
         	if($concat_type)
         		return "unique|".$primary;
         	else
         		return $unique;
         }
-        
+
         return false;
     }
 

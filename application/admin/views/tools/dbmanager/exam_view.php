@@ -22,14 +22,14 @@
             <th width="<?php echo $exam['primary'] == "" ? 80:50; ?>px" class="actions">
                 <center>
                 	<?php if($exam['primary'] == "") { ?>
-                	
+
                 		<img 
                 		alt="This table has not any index defined. Record edition could throw unexpected results" 
                 		title="This table has not any index defined. Record edition could throw unexpected results"
                 		style="vertical-align:text-top;" src="<?php echo public_data("img/tools/table_error.png");?>" />
-                	
-                	<?php }//endif?>
-                	Actions 
+
+                	<?php }//endif ?>
+                	Actions
                 </center>
             </th>
              <?php }// end if ?>

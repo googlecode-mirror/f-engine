@@ -15,7 +15,7 @@ class query extends Controller
 	function query() {
 
 		parent::Controller();
-		session_start();
+		//$this->output->enable_profiler = true;
 	}
 
 	function index() {
@@ -99,6 +99,7 @@ class query extends Controller
 
 	function init_db () {
 
+		session_start();
 		$project = $_POST['project'] != "" ? $_POST['project'] : $_SESSION['project'];
 		if(isset($project)) {
 

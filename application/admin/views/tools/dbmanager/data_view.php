@@ -73,7 +73,7 @@
         	</div>
 			<div id="current_query" style="border:1px solid #f26d6d;background-color:#faf799;padding:2px;">
 				<img class="oculto" src="<?php echo public_data();?>img/tools/preloader.gif" alt="loading" title="loading" style="vertical-align:sub;float:left;" />
-				<span style="max-height:140px;overflow-y:scroll;display:block;"></span>
+				<span style="max-height:140px;overflow-y:auto;display:block;"></span>
 				<span></span>
 			</div>
 			<div id="content"></div>
@@ -96,17 +96,16 @@
 				<?php }//endif ?>
 				<center><input type="submit" value="Run query" /></center>
 			</div>
-
-	        <?php foreach($tables as $table) {?>
-              	<input type="hidden" name="tables[]" value="<?php  echo $table;?>" />
-                <?php }//endforeach;?>
-
-                <div id="sqlResult" style="display:none;width:460px;">
-				<code></code>
-			</div>
 			<div id="field_autocomplete" class="oculto">
 				<img src="<?php echo public_data("img/tools/help2.png");?>" style="vertical-align:sub;" /> 
 				<strong>Table fields</strong>
+			</div>
+	        <?php foreach($tables as $table) {?>
+              	<input type="hidden" name="tables[]" value="<?php  echo strtolower($table);?>" />
+                <?php }//endforeach;?>
+
+                <div id="sqlResult" style="clear: both; padding: 5px; width: 560px;display:none;">
+				<code></code>
 			</div>
 
 		</form>
