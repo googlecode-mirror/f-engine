@@ -1096,7 +1096,7 @@ function initTab_sql() {
 
                     	//hide old results and pagination
                     	$("#exam-results > table, #exam-results > div#content").hide();
-                    	
+
                     	//switch tabs
                     	$("#tableContent ul a[href=#exam]").parent().show();
                     	$("#tableContent ul a[href=#exam]").click();
@@ -1185,6 +1185,7 @@ function initTab_sql() {
     autocomplete = $("#field_autocomplete");
     var autocom_tables = $("#query input[name=tables[]]");
     var autocom_lastPos = 0;
+    var autocom_default = autocomplete.children("ul.default");
     $('#sqlquery').keyup(function(event) {
 
 	    if (document.selection) {
@@ -1207,20 +1208,35 @@ function initTab_sql() {
 
 	    	if(key == " " || key == ",") {
 
-	    		autocomplete.hide();
+	    		autocomplete.removeClass("enabled").children("ul").not(".default").hide();
+	    		if(autocom_default.length > 0) {
+	    			autocomplete.children("strong").text(autocom_default.attr("id").replace("_fields",""));
+	    			autocom_default.show().find("a").show();
+
+	    		} else {
+	    			autocomplete.hide();
+	    		}
 	    		return;
 	    	}
 
 	    	if(key == ".") {
 
 	    		var segments = text.substring(0,cursorPos-1).split(/[^A-Z0-9_\-]/ig);
+	    		autocomplete.addClass("enabled");
 
 	    	} else if(key.match(/[A-Z0-9_\-]/i) == null) {
 
-	    		autocomplete.hide();
+	    		autocomplete.removeClass("enabled");
+	    		autocomplete.children("ul").not(".default").hide();
+	    		if(autocom_default.length > 0) {
+	    			autocomplete.children("strong").text(autocom_default.attr("id").replace("_fields",""));
+	    			autocom_default.show();
+	    		} else {
+	    			autocomplete.hide();
+	    		}
 	    		return;
 
-	    	} else if(autocomplete.filter(":visible").length > 0 || autocomplete.hasClass("noMatch")) {
+	    	} else if((autocomplete.hasClass("enabled") && autocomplete.filter(":visible").length > 0) || autocomplete.hasClass("noMatch")) {
 
 	    		var segments = text.substring(0,cursorPos).split(/[^A-Z0-9_\-]/ig);
 
@@ -1247,7 +1263,7 @@ function initTab_sql() {
 	    			} else if ( visibleItems.length == 1 && skipAutocomplete == false && event.keyCode != 39
 	    					 	&& event.keyCode != 35 && event.keyCode != 36) {
 
-	    				var txt2add = visibleItems.text().replace(segment,"");
+	    				var txt2add = visibleItems.text().toLowerCase().replace(segment.toLowerCase(),"");
 	    				if(txt2add.length > 0) {
 
 	    					var str = text.substring(0,cursorPos) + txt2add + text.substring(cursorPos);		    				
@@ -1261,16 +1277,18 @@ function initTab_sql() {
 	    	} 
 	    }
 
-		if(segments.length > 0) {
+		if(autocomplete.hasClass("enabled") && segments.length > 0) {
 
 			var segment = segments[segments.length -1].toLowerCase();
 			if(autocom_tables.filter('[value="'+segment+'"]').length > 0) {
 
 				if($("#"+segment+"_fields",autocomplete).length > 0) {
 
-					autocomplete.children("ul").addClass("oculto");
-					$("#"+segment+"_fields",autocomplete).removeClass("oculto").find("a").show();
-					autocomplete.show();
+					autocomplete.children("ul").hide();
+					$("#"+segment+"_fields",autocomplete).show().find("a").show();
+					autocomplete.show().children("strong").text(
+							autocomplete.children("ul:visible").attr("id").replace("_fields","")
+					);
 					return;
 
 				} else {
@@ -1285,28 +1303,16 @@ function initTab_sql() {
 						},
 						success: function(resp) {
 
-							autocomplete.children("ul").addClass("oculto");
+							autocomplete.show().children("ul").hide();
 							autocomplete.append(resp);
+							autocomplete.children("strong").text(
+									autocomplete.children("ul:last").attr("id").replace("_fields","")
+							);
 
-							if($("#field_autocomplete:visible").length == 0) {
+							autocomplete.find("ul:last a").bind("click",function () {
 
-								var node = $("#sql"); 
-								if(node.attr("rel") == "") {
-
-									node.attr("rel",node.width())
-
-								} else {
-
-									node.css("width", $("#tableContent").width() + autocomplete.width() + 20);
-								}
-
-								autocomplete.show();
-								autocomplete.find("ul:visible a").bind("click",function () {
-
-									autocomplete.hide();
-									$("#sqlquery").insertAtCaret($(this).text());
-								});
-							}
+								$("#sqlquery").insertAtCaret($(this).text());
+							});
 						}
 					});
 				}
