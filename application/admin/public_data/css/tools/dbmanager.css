@@ -172,12 +172,19 @@ div#field_autocomplete {
 	background-color:white;
 	opacity:0.8;
 	max-height:150px;
-	width:140px;
+	min-width:140px;
 	border:1px solid #ccc;
 	margin-top:3px;
 	margin-left:3px;
 	padding:2px;
 	overflow-x:hidden;
+}
+
+div#field_autocomplete > strong {
+	
+	padding-left:17px;
+	background-image: url(img/tools/help2.png);
+	background-repeat:no-repeat;
 }
 
 

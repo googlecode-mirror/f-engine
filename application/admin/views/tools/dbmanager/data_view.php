@@ -83,7 +83,7 @@
 	<?php }//endif ?>
 </div>
 
-<div id="sql" style="clear:both;display:table;width:560px;">
+<div id="sql" style="clear:both;display:table;width:770px;">
 
 	<div id="query">
 		<form method="post" action="<?php echo site_url()?>tools/dbmanager/ajax/query">
@@ -96,9 +96,17 @@
 				<?php }//endif ?>
 				<center><input type="submit" value="Run query" /></center>
 			</div>
-			<div id="field_autocomplete" class="oculto">
-				<img src="<?php echo public_data("img/tools/help2.png");?>" style="vertical-align:sub;" /> 
-				<strong>Table fields</strong>
+			<div id="field_autocomplete" <?php echo isset($_POST['table']) ? '' : 'class="oculto"'; ?>>
+				<strong><?php echo isset($_POST['table']) ? $_POST['table'] : "Table fields"; ?></strong>
+				<?php if (isset($_POST['table'])) { ?>
+				<ul class="jqueryFileTree default" id="<?php echo $_POST['table']; ?>_fields">
+					<?php foreach($structure as $field){ ?>
+					<li>
+						<a href="#"><?php echo $field->Field;?></a>
+					</li>
+					<?php }//endforeach ?>
+				</ul>
+				<?php }//endif ?>
 			</div>
 	        <?php foreach($tables as $table) {?>
               	<input type="hidden" name="tables[]" value="<?php  echo strtolower($table);?>" />
