@@ -1092,6 +1092,7 @@ function initTab_sql() {
                     if( $("#db_list li a.selected").length == 0 ) {
 
                     	$("#current_query span:eq(0)").text(newquery);
+                    	$("#current_query span:eq(1)").hide();
                     	loading();
 
                     	//hide old results and pagination
@@ -1129,6 +1130,7 @@ function initTab_sql() {
 
                 	$('#sqlResult').hide();
             		$("#current_query span:eq(0)").text(newquery);
+            		$("#current_query span:eq(1)").hide();
             		loading();
 
             		//reset old order by 

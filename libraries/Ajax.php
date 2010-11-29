@@ -94,10 +94,15 @@ class CI_Ajax {
 		return $html;
 	}
 	
-	function _ajaxSubmitButton($id,$update,$redirect) {
+	function _ajaxSubmitButton($id,$update,$redirect = false, $redirectOn = "") {
 
-		$success = 'if(resp != "") { jQuery("'.$update.'").html(resp) } 
-		else { document.location = "'.$redirect.'" }';
+		if($redirect) {
+			$success = 'if(resp == "'.$redirectOn.'") { document.location = "'.$redirect.'" }
+			elseif(resp != "") { jQuery("'.$update.'").html(resp) }';
+		} else {
+			
+			$success = 'if(resp != "") { jQuery("'.$update.'").html(resp) }';
+		}
 
 		$this->code[] = "jQuery('#$id').click(function(){
 			jQuery.ajax({'url':jQuery(this).parents('form').attr('action'),'cache':false,'type':'post',
