@@ -6,49 +6,90 @@ loaded for next requests. Caching any objects or content requiring “heavy” d
 to cut response times and save server resources and memory. 
 </p>
 
-
 <h2>Initializing the Cache Class</h2>
 
-<p>To initialize the Cache Class in your controller constructor, use the <dfn>$this-&gt;load-&gt;cache</dfn> function:</p>
-
-
+<p>To initialize the Ajax Class in your controller constructor, use the the following code:</p>
+<code>
+    $this->load->cache("drivername");
+</code>
+<p>The following drivers are supported:</p>
+<ul>
+	<li>APC</li>
+	<li>File</li>
+	<li>Memcache</li>
+	<li>Sqlite</li>
+	<li>Xcache</li>
+</ul>
+<p>You can modify driver configuration by modifying projectName<strong>/config/cache.php</strong> file 
+or re-define it when cache is loaded:</p>
+<code>
+    $this->load->cache("apc",array("default_expire" => 7400));
+</code>
 <h1>Function Reference</h1>
 
-<h2>$this-&gt;cache-&gt;get();</h2>
+
+<h2>set</h2>
 
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a sapien dolor, feugiat lobortis felis.</p>
+<code>
+$this->cache->set($id, $data);
+</code>
 
+<h2>set_with_tags</h2>
+<p class="important">
+    <strong>Note:</strong>
+    Tags are only supported by sqlite cache driver.
+</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a sapien dolor, feugiat lobortis felis.</p>
+<code>
+$this->cache->set_with_tags($id, $data, $lifetime, $tags)
+</code>
 
-<h2>$this-&gt;cache-&gt;find();</h2>
+<h2>get</h2>
 
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a sapien dolor, feugiat lobortis felis.</p>
+<code>
+$this->cache->get($id, $default);
+</code>
 
 
-<h2>$this-&gt;cache-&gt;set();</h2>
-
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a sapien dolor, feugiat lobortis felis.</p>
-
-
-<h2>$this-&gt;cache-&gt;set_with_tags();</h2>
+<h2>find</h2>
 
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a sapien dolor, feugiat lobortis felis.</p>
+<code>
+$this->cache->find($tag);
+</code>
 
-
-<h2>$this-&gt;cache-&gt;delete();</h2>
-
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a sapien dolor, feugiat lobortis felis.</p>
-
-
-<h2>$this-&gt;cache-&gt;delete_tag();</h2>
+<h2>delete</h2>
 
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a sapien dolor, feugiat lobortis felis.</p>
+<code>
+$this->cache->delete($id);
+</code>
 
 
-<h2>$this-&gt;cache-&gt;delete_all();</h2>
-
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a sapien dolor, feugiat lobortis felis.</p>
-
-
-<h2>$this-&gt;cache-&gt;garbage_collect();</h2>
+<h2>delete_tag</h2>
 
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a sapien dolor, feugiat lobortis felis.</p>
+<code>
+$this->cache->delete_tag($tag);
+</code>
+
+
+<h2>delete_all</h2>
+
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a sapien dolor, feugiat lobortis felis.</p>
+<code>
+$this->cache->delete_all();
+</code>
+
+
+<h2>garbage_collector</h2>
+<p class="important">
+    <strong>Note:</strong>
+    Only supported by sqlite cache driver.
+</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a sapien dolor, feugiat lobortis felis.</p>
+<code>
+$this->cache->garbage_collect();
+</code>
