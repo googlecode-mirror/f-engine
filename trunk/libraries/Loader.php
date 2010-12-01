@@ -89,7 +89,7 @@ class CI_Loader extends Loader {
 
 			if(!is_array($data["js"]))	$data["js"] = array($data["js"]);
 
-			if($config['compact']['js']) {
+			if(isset($config['compact']['js'])) {
 
 				$external_js = array();
 				$local_js = array();

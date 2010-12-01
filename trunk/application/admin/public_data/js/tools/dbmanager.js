@@ -134,7 +134,7 @@ $('input.filter').bind('keyup', function () {
 	}
 	filter.length = this.value.length;
 
-}).bind("click",function () {
+}).bind("focus",function () {
 
 	$(this).select();
 });
