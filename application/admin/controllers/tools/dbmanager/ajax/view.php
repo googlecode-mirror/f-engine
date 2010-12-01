@@ -6,8 +6,8 @@
  * @author		flmn
  * @copyright	Copyright (c) 2010, Mikel Madariaga
  * @license		http://www.f-engine.net/userguide/license
- * @link			http://www.f-engine.net/
- * @since		Version 0.4
+ * @link		http://www.f-engine.net/
+ * @since		Version 0.5
  * @filesource
  */
 class view extends Controller 
@@ -86,8 +86,11 @@ class view extends Controller
 			if(isset($_POST["orderby"]) &&  $_POST["orderby"] != '') {
 
 				$query_nolimit = str_ireplace("ORDER","order",$query_nolimit);
-				$query_nolimit = explode("order", $query_nolimit);
-				$query_nolimit = $query_nolimit[0];	
+				
+				if(strrpos($query_nolimit," order ") !== false) {
+
+					$query_nolimit = substr($query_nolimit,0,strrpos($query_nolimit," order "));
+				}
 
 				$orderby = " ORDER BY ".$_POST["orderby"]." ";
 				$query_str = $query_nolimit.$orderby." LIMIT ".$offset.",".$items_per_page;
