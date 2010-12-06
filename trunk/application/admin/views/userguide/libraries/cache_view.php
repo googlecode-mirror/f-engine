@@ -15,6 +15,7 @@ to cut response times and save server resources and memory.
 <p>The following drivers are supported:</p>
 <ul>
 	<li>APC</li>
+	<li>Eaccelerator</li>
 	<li>File</li>
 	<li>Memcache</li>
 	<li>Sqlite</li>
@@ -25,71 +26,80 @@ or re-define it when cache is loaded:</p>
 <code>
     $this->load->cache("apc",array("default_expire" => 7400));
 </code>
-<h1>Function Reference</h1>
 
-
+<br />
 <h2>set</h2>
 
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a sapien dolor, feugiat lobortis felis.</p>
+<p>Set a value to cache with id and lifetime.</p>
 <code>
 $this->cache->set($id, $data);
 </code>
 
+<br />
 <h2>set_with_tags</h2>
+
+<p>Set a value based on an id. Optionally add tags.</p>
+<code>
+$this->cache->set_with_tags($id, $data, $lifetime, $tags)
+</code>
 <p class="important">
     <strong>Note:</strong>
     Tags are only supported by sqlite cache driver.
 </p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a sapien dolor, feugiat lobortis felis.</p>
-<code>
-$this->cache->set_with_tags($id, $data, $lifetime, $tags)
-</code>
 
+<br />
 <h2>get</h2>
 
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a sapien dolor, feugiat lobortis felis.</p>
+<p>Retrieve a cached value entry by id.</p>
 <code>
 $this->cache->get($id, $default);
 </code>
 
-
+<br />
 <h2>find</h2>
 
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a sapien dolor, feugiat lobortis felis.</p>
+<p>Find cache entries based on a tag.</p>
 <code>
 $this->cache->find($tag);
 </code>
 
-<h2>delete</h2>
-
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a sapien dolor, feugiat lobortis felis.</p>
-<code>
-$this->cache->delete($id);
-</code>
-
-
-<h2>delete_tag</h2>
-
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a sapien dolor, feugiat lobortis felis.</p>
-<code>
-$this->cache->delete_tag($tag);
-</code>
-
-
-<h2>delete_all</h2>
-
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a sapien dolor, feugiat lobortis felis.</p>
-<code>
-$this->cache->delete_all();
-</code>
-
-
-<h2>garbage_collector</h2>
 <p class="important">
     <strong>Note:</strong>
     Only supported by sqlite cache driver.
 </p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a sapien dolor, feugiat lobortis felis.</p>
+
+<br />
+<h2>delete</h2>
+
+<p>Delete a cache entry based on id.</p>
+<code>
+$this->cache->delete($id);
+</code>
+
+<br />
+<h2>delete_tag</h2>
+
+<p>Delete cache entries based on a tag.</p>
+<code>
+$this->cache->delete_tag($tag);
+</code>
+
+<br />
+<h2>delete_all</h2>
+
+<p>Delete all cache entries.</p>
+<code>
+$this->cache->delete_all();
+</code>
+
+<br />
+<h2>garbage_collector</h2>
+
+<p>Cleans any expired cache entries from the cache.</p>
 <code>
 $this->cache->garbage_collect();
 </code>
+<p class="important">
+    <strong>Note:</strong>
+    Only supported by sqlite cache driver.
+</p>

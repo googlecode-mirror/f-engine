@@ -58,6 +58,8 @@ class CI_Ajax {
 
 		$this->code = array();
 		$this->functions = array();
+		
+		log_message('debug', "Ajax Class Initialized");
 	}
 
 	// --------------------------------------------------------------------
@@ -97,11 +99,13 @@ class CI_Ajax {
 	function _ajaxSubmitButton($id,$update,$redirect = false, $redirectOn = "") {
 
 		if($redirect) {
-			$success = 'if(resp == "'.$redirectOn.'") { document.location = "'.$redirect.'" }
-			elseif(resp != "") { jQuery("'.$update.'").html(resp) }';
+			$success = '
+			if(resp == "'.$redirectOn.'") { document.location = "'.$redirect.'"; }
+			else if(resp != "") { jQuery("'.$update.'").html(resp); }
+			';
 		} else {
 			
-			$success = 'if(resp != "") { jQuery("'.$update.'").html(resp) }';
+			$success = 'if(resp != "") { jQuery("'.$update.'").html(resp); }';
 		}
 
 		$this->code[] = "jQuery('#$id').click(function(){

@@ -1,16 +1,9 @@
 Core & libraries:
     - Check URL Suffix compatibility
-    - Cache garbage collector
     - Plugins: Widgets, tools, appz
-    - Integrate jquery ui in ajax library
 
 Dbmanager:
 	- kill processes feature
 	- Advance index editor
 	- Edit user permissions
 	- New features and style redesign in "operations"
-	- Import zip/gzip backups
-	- .sql file extension for txt backups
-	
-New form wizard:
-	- Create model option

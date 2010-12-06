@@ -44,6 +44,8 @@ class CI_Cache {
 		$class_name = "CI_Cache_".ucfirst($this->default_driver);
 
 		$this->driver = new $class_name($config[$this->default_driver]);
+
+		log_message('debug', "Cache Class Initialized");
 	}
 
 	/**

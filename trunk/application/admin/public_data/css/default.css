@@ -67,7 +67,7 @@ h2 {
 	background-color: transparent;
 	border-bottom: 1px solid #999;
 	color: #336699;
-	font-size: 14px;
+	font-size: 15px;
 	font-weight: bold;
 	margin: 0px 0 16px 0;
 	padding: 0px 0 6px 0;
@@ -93,7 +93,6 @@ h4 {
 	padding: 0 0 0 0;
 }
 
-
 /* Cabecera.
 ----------------------------------------------------------------------------------------------- */
 
@@ -103,7 +102,6 @@ h4 {
 	padding:				0;
 	background:				#6D7FC2 url("img/fnd-azul1.png") repeat-x;
 }
-
 
 /* Nombre.
 ----------------------------------------------------------------------------------------------- */

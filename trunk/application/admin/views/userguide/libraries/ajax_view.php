@@ -11,9 +11,8 @@
 	    $this->load->ajax();
 	</code>
 
-<h1>Function Reference</h1>
 <br />
-<h2>link</h2>
+<h2>Links</h2>
 
 <p>Creates a html anchor that triggers an ajax request when it is clicked and updates selected page area with returned content.</p>
 <p>
@@ -21,13 +20,13 @@
 	    $this-&gt;ajax-&gt;link($anchorText, $targetUrl, $updateArea);
 	</code>
 </p>
-<h3>Example:</h3>
+<h5>Example:</h5>
 <code>
 &lt;p&gt;&lt;?php echo $this->ajax->link("ajax link","ajax/link","#target"); ?&gt;.&lt;/p&gt;<br />
 &lt;div id="target"&gt;&lt;/div&gt;
 </code>
 
-<h2>submitButton</h2>
+<h2>Form submit button</h2>
 
 <p>Creates ajax form submit button. It shows any server response, such us form validation, 
 and optionally it is also able to redirect browser once the job is done.
@@ -37,7 +36,7 @@ and optionally it is also able to redirect browser once the job is done.
 	    $this-&gt;ajax-&gt;submitButton($buttonText,$updateArea,$redirectUrl, $redirectOnResponse);
 	</code>
 </p>
-<h3>Example:</h3>
+<h5>Example:</h5>
 <code>
 &lt;form method="post" action="&lt;?php echo current_url();?&gt;"><br />
 &nbsp;&nbsp;&lt;label for="some_text">Some text</label> <br />
@@ -47,7 +46,8 @@ and optionally it is also able to redirect browser once the job is done.
 &lt;div id="req_resp"&gt;&lt;/div&gt;
 </code>
 
-<h2>element</h2>
+<br />
+<h2>Ajax elements</h2>
 
 <p>Triggers an ajax request and updates selected page area with returned content. This ajax method is 
 compatible with any existing html element in webpage and any jQuery compatible javascript event.</p>
@@ -56,7 +56,7 @@ compatible with any existing html element in webpage and any jQuery compatible j
 	    $this-&gt;ajax-&gt;element($cssSelectorToElement,$event, $requesturl, $updateArea);
 	</code>
 </p>
-<h3>Examples:</h3>
+<h5>Examples:</h5>
 <p>Trigger ajax request when html select node changes</p>
 <code>
 	&lt;select style="width: 95px;" id="country"&gt;<br />
@@ -80,7 +80,8 @@ compatible with any existing html element in webpage and any jQuery compatible j
 	&lt;div id="response">&lt;/div&gt;<br />
 </code>
 
-<h2>timer</h2>
+<br />
+<h2>Timers</h2>
 
 <p>Triggers an ajax request every <i>n</i> miliseconds and updates selected page area with returned content.</p>
 <p>
@@ -88,13 +89,14 @@ compatible with any existing html element in webpage and any jQuery compatible j
 	    $this-&gt;ajax-&gt;timer($miliSeconds,$targetUrl,$updateArea);
 	</code>
 </p>
-<h3>Example:</h3>
+<h5>Example:</h5>
 <code>
 &lt;div id="timerReqHandler"&gt;&lt;/div&gt;<br />
 &lt;?php $this->ajax->timer(3000,"ajax/timer",'#timerReqHandler');?&gt;
 </code>
 
-<h2>clearTimer</h2>
+<br />
+<h2>Clear timer</h2>
 
 <p>Removes any timer added before.</p>
 <p>
@@ -102,15 +104,16 @@ compatible with any existing html element in webpage and any jQuery compatible j
 	    $this-&gt;ajax-&gt;clearTimer($updatedArea);
 	</code>
 </p>
-<h3>Example:</h3>
+<h5>Example:</h5>
 <code>
 $this->ajax->clearTimer('#timerReqHandler');
 </code>
 
-<h2>autocomplete</h2>
+<br />
+<h2>Field autocomplete</h2>
 
 <p>Loads the autocomplete jquery-ui widget, providing suggestions while you type into the field.</p>
-<h3>Example:</h3>
+<h5>Example:</h5>
 <strong>View:</strong><br />
 <code>
 &lt;input type="text" name="languages" id="programing_languages" /&gt;<br />
@@ -153,13 +156,14 @@ foreach($items as $item) {
 echo json_encode($data);
 </code>
 
-<h2>datePicker</h2>
+<br />
+<h2>Date picker</h2>
 
 <p>The datepicker is tied to a standard form input field. Focus on the input (click, or use the tab key) 
 to open an interactive calendar in a small overlay. Choose a date, click elsewhere on the page 
 (blur the input), or hit the Esc key to close. If a date is chosen, feedback is shown as the 
 input's value.</p>
-<h3>Example:</h3>
+<h5>Example:</h5>
 <code>
 	&lt;input type="text" name="date" id="datepicker" /&gt;<br />
 	&lt;?php $this->ajax->datePicker("#datepicker");?&gt;

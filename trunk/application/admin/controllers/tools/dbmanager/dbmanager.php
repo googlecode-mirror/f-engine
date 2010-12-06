@@ -21,7 +21,7 @@ class dbmanager extends Controller
 	
 	function index($current_db = '') {
 
-		if($this->uri->param(0) == "select") {
+		if($this->uri->param(1) == "select") {
 
 			//select project
 			$this->target_project();
@@ -150,7 +150,7 @@ class dbmanager extends Controller
 			}	
 		}
 
-		if($this->uri->param(0) != "")
+		if($this->uri->param(1) != "")
 			$segments = array_pop($this->uri->segments);
 		else
 			$segments = $this->uri->segments;

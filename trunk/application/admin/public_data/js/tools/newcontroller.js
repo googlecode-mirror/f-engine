@@ -696,4 +696,21 @@
 			if($(help[0]).attr('style') != null) {	help.toggle(); }
 		});
 	});
+	
+	
+ 	/***	Create model
+ 	 ********************************************************/
+	$("#cmodel").change(function () {
+		
+		
+		if($(this).attr("value") == 1) {
+			
+			$(this).next().show().children("input").focus().select();
+
+		} else {
+			
+			$(this).next().hide();
+		}
+	});
+	
  });//end ready

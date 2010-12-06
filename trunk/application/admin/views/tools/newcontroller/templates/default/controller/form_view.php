@@ -7,7 +7,7 @@
 	</style>
 	<form action="<?php echo '<? echo site_url("'.$path.'/'.$target.'"); ?>'; ?>" method="post">
 	<?php echo "<?php }//endif ?>\n" ?>
-		<table width="90%">
+		<table width="90%" id="insert-form">
 		    <tbody>
 	    	<?php
 	    	  foreach($field_names as $key => $item) { if($item == '') continue;?>
@@ -24,6 +24,6 @@
 	</tbody>
 		</table>
 	<?php echo "<?php if(!IS_AJAX) {  ?>\n" ?>
-		<input type="submit" id="form-submit" value="save" />
+		<?php echo '<?php echo $this->ajax->submitButton("Save","#insert-form","'.$path.'");  ?>'."\n" ?>
 	</form>
 	<?php echo "<?php }//endif ?>" ?>

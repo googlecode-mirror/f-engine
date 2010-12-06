@@ -7,14 +7,15 @@ New in v0.5
 		- Querystring based url compatibility removed
 		- jQuery version update
     	- New Ajax layer
-    	- Added ajax option to pagination library
+    	- Ajax capable pagination library
     	- Documentation updated
 	- Bbmanager:
 		- Bugfixing
-		- Added Import feature
+		- Added Import feature (zip/gzip compatible)
 	- New form wizard:
-		- Generates cleaner code now
+		- It generates cleaner code now
 		- Rewritted to support the new ajax layer
+		- Added create model feature
 	- Filemanager:
 		- New folder/file permissions fixed
 		- Added library template
