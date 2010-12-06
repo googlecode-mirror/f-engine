@@ -230,18 +230,20 @@ class newform extends Model {
 			chmod($this->apppath.'views/'.$filename, 0777);
     	}
 
-        foreach($this->files["models"] as $filename => $data) {
+    	if(isset($this->files["models"])) {
+	        foreach($this->files["models"] as $filename => $data) {
+	
+		    	if (!$handler = fopen($this->apppath.'models/'.$filename, 'w+')) {
+			         show_error("No se pudo abrir el archivo ".$this->apppath.'models/'.$filename);
+			    }
 
-	    	if (!$handler = fopen($this->apppath.'models/'.$filename, 'w+')) {
-		         show_error("No se pudo abrir el archivo ".$this->apppath.'models/'.$filename);
-		    }
+			    if (fwrite($handler, '<?'.$data) === FALSE) {
+			        show_error("No se pudo escribir al archivo ".$this->apppath.'models/'.$filename);
+			    }
 
-		    if (fwrite($handler, '<?'.$data) === FALSE) {
-		        show_error("No se pudo escribir al archivo ".$this->apppath.'models/'.$filename);
-		    }
-
-		    fclose($handler);
-			chmod($this->apppath.'models/'.$filename, 0777);
+			    fclose($handler);
+				chmod($this->apppath.'models/'.$filename, 0777);
+	    	}
     	}
     }
 
@@ -309,7 +311,7 @@ class newform extends Model {
 
     	if( isset($this->post['js']) )
     		$this->assets['js'] = "'".implode("','",$this->post['js'])."'";
- 
+
     	if( isset($this->post['css']) )
     		$this->assets['css'] = "'".implode("','",$this->post['css'])."'";
 
@@ -318,7 +320,7 @@ class newform extends Model {
 
     	if( isset($this->post['footer']) )
     		$this->assets['footer'] = str_replace("_view.php","","'footer/".implode("','",$this->post['footer'])."'");
-    		
+
     	if( isset($this->post['masterview']) )
     		$this->masterview = trim($this->post['masterview']);
     }
@@ -334,20 +336,19 @@ class newform extends Model {
 				$databases[] = substr($item,0,strpos($item,'.'));
 			}
 			$databases = array_unique($databases);
-			
-			
+
 			if(count($databases) > 1 && isset($this->post['resume_rel_field1'])) {
-				
+
 				$where = array();
 				for($i = 0; $i < count($this->post['resume_rel_field1']); $i++) {
-					
+
 					$where[] = "'".$this->post['resume_rel_field1'][$i]." = ".$this->post['resume_rel_field2'][$i]."'";
 				}
-				
+
 				$where = 'array('.implode($where,",").');';
-				
+
 			} else {
-				
+
 				$where = 'array();';	
 			}
 
@@ -368,7 +369,7 @@ class newform extends Model {
 			foreach( $data["data"] as $key => $val) {
 
 				if( !isset($data["fields"][$i]) || $data["fields"][$i] != array_pop(explode(".", $data['data'][$key])) ) {
-					
+
 					if(isset($data["fields"][$i]))
 						$data['data'][$key] = $data['data'][$key]." as ".$data['fields'][$i];
 					else
@@ -415,7 +416,11 @@ class newform extends Model {
 			/**
 	    	 * set view vars 
 	    	 */
-			$view = array('target' => 'save','path' => $this->foldername);
+			$view = array(
+				'target' => 'save',
+				'path' => $this->foldername,
+				'styles' => $this->post['insertform_style']
+			);
 
 			$view['field_names'] = array();
 			if(isset($this->post['insert_field_names'])) {
@@ -534,6 +539,7 @@ class newform extends Model {
 			else
 				$data['form_names'] = array();	
 
+			$data['styles'] = $this->post['insertform_style'];
 			$this->update_vars["view"] = $data;
 			unset($data);
 		/*

@@ -681,19 +681,73 @@
 		}//end if
 	});//end bind
 
+ 	//set form style (insert/edit tabs only)
+ 	$('.go2db_styles').bind('click',function() {
+
+		var fields = '';
+
+		$('div.frame:visible div.row').each(function () {
+
+			var fieldLenght = $.trim($(this).children("div:eq(1)").text()).match(/\d*(?=\))/i);
+
+			if(fieldLenght == null) {
+				
+				if($.trim($(this).children("div:eq(1)").text()) == "text") {
+
+					fieldLenght = 1000;
+
+				} else {
+
+					fieldLenght = 0;
+				}
+			}
+
+			fields += $(this).find("input[type=hidden][name*=field_names[]]").attr("value") + "#"+fieldLenght+",";
+		});
+
+		if(fields != "")
+			fields = fields.substring(0,fields.length-1)
+
+		$(this).parent().parent().fadeOut("normal", function () {
+
+			$(this).next().fadeIn("normal");
+
+			$.ajax({
+				type: "POST",
+				url: ROOT+"tools/newcontroller/ajax/dbstyles",
+				data: "fields="+fields+"&view="+$(this).next().parent().attr("id"),
+				cache: true,							
+				success: function (resp) {
+
+					$('div.frame:visible div.db_styles').html(resp);
+				}
+			});
+		});
+ 	});
 
  	/***	Form workflow
  	 ********************************************************/
-	$('.back2db_list').bind('click',function() {
+	$('input.back2db_list').bind('click',function() {
 
 		$(this).parent().parent().fadeOut("normal", function () {
 
 			$(this).prev().fadeIn("normal");
-			
 			$('div.db_fields',this).html('');
 
 			var help = $('div.help > div',this);
-			if($(help[0]).attr('style') != null) {	help.toggle(); }
+			if($(help[0]).filter(':visible').length == 0) {	
+				help.filter(":eq(0)").show();
+				help.filter(":eq(1)").hide();
+			}
+		});
+	});
+	
+	$('input.back2db_fields').bind('click',function() {
+
+		$(this).parent().parent().fadeOut("normal", function () {
+
+			$(this).prev().fadeIn("normal");
+			$(this).children("div.db_styles").html("");
 		});
 	});
 	

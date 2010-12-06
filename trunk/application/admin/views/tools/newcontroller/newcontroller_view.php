@@ -150,8 +150,30 @@
 				</div>
 				<div class="buttons">
 					<input type="button" class="back2db_list" value="Prev" />
+					<input type="button" class="go2db_styles" value="Next" />
 				</div>
-			</div>	
+			</div>
+			<div class="frame"  style="display: none;">
+				<div class="db_styles floatl">
+				</div>
+				<div class="help">
+					<div>
+						<h1>Select fields</h1>
+						<p>
+							Manipulate table fields to get the structure you are looking for. You can:
+							<ul>
+								<li>Change the order that fields are shown by drad and droping them</li>
+								<li>Delete the fields you dont need in result form. Press right click and choose Delete in the context menu</li>
+								<li>Edit field names that will be shown in result form. Press right click and choose Edit in the context menu, 
+								type a new name, press right click again and choose apply to commit changes or undo to return to the original value.</li>
+							</ul>
+						</p>
+					</div>
+				</div>
+				<div class="buttons">
+					<input type="button" class="back2db_fields" value="Prev" />
+				</div>
+			</div>
 		</div>
 		<!--	end edit -->
 		<div id="insert" style="display: none;">	
@@ -252,8 +274,30 @@
 				</div>
 				<div class="buttons">
 					<input type="button" class="back2db_list" value="Prev" />
+					<input type="button" class="go2db_styles" value="Next" />
 				</div>
-			</div>	
+			</div>
+			<div class="frame"  style="display: none;">
+				<div class="db_styles floatl">
+				</div>
+				<div class="help">
+					<div>
+						<h1>Select fields</h1>
+						<p>
+							Manipulate table fields to get the structure you are looking for. You can:
+							<ul>
+								<li>Change the order that fields are shown by drad and droping them</li>
+								<li>Delete the fields you dont need in result form. Press right click and choose Delete in the context menu</li>
+								<li>Edit field names that will be shown in result form. Press right click and choose Edit in the context menu, 
+								type a new name, press right click again and choose apply to commit changes or undo to return to the original value.</li>
+							</ul>
+						</p>
+					</div>
+				</div>
+				<div class="buttons">
+					<input type="button" class="back2db_fields" value="Prev" />
+				</div>
+			</div>
 		</div>
 		<!--	end insert -->
 		<ul id="myMenu" class="contextMenu">
