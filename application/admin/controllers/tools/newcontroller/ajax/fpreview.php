@@ -74,7 +74,7 @@ class fpreview extends Controller {
 
 							foreach($items as $item) {
 
-								preg_match("/conf\[[\"']".$type[1]."[\"']]/i",$item,$matches);
+								preg_match("/conf\[[\"']".trim($type[1])."[\"']\]/i",$item,$matches);
 
 								if(count($matches) > 0) {
 

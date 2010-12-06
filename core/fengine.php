@@ -6,8 +6,8 @@
  * @author		flmn
  * @copyright	Copyright (c) 2010, Mikel Madariaga
  * @license		http://www.f-engine.net/userguide/license
- * @link			http://www.f-engine.net/
- * @since		Version 0.2
+ * @link		http://www.f-engine.net/
+ * @since		Version 0.5
  * @filesource
  */
 

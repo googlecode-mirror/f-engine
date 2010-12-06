@@ -21,7 +21,7 @@ class fileeditor extends Controller
 	
 	function index() {
 
-		if($this->uri->param(0) == "select") {
+		if($this->uri->param(1) == "select") {
 
 			$this->target_project();
 			return;
@@ -58,7 +58,7 @@ class fileeditor extends Controller
 			}	
 		}
 
-		if($this->uri->param(0) != "")
+		if($this->uri->param(1) != "")
 			$segments = array_pop($this->uri->segments);
 		else
 			$segments = $this->uri->segments;

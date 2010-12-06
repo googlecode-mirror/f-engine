@@ -1297,6 +1297,7 @@ function initTab_sql() {
 		if(autocomplete.hasClass("enabled") && segments.length > 0) {
 
 			var segment = segments[segments.length -1].toLowerCase();
+
 			if(autocom_tables.filter('[value="'+segment+'"]').length > 0) {
 
 				if($("#"+segment+"_fields",autocomplete).length > 0) {
@@ -1320,16 +1321,19 @@ function initTab_sql() {
 						},
 						success: function(resp) {
 
-							autocomplete.show().children("ul").hide();
-							autocomplete.append(resp);
-							autocomplete.children("strong").text(
-									autocomplete.children("ul:last").attr("id").replace("_fields","")
-							);
+							if($('#'+segment+'_fields').length == 0) {
 
-							autocomplete.find("ul:last a").bind("click",function () {
+								autocomplete.show().children("ul").hide();
+								autocomplete.append(resp);
+								autocomplete.children("strong").text(
+										autocomplete.children("ul:last").attr("id").replace("_fields","")
+								);
 
-								$("#sqlquery").insertAtCaret($(this).text());
-							});
+								autocomplete.find("ul:last a").bind("click",function () {
+	
+									$("#sqlquery").insertAtCaret($(this).text());
+								});
+							}
 						}
 					});
 				}

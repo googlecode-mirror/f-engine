@@ -6,6 +6,7 @@ class update extends Controller {
 		parent::Controller();
 		$this->load->library('validation');
 		$this->load->helper('url');
+		$this->load->library("ajax");
 	}
 
 	function index() {

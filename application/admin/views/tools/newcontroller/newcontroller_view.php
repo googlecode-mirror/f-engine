@@ -374,7 +374,6 @@
 						<input type="text" name="url" value="demo"/>
 					</td>
 				</tr>
-				
 				<tr>
 					<td>Action</td>
 					<td>
@@ -382,6 +381,32 @@
 							<option value="create">Create files</option>
 							<option value="show">Just show code in browser</option>
 						</select>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2"><br /></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: super;">Options</td>
+					<td>
+						<div <?php if(count($templates) < 2) { ?> style="display:none;" <?php }//endif ?>>
+						Template: 
+						<select name="template" style="width: 183px;">
+						<?php foreach($templates as $template) { ?>
+							<option value="<?php echo $template;?>">
+								<?php echo $template;?>
+							</option>
+						<?php }//endforeach ?>
+						</select>
+						</div>
+						Create model 
+						<select name="model"  id="cmodel" style="width:163px;">
+							<option value="0">No</option>
+							<option value="1">Yes</option>
+						</select>
+						<div style="display:none;">
+							Model name: <input type="text"name="modelname" value="myModel" style="width:158px;float:right;"/>
+						</div>
 					</td>
 				</tr>
 				<tr>

@@ -15,13 +15,13 @@ class newcontroller extends Controller
 	function newcontroller() {
 
 		parent::Controller();
-		$this->load->helper('url');
+		$this->load->helper(array('url','directory'));
 		session_start();
 	}
 
 	function index() {
 
-		if($this->uri->param(0) == "select") {
+		if($this->uri->param(1) == "select") {
 
 			$this->target_project();
 			return;
@@ -61,10 +61,20 @@ class newcontroller extends Controller
 			
 			$data['masterview'][] = $key;
 		}
+		
+		/*** template folders ***/
+		$templates = directory_map(APPPATH.'views/tools/newcontroller/templates');
+		
+		$directories = array();
+		foreach($templates as $dir => $val) {
+
+			$directories[] = $dir;	
+		}
+
+		$data["templates"] = $directories;
 
 		/***	Load view	***/
 		$this->load->masterview('tools/newcontroller/newcontroller',$data,'newcontroller');
-		
 	}
 
 	function target_project ($valid = true) {
@@ -81,7 +91,7 @@ class newcontroller extends Controller
 			}	
 		}
 
-		if($this->uri->param(0) != "")
+		if($this->uri->param(1) != "")
 			$segments = array_pop($this->uri->segments);
 		else
 			$segments = $this->uri->segments;

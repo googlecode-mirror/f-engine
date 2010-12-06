@@ -23,14 +23,18 @@ class newform extends Model {
 
 	public  $delete;
 	private $delete_vars;
+	
+	public  $model;
+	private $model_vars;
 
+	private $template_folder;
 	private $files;
 
     function newform() {
 
         parent::Model();
     }
-    
+
     function init($data) {
 
     	$this->post = $data;
@@ -45,6 +49,17 @@ class newform extends Model {
     	$this->datagrid_vars = array();
     	$this->delete = array();
     	$this->delete_vars = array();
+ 
+    	$this->model = array();
+    	$this->model_vars = array();
+
+    	if(isset($this->post["model"]) and $this->post["model"] == 1) {
+			
+			$this->template_folder = $this->post["template"]."/model";
+		} else {
+			
+			$this->template_folder = $this->post["template"]."/controller";   
+		}
 
     	$this->files = array();
 
@@ -85,7 +100,7 @@ class newform extends Model {
 
 		if($this->foldername == '') 
 			$this->foldername = "unnamed";	
-	
+
 		/*
 		 * parse input data and set al required var values
 		 */
@@ -95,12 +110,17 @@ class newform extends Model {
 		$this->set_datagrid_vars();
 		$this->set_delete_vars();
 
+		if(isset($this->post["model"]) and $this->post["model"] == 1) {
+			
+			$this->set_model_vars();
+		}
+
 		/*
 		 * Parse form templates
 		 */
 		$this->parse_templates();
 
-		//$this->debug(false,true,true);
+		$this->debug(false,false,false);
     }
 
     function create_folders() {
@@ -166,6 +186,11 @@ class newform extends Model {
 
     		$this->files["controllers"][$this->foldername.'/delete'.EXT] = $this->delete;
     	}
+
+    	if( count($this->model_vars) > 0 and $this->model_vars["modelname"] != "" ) {
+
+    		$this->files["models"][$this->model_vars["modelname"].EXT] = $this->model;
+    	}
     }
 
     function get_files () {
@@ -204,6 +229,20 @@ class newform extends Model {
 		    fclose($handler);
 			chmod($this->apppath.'views/'.$filename, 0777);
     	}
+
+        foreach($this->files["models"] as $filename => $data) {
+
+	    	if (!$handler = fopen($this->apppath.'models/'.$filename, 'w+')) {
+		         show_error("No se pudo abrir el archivo ".$this->apppath.'models/'.$filename);
+		    }
+
+		    if (fwrite($handler, '<?'.$data) === FALSE) {
+		        show_error("No se pudo escribir al archivo ".$this->apppath.'models/'.$filename);
+		    }
+
+		    fclose($handler);
+			chmod($this->apppath.'models/'.$filename, 0777);
+    	}
     }
 
     function parse_templates() {
@@ -231,34 +270,39 @@ class newform extends Model {
 
     	//datagrid
     	if( isset($this->datagrid_vars["form"]) )
-			$this->datagrid["form"] = $this->fe->load->view('tools/newcontroller/templates/resumecontroller',$this->datagrid_vars["form"],true); 
+			$this->datagrid["form"] = $this->fe->load->view('tools/newcontroller/templates/'.$this->template_folder.'/resumecontroller',$this->datagrid_vars["form"],true); 
 
     	if( isset($this->datagrid_vars["view"]) )
-    		$this->datagrid["view"] = $this->fe->load->view('tools/newcontroller/templates/resume',$this->datagrid_vars["view"],true);
+    		$this->datagrid["view"] = $this->fe->load->view('tools/newcontroller/templates/'.$this->template_folder.'/resume',$this->datagrid_vars["view"],true);
 
     	//new record
       	if( isset($this->insert_vars["view"]) )
-    		$this->insert["view"] = $this->fe->load->view('tools/newcontroller/templates/insert',$this->insert_vars["view"],true);
+    		$this->insert["view"] = $this->fe->load->view('tools/newcontroller/templates/'.$this->template_folder.'/insert',$this->insert_vars["view"],true);
 
         if( isset($this->insert_vars["form"]) )
-    		$this->insert["form"] = $this->fe->load->view('tools/newcontroller/templates/controller',$this->insert_vars["form"],true);
+    		$this->insert["form"] = $this->fe->load->view('tools/newcontroller/templates/'.$this->template_folder.'/controller',$this->insert_vars["form"],true);
 
         if( isset($this->insert_vars["controller"]) )
-    		$this->insert["controller"] = $this->fe->load->view('tools/newcontroller/templates/save',$this->insert_vars["controller"],true);
-    	
+    		$this->insert["controller"] = $this->fe->load->view('tools/newcontroller/templates/'.$this->template_folder.'/save',$this->insert_vars["controller"],true);
+
     	// edit and update
         if( isset($this->update_vars["view"]) )
-    		$this->update["view"] = $this->fe->load->view('tools/newcontroller/templates/form',$this->update_vars["view"],true);
+    		$this->update["view"] = $this->fe->load->view('tools/newcontroller/templates/'.$this->template_folder.'/form',$this->update_vars["view"],true);
 
         if( isset($this->update_vars["form"]) )
-    		$this->update["form"] = $this->fe->load->view('tools/newcontroller/templates/savecontroller',$this->update_vars["form"],true);
+    		$this->update["form"] = $this->fe->load->view('tools/newcontroller/templates/'.$this->template_folder.'/savecontroller',$this->update_vars["form"],true);
 
     	if( isset($this->update_vars["controller"]) )
-    		$this->update["controller"] = $this->fe->load->view('tools/newcontroller/templates/update',$this->update_vars["controller"],true);
-    		
+    		$this->update["controller"] = $this->fe->load->view('tools/newcontroller/templates/'.$this->template_folder.'/update',$this->update_vars["controller"],true);
+
     	//delete
 		if( count($this->delete_vars) > 0 )
-    		$this->delete = $this->fe->load->view('tools/newcontroller/templates/delete',$this->delete_vars,true);
+    		$this->delete = $this->fe->load->view('tools/newcontroller/templates/'.$this->template_folder.'/delete',$this->delete_vars,true);
+
+    	//model
+    	if( count($this->model_vars) > 0 )
+    		$this->model = $this->fe->load->view('tools/newcontroller/templates/'.$this->template_folder.'/model',$this->model_vars,true);
+
     }
 
     function set_assets() {
@@ -276,7 +320,7 @@ class newform extends Model {
     		$this->assets['footer'] = str_replace("_view.php","","'footer/".implode("','",$this->post['footer'])."'");
     		
     	if( isset($this->post['masterview']) )
-    		$this->masterview = $this->post['masterview'];
+    		$this->masterview = trim($this->post['masterview']);
     }
 
 	function set_datagrid_vars() {
@@ -450,13 +494,13 @@ class newform extends Model {
 			if(isset($this->post['edit_id_fields'])) {
 				$data['indexes'] = $this->post['edit_id_fields'];
 			}
-			
-			
+
+
 			if(isset($_POST['edit_field_names']))
 				$data = array_merge($data,array('field_names' => $this->post['edit_field_names']));
 			else
 				$data['field_names'] = array();
-			
+
 			if(isset($_POST['edit_form_fields']))
 				$data = array_merge($data,array('form_names' => $this->post['edit_form_fields']));
 			else
@@ -471,20 +515,20 @@ class newform extends Model {
 		 */ 
 			$uripos = 1;
 			$target = '/';
-			
+
 			if(isset($this->post['edit_id_fields']))
 				foreach($this->post['edit_id_fields'] as $item) {
 					 
 					$target .= '".$this->uri->param('.$uripos++.')."';
 				}
-	
+
 			$data = array('target' => 'update'.$target, 'path' => $this->foldername);
-			
+
 			if(isset($_POST['edit_field_names']))
 				$data = array_merge($data,array('field_names' => $this->post['edit_field_names']));
 			else
 				$data['field_names'] = array();	
-			
+
 			if(isset($_POST['edit_form_fields']))
 				$data = array_merge($data,array('form_names' => $this->post['edit_form_fields']));
 			else
@@ -496,14 +540,14 @@ class newform extends Model {
 		 * set update controller vars
 		 */ 
 			$uripos = 1;
-	
+
 			$databases = array();
 			if(isset($this->post['edit_form_fields']))
 				foreach($this->post['edit_form_fields'] as $item) {
 		
 					$databases[] = substr($item,0,strpos($item,'.'));
 				}
-	
+
 			$data = array(
 						  	'path'=> $this->foldername, 
 							'dbs' => array_unique($databases),
@@ -514,12 +558,12 @@ class newform extends Model {
 			if(isset($this->post['edit_form_fields']))
 				$data = array_merge($data,array('fields' => $this->post['edit_field_names'],'data' => $this->post['edit_form_fields']));
 			else {
-				
+
 				$data['edit_field_names'] = array();
 				$data['edit_form_fields'] = array();
 			}
-			
-			
+
+
 			if(isset($this->post['edit_form_fields']))
 				$data = array_merge($data, array('indexes' => $this->post['edit_id_fields']));
 
@@ -543,7 +587,7 @@ class newform extends Model {
 				$data['indexes'] = $this->post['edit_id_fields'];
 			else
 				$data['indexes'] = array();
-			
+
 			$this->update_vars["controller"] = $data;
 		}
     }
@@ -556,6 +600,41 @@ class newform extends Model {
 		    	'table' => array_shift(explode(".",$this->post['remove_id_fields'][0])),
 		    	'field' => $this->post['remove_id_fields'][0]
 		    );
+    	}
+    }
+
+    function set_model_vars() {
+
+    	$this->model_vars["modelname"] = strtolower($this->post["modelname"]);
+
+    	if(isset($this->datagrid_vars["form"])) {
+
+    		$this->model_vars["datagrid"] = $this->datagrid_vars["form"];
+    		$this->datagrid_vars["form"]["modelname"] = $this->post["modelname"];
+    	}
+
+    	if(isset($this->insert_vars["form"])) {
+
+    		$this->model_vars["insert"] = $this->insert_vars["controller"];
+    		$this->insert_vars["form"]["modelname"] = $this->post["modelname"];
+    	}
+
+    	if(isset($this->update_vars["form"])) {
+
+    		$this->model_vars["update"] = $this->update_vars["controller"];
+    		$this->update_vars["form"]["modelname"] = $this->post["modelname"];
+    	}
+
+    	if(count($this->delete_vars) > 0) {
+
+    		$this->model_vars["delete"] = $this->delete_vars;
+    		$this->delete_vars["form"]["modelname"] = $this->post["modelname"];
+    	}
+
+    	if(false) {
+    		echo "<pre>";
+    		print_r($this->model_vars);
+    		die;
     	}
     }
 

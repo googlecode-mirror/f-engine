@@ -50,14 +50,14 @@ class save extends Controller {
 
 	function _validate() {
 
-<?php foreach ($rules as $key => $val):?>
+<?php foreach ($rules as $key => $val) { ?>
 		$rules['<?php  echo $key?>'] = '<?php  echo $val?>';<?php echo "\r\n";?>
-<?php endforeach;?>
+<?php } //endforeach?>
 		$this->validation->set_rules($rules);
 		
-<?php foreach ($rules as $key => $val):?>
+<?php foreach ($rules as $key => $val) {?>
 		$fields['<?php  echo $key?>'] = '<?php  echo $key?>';
-<?php endforeach;?>
+<?php }// endforeach?>
 		$this->validation->set_fields($fields);
 
 		$this->validation->set_error_delimiters('<div class="error">', '</div>');
