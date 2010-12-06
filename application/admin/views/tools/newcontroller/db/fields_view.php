@@ -2,21 +2,13 @@
     <legend>
 		<span>
 	        <a href='#' class='vrules'>
-	        	<img src='<? echo base_url();?>public_data/img/tools/validation.png' />
-				<img style="display:none" src='<? echo base_url();?>public_data/img/tools/application.png' />
+	        	<img src='<? echo base_url();?>public_data/img/tools/validation.png' style="vertical-align:bottom;" />
+				<img style="display:none" src='<? echo base_url();?>public_data/img/tools/application.png' style="vertical-align:bottom;" />
 			
 				<span style="color:black;">Validation rules</span>
 				<span style="color:black;display:none;">Fields</span>
 			</a>
 		</span>
-		<!--<span>
-			<a class='dbrel'>
-				<img src='<? echo base_url();?>public_data/img/tools/db.png' />
-				<img style="display:none" src='<? echo base_url();?>public_data/img/tools/application.png' />
-			</a>
-			<span>DB Relationships</span>
-			<span style="display:none">Fields</span>
-		</span>-->
     </legend>
     <ul class='dbheader legends'>
         <li>
@@ -43,8 +35,8 @@
         </li>
     </ul>
     <ul class='dbfldlst'>
-		<?foreach ($databases as $name=>$table):?>
-			<?foreach ($table as $field): ?>
+		<?foreach ($databases as $name=>$table) { ?>
+			<?foreach ($table as $field) { ?>
 		        <li>
 		            <div class="row">
 		                <div class='enlarge'>
@@ -77,15 +69,15 @@
 		                <a class='add_rule'><img src='<? echo base_url()?>public_data/img/tools/add.png' /></a>
 		            </div>
 		        </li>
-			<?endforeach;?>
+			<? } //endforeach?>
 			<li>&nbsp;</li>
-		<?endforeach;?>
+		<? } //endforeach?>
     </ul>
 	<div>
+
+	<? if (count($databases) > 1) { ?>
 	<br />
 	<hr />
-	<? if (count($databases) > 1): ?>
-	
 		<span class="rel_title">Define database relationships:</span>
 
 		<div style="padding: 10px 0;display:none;">
@@ -119,10 +111,9 @@
 			<br style="clear:both;"/>
 		</div>
 	
-	<? endif; ?>
+	<? } //endif ?>
 	</div>
-	<div style="display:none;">
-		
-		
-	</div>
+
+	<div style="display:none;"></div>
+
 </fieldset>

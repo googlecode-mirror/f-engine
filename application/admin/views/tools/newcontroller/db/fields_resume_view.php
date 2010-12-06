@@ -1,6 +1,6 @@
 <fieldset>
     <legend>
-        <img src='<? echo base_url();?>public_data/img/tools/application.png' />
+        <img src='<? echo base_url();?>public_data/img/tools/application.png' style="vertical-align:bottom;" />
 		<span>Fields</span>
     </legend>
     <ul class='dbheader legends'>
@@ -25,8 +25,8 @@
         </li>
     </ul>
     <ul class='dbfldlst'>
-		<?foreach ($databases as $name=>$table):?>
-			<?foreach ($table as $field): ?>
+		<?foreach ($databases as $name=>$table) {?>
+			<?foreach ($table as $field) { ?>
 		        <li>
 		            <div class="row">
 		                <div class='enlarge'>
@@ -49,9 +49,9 @@
 		                </div>
 		            </div>
 		        </li>
-			<?endforeach;?>
+			<? } //endforeach ?>
 			<li style="height:5px;">&nbsp;</li>
-		<?endforeach;?>
+		<? } //endforeach ?>
     </ul>
 	
 	<br />
@@ -94,7 +94,7 @@
 			<br style="clear:both;"/>
 		</div>
 	
-	<? } //endif; ?>
+	<? } //endif ?>
 	
 	<?if(count($databases) == 1) { ?>
 		<input type="checkbox" class="checkbox" value="1" name="delete" /> Include delete feature
