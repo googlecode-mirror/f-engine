@@ -465,6 +465,7 @@ class newform extends Model {
 
 				}
 
+				$data['styles'] = $this->post['insertform_style'];
 				$this->insert_vars["controller"] = $data;
 
 			} else {
@@ -594,6 +595,7 @@ class newform extends Model {
 			else
 				$data['indexes'] = array();
 
+			$data['styles'] = $this->post['editform_style'];
 			$this->update_vars["controller"] = $data;
 		}
     }
