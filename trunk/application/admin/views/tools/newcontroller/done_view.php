@@ -25,4 +25,14 @@
 <?php 
 	} 
 	
+	if (isset($models)) { ?>
+	<br />
+	<h1>Models</h1>
+	<br />
+	<?php foreach($models as $file => $content) { ?>
+		<h2><?php echo $file; ?></h2>
+		<textarea style="width: 100%; height: 200px;"><?php echo '<?'.htmlentities($content); ?></textarea>
+	<?php } ?>
+<?php 
+	} 
 ?>

@@ -37,7 +37,7 @@ class CI_Validation {
 	var $_error_prefix		= '<p>';
 	var $_error_suffix		= '</p>';
 
-	
+	var $data_src;
 
 	/**
 	 * Constructor
@@ -53,6 +53,7 @@ class CI_Validation {
 		}
 		
 		log_message('debug', "Validation Class Initialized");
+		$this->data_src = $_POST;
 	}
 	
 	// --------------------------------------------------------------------
@@ -62,7 +63,7 @@ class CI_Validation {
 	 *
 	 * This function takes an array of field names as input
 	 * and generates class variables with the same name, which will
-	 * either be blank or contain the $_POST value corresponding to it
+	 * either be blank or contain the $this->data_src value corresponding to it
 	 *
 	 * @access	public
 	 * @param	string
@@ -93,7 +94,7 @@ class CI_Validation {
 			
 		foreach($this->_fields as $key => $val)
 		{
-			$this->$key = ( ! isset($_POST[$key])) ? '' : $this->prep_for_form($_POST[$key]);
+			$this->$key = ( ! isset($this->data_src[$key])) ? '' : $this->prep_for_form($this->data_src[$key]);
 			
 			$error = $key.'_error';
 			if ( ! isset($this->$error))
@@ -186,7 +187,7 @@ class CI_Validation {
 	function run()
 	{
 		// Do we even have any data to process?  Mm?
-		if (count($_POST) == 0 OR count($this->_rules) == 0)
+		if (count($this->data_src) == 0 OR count($this->_rules) == 0)
 		{
 			return FALSE;
 		}
@@ -203,7 +204,7 @@ class CI_Validation {
 			// Is the field required?  If not, if the field is blank  we'll move on to the next test
 			if ( ! in_array('required', $ex, TRUE))
 			{
-				if ( ! isset($_POST[$field]) OR $_POST[$field] == '')
+				if ( ! isset($this->data_src[$field]) OR $this->data_src[$field] == '')
 				{
 					continue;
 				}
@@ -218,7 +219,7 @@ class CI_Validation {
 			 * test for it here since there's not reason to go
 			 * further
 			 */
-			if ( ! isset($_POST[$field]))
+			if ( ! isset($this->data_src[$field]))
 			{			
 				if (in_array('isset', $ex, TRUE) OR in_array('required', $ex))
 				{
@@ -253,7 +254,7 @@ class CI_Validation {
 			 * The various prepping functions need to know the
 			 * current field name so they can do this:
 			 *
-			 * $_POST[$this->_current_field] == 'bla bla';
+			 * $this->data_src[$this->_current_field] == 'bla bla';
 			 */
 			$this->_current_field = $field;
 
@@ -285,7 +286,7 @@ class CI_Validation {
 						continue;
 					}
 					
-					$result = $this->CI->$rule($_POST[$field], $param);	
+					$result = $this->CI->$rule($this->data_src[$field], $param);	
 					
 					// If the field isn't required and we just processed a callback we'll move on...
 					if ( ! in_array('required', $ex, TRUE) AND $result !== FALSE)
@@ -307,14 +308,14 @@ class CI_Validation {
 						 */
 						if (function_exists($rule))
 						{
-							$_POST[$field] = $rule($_POST[$field]);
-							$this->$field = $_POST[$field];
+							$this->data_src[$field] = $rule($this->data_src[$field]);
+							$this->$field = $this->data_src[$field];
 						}
 											
 						continue;
 					}
 					
-					$result = $this->$rule($_POST[$field], $param);
+					$result = $this->$rule($this->data_src[$field], $param);
 				}
 								
 				// Did the rule test negatively?  If so, grab the error.
@@ -354,7 +355,7 @@ class CI_Validation {
 		/*
 		 * Recompile the class variables
 		 *
-		 * If any prepping functions were called the $_POST data
+		 * If any prepping functions were called the $this->data_src data
 		 * might now be different then the corresponding class
 		 * variables so we'll set them anew.
 		 */	
@@ -413,12 +414,12 @@ class CI_Validation {
 	 */
 	function matches($str, $field)
 	{
-		if ( ! isset($_POST[$field]))
+		if ( ! isset($this->data_src[$field]))
 		{
 			return FALSE;
 		}
 		
-		return ($str !== $_POST[$field]) ? FALSE : TRUE;
+		return ($str !== $this->data_src[$field]) ? FALSE : TRUE;
 	}
 	
 	// --------------------------------------------------------------------
@@ -706,12 +707,12 @@ class CI_Validation {
 	 */	
 	function set_select($field = '', $value = '')
 	{
-		if ($field == '' OR $value == '' OR  ! isset($_POST[$field]))
+		if ($field == '' OR $value == '' OR  ! isset($this->data_src[$field]))
 		{
 			return '';
 		}
 			
-		if ($_POST[$field] == $value)
+		if ($this->data_src[$field] == $value)
 		{
 			return ' selected="selected"';
 		}
@@ -732,12 +733,12 @@ class CI_Validation {
 	 */	
 	function set_radio($field = '', $value = '')
 	{
-		if ($field == '' OR $value == '' OR  ! isset($_POST[$field]))
+		if ($field == '' OR $value == '' OR  ! isset($this->data_src[$field]))
 		{
 			return '';
 		}
 			
-		if ($_POST[$field] == $value)
+		if ($this->data_src[$field] == $value)
 		{
 			return ' checked="checked"';
 		}
@@ -758,12 +759,12 @@ class CI_Validation {
 	 */	
 	function set_checkbox($field = '', $value = '')
 	{
-		if ($field == '' OR $value == '' OR  ! isset($_POST[$field]))
+		if ($field == '' OR $value == '' OR  ! isset($this->data_src[$field]))
 		{
 			return '';
 		}
 			
-		if ($_POST[$field] == $value)
+		if ($this->data_src[$field] == $value)
 		{
 			return ' checked="checked"';
 		}
@@ -814,7 +815,7 @@ class CI_Validation {
 	{
 		if ($str == 'http://' OR $str == '')
 		{
-			$_POST[$this->_current_field] = '';
+			$this->data_src[$this->_current_field] = '';
 			return;
 		}
 		
@@ -823,7 +824,7 @@ class CI_Validation {
 			$str = 'http://'.$str;
 		}
 		
-		$_POST[$this->_current_field] = $str;
+		$this->data_src[$this->_current_field] = $str;
 	}
 	
 	// --------------------------------------------------------------------
@@ -837,7 +838,7 @@ class CI_Validation {
 	 */	
 	function strip_image_tags($str)
 	{
-		$_POST[$this->_current_field] = $this->CI->input->strip_image_tags($str);
+		$this->data_src[$this->_current_field] = $this->CI->input->strip_image_tags($str);
 	}
 	
 	// --------------------------------------------------------------------
@@ -851,7 +852,7 @@ class CI_Validation {
 	 */	
 	function xss_clean($str)
 	{
-		$_POST[$this->_current_field] = $this->CI->input->xss_clean($str);
+		$this->data_src[$this->_current_field] = $this->CI->input->xss_clean($str);
 	}
 	
 	// --------------------------------------------------------------------
@@ -865,7 +866,7 @@ class CI_Validation {
 	 */	
 	function encode_php_tags($str)
 	{
-		$_POST[$this->_current_field] = str_replace(array('<?php', '<?PHP', '<?', '?>'),  array('&lt;?php', '&lt;?PHP', '&lt;?', '?&gt;'), $str);
+		$this->data_src[$this->_current_field] = str_replace(array('<?php', '<?PHP', '<?', '?>'),  array('&lt;?php', '&lt;?PHP', '&lt;?', '?&gt;'), $str);
 	}
 
 }

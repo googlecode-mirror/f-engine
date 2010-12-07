@@ -16,9 +16,14 @@ class update extends Controller {
 
 			$i = 0;
 			foreach($fields as $field) {
-				echo "";
+
 				if(strpos($data[$i], $db) !== false && in_array($field,$ignore) === false ) {
-					echo "\t\t\t\t'".$field.'\' => $_POST["'.$field.'"]'.",\r\n";
+					
+					if("file" == $styles[$i])
+						echo "\t\t\t\t\t'".$field.'\' => isset($_FILES["'.$field.'"]) ? $_FILES["'.$field.'"]["name"] : "",'."\r\n";
+					else
+						echo "\t\t\t\t'".$field.'\' => $_POST["'.$field.'"]'.",\r\n";
+					
 				} //end if
 				$i++;
 			} //end foreach ?>
@@ -49,9 +54,9 @@ class update extends Controller {
 			$this->load->library("ajax");
 
 			if(IS_AJAX)
-				$this->load->masterview('<?php echo $view; ?>');
-			else
 				$this->load->view('<?php echo $view; ?>');
+			else
+				$this->load->masterview('<?php echo $view; ?>');
 		}
 	}
 }

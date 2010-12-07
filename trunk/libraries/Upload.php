@@ -202,7 +202,7 @@ class CI_Upload {
 		$this->client_name = $this->file_name;
 
 		// Is the file type allowed to be uploaded?
-		if ( ! $this->is_allowed_filetype())
+		if ( !in_array("*",$this->allowed_types) and !$this->is_allowed_filetype())
 		{
 			$this->set_error('upload_invalid_filetype');
 			return FALSE;

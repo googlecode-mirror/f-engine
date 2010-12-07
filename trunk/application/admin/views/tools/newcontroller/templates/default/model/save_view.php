@@ -15,7 +15,12 @@ class save extends Controller {
 			$i = 0;
 			foreach($data as $field) {
 				if(strpos($field, $db) !== false && in_array($fields[$i],$ignore) === false ) {
-					echo "\t\t\t\t\t'".substr($field,strpos($field,'.')+1).'\' => $_POST["'.$fields[$i].'"]'.",\r\n";
+						
+					if("file" == $styles[$i])
+						echo "\t\t\t'".substr($field,strpos($field,'.')+1).'\' => isset($_FILES["'.$fields[$i].'"]) ? $_FILES["'.$fields[$i].'"]["name"] : "",'."\r\n";
+					else
+						echo "\t\t\t'".substr($field,strpos($field,'.')+1).'\' => $_POST["'.$fields[$i].'"]'.",\r\n";
+						
 				} //endif
 				$i++;
 			} //endforeach?>
