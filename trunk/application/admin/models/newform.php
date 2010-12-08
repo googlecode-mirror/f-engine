@@ -540,7 +540,7 @@ class newform extends Model {
 			else
 				$data['form_names'] = array();	
 
-			$data['styles'] = $this->post['insertform_style'];
+			$data['styles'] = $this->post['editform_style'];
 			$this->update_vars["view"] = $data;
 			unset($data);
 		/*
