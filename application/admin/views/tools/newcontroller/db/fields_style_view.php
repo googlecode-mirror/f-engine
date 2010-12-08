@@ -23,9 +23,9 @@
 				<td><?php echo $fieldname; ?></td>
 				<td>
 					<select name="<?php echo $view?>form_style[]">
+						<option <?php echo $length < 120 ? 'selected="selected"' : ''; ?> value="input">text input</option>
+						<option <?php echo $length >= 120 ? 'selected="selected"' : ''; ?>  value="textarea">Textarea</option>
 						<option value="file">File</option>
-						<option <?php echo $length < 100 ? 'selected="selected"' : ''; ?> value="input">text input</option>
-						<option <?php echo $length >= 100 ? 'selected="selected"' : ''; ?>  value="textarea">Textarea</option>
 					</select>
 				</td>
 			</tr>

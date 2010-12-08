@@ -34,6 +34,13 @@ class <?php echo $classname;?> extends Controller {
 			'content' => $content,
 			'pagination' => $this->pagination->create_links() 
 		); 
-		$this->load->masterview('<?php echo $vpath;?>/datagrid', $data, "<?php echo $masterview;?>");
+		
+		if(IS_AJAX) {
+
+			$this->load->view('<?php echo $vpath;?>/datagrid', $data);
+		} else {
+
+			$this->load->masterview('<?php echo $vpath;?>/datagrid', $data, "<?php echo $masterview;?>");
+		}
 	}
 }

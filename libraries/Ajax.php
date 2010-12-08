@@ -79,7 +79,7 @@ class CI_Ajax {
 
 		$success = 'jQuery("'.$update.'").html(html)';
 
-		$this->code[] = "jQuery('#$id').live('click',function(){
+		$this->code[] = "jQuery('#$id').unbind('click').click(function(){
 			jQuery.ajax({'url':'$target','cache':false,'type':'post','success':function(html){".$success."}});
 			return false;
 			});\n";
