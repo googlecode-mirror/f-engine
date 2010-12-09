@@ -11,6 +11,7 @@ class <?php echo $modelname;?> extends Model {
 	<?php if( (isset($update["styles"]) and in_array("file", $update["styles"])) 
 		or isset($insert["styles"]) and in_array("file", $insert["styles"])) { 
 		?>var $upload_path;
+	var $allowed_filetypes;
 	<?php $upload_file = true; }//endif  ?>
 
 	function <?php echo $modelname;?>() {
@@ -24,18 +25,23 @@ class <?php echo $modelname;?> extends Model {
         $this->error_delimiter_start = '<div class="error">';
         $this->error_delimiter_end = '</div>';
 
-        <?php if(isset($upload_file) and $upload_file == true) { ?>$this->upload_path = PUBLIC_DATA; <?php echo "\r\n"; }//endif ?>
+        <?php if(isset($upload_file) and $upload_file == true) { 
+        ?>$this->upload_path = PUBLIC_DATA; <?php echo "\r\n\t\t";?>$this->allowed_filetypes = '*'; <?php 
+        	echo "\r\n"; 
+        } else {
+        	echo "\r\n";
+        }//endif ?>
 	}
 	<?php 
-
-	$params = array();
+if(isset($update["indexes"])) { ?>
+<?php $params = array();
 	foreach($update["indexes"] as $param) {
 
 		$params[] = "$".str_replace(".","_",$param);
 
 	}
-	echo "\r\n";
 	?>
+
 	function get(<?php echo implode(", ",$params);?>) {
 
 		<?php echo '$where = array('."\r\n";
@@ -51,7 +57,8 @@ class <?php echo $modelname;?> extends Model {
 		'<?php echo implode(",",$update["data"]);?>'
 		,$where)->row();
 	}
-
+<?php }//endif ?>
+<?php if(isset($datagrid["data"])) { ?>
 	function get_where($where = array(), $extra = '') {
 
 		return $this->fe->db->f_select(array('<?php echo implode("','",$datagrid["dbs"]);?>'),
@@ -64,7 +71,8 @@ class <?php echo $modelname;?> extends Model {
 		return $this->db->f_select(array('<?php echo implode("','",$datagrid["dbs"]);?>'),
 		'count(*) as itemNum',<?php echo '$where'; ?>)->row()->itemNum;
 	}
-
+<?php }//endif ?>
+<?php if(isset($insert["dbs"])) { ?>
 	function insert($data) {
 
 		$this->data = $data;
@@ -85,8 +93,7 @@ class <?php echo $modelname;?> extends Model {
 			);
 
 			$this->fe->db->f_insert('<?php echo $db;?>',$data);
-			<?php }//endforeach ?>
-			return true;
+			<?php }//endforeach ?>return true;
 
 		} else {
 
@@ -110,7 +117,10 @@ class <?php echo $modelname;?> extends Model {
 <?php }// endforeach?>
 		$this->fe->validation->set_fields($fields);
 
-		<?php if(isset($insert["styles"]) and in_array("file", $insert["styles"])) { ?>$this->fe->load->library('upload', array('upload_path' => $this->upload_path, 'allowed_types' => '*')); <?php 
+		<?php if(isset($insert["styles"]) and in_array("file", $insert["styles"])) { ?>$this->fe->load->library('upload', array(
+			'upload_path' => $this->upload_path, 
+			'allowed_types' => $this->allowed_filetypes)
+		); <?php 
 
 				$i=0;
 				$upload_fields = array();
@@ -122,19 +132,21 @@ class <?php echo $modelname;?> extends Model {
 				}
 			}//endif
 			
-			foreach($upload_fields as $item) {
-
-				echo "\r\n\t\t".'if( stripos($rules["'.$item.'"],"required") !== false or $_FILES["'.$item.'"]["error"] == 0) {';
-				echo "\r\n\r\n\t\t\t".'if(!$this->fe->upload->do_upload("'.$item.'")) { ';
-				echo "\r\n\r\n\t\t\t\t".'$uerror["'.$item.'"] = $this->fe->upload->display_errors($this->error_delimiter_start, $this->error_delimiter_end);';
-				echo "\r\n\t\t\t\t".'$this->data["'.$item.'"] = "";';
-				echo "\r\n\r\n\t\t\t".'} else { '."\r\n";
-				echo "\r\n\t\t\t\t".'$file_data = $this->fe->upload->data();';
-				echo "\r\n\t\t\t\t".'$this->data["'.$item.'"] = $file_data["file_name"];';
-				echo "\r\n\t\t\t".'} //endif '."\r\n\t\t} //endif";
-			}
+			if(isset($upload_fields)) {
+				foreach($upload_fields as $item) {
+	
+					echo "\r\n\t\t".'if( stripos($rules["'.$item.'"],"required") !== false or $_FILES["'.$item.'"]["error"] == 0) {';
+					echo "\r\n\r\n\t\t\t".'if(!$this->fe->upload->do_upload("'.$item.'")) { ';
+					echo "\r\n\r\n\t\t\t\t".'$uerror["'.$item.'"] = $this->fe->upload->display_errors($this->error_delimiter_start, $this->error_delimiter_end);';
+					echo "\r\n\t\t\t\t".'$this->data["'.$item.'"] = "";';
+					echo "\r\n\r\n\t\t\t".'} else { '."\r\n";
+					echo "\r\n\t\t\t\t".'$file_data = $this->fe->upload->data();';
+					echo "\r\n\t\t\t\t".'$this->data["'.$item.'"] = $file_data["file_name"];';
+					echo "\r\n\t\t\t".'} //endif '."\r\n\t\t} //endif";
+				}
 			
-			echo "\r\n\r\n";
+				echo "\r\n\r\n";
+			}
 		?>
 		
 		$this->fe->validation->run();
@@ -151,7 +163,8 @@ class <?php echo $modelname;?> extends Model {
 			}
 		}
 	}
-
+<?php }//endif ?>
+<?php if(isset($update["dbs"])) { ?>
 	function update($data,$where = array()) {
 
 		$this->data = $data;
@@ -164,7 +177,7 @@ class <?php echo $modelname;?> extends Model {
 				echo '$data = array('."\r\n";
 				$i = 0;
 				foreach($update["data"] as $field) {
-					if(strpos($field, $db) !== false && in_array($insert["fields"][$i],$update["ignore"]) === false ) {
+					if(strpos($field, $db) !== false && in_array($update["fields"][$i],$update["ignore"]) === false ) {
 						echo "\t\t\t\t'".substr($field,strpos($field,'.')+1).'\' => $data["'.$update["fields"][$i].'"]'.",\r\n";
 					} //endif
 					$i++;
@@ -172,8 +185,7 @@ class <?php echo $modelname;?> extends Model {
 			);
 
 			$this->db->f_update('<?php echo $db;?>',$data,$where);
-			<?php }//endforeach ?>
-			return true;
+			<?php }//endforeach ?>return true;
 
 		} else {
 
@@ -196,7 +208,10 @@ class <?php echo $modelname;?> extends Model {
 <?php }//endforeach;?>
 		$this->fe->validation->set_fields($fields);
 
-		<?php if(isset($update["styles"]) and in_array("file", $update["styles"])) { ?>$this->fe->load->library('upload', array('upload_path' => $this->upload_path, 'allowed_types' => '*')); <?php 
+		<?php if(isset($update["styles"]) and in_array("file", $update["styles"])) { ?>$this->fe->load->library('upload', array(
+			'upload_path' => $this->upload_path, 
+			'allowed_types' => $this->allowed_filetypes)
+		); <?php 
 
 				$i=0;
 				$upload_fields = array();
@@ -207,18 +222,20 @@ class <?php echo $modelname;?> extends Model {
 					}
 				}
 			}//endif
-			
-			foreach($upload_fields as $item) {
 
-				echo "\r\n\t\t".'if( stripos($rules["'.$item.'"],"required") !== false or $_FILES["'.$item.'"]["error"] == 0) {';
-				echo "\r\n\r\n\t\t\t".'if(!$this->fe->upload->do_upload("'.$item.'")) { ';
-				echo "\r\n\r\n\t\t\t\t".'$uerror["'.$item.'"] = $this->fe->upload->display_errors($this->error_delimiter_start, $this->error_delimiter_end);';
-				echo "\r\n\r\n\t\t\t".'} else { '."\r\n";
-				echo "\r\n\t\t\t\t".'$file_data = $this->fe->upload->data();';
-				echo "\r\n\t\t\t".'} //endif '."\r\n\t\t} //endif";
+			if(isset($upload_fields)) {
+				foreach($upload_fields as $item) {
+
+					echo "\r\n\t\t".'if( stripos($rules["'.$item.'"],"required") !== false or $_FILES["'.$item.'"]["error"] == 0) {';
+					echo "\r\n\r\n\t\t\t".'if(!$this->fe->upload->do_upload("'.$item.'")) { ';
+					echo "\r\n\r\n\t\t\t\t".'$uerror["'.$item.'"] = $this->fe->upload->display_errors($this->error_delimiter_start, $this->error_delimiter_end);';
+					echo "\r\n\r\n\t\t\t".'} else { '."\r\n";
+					echo "\r\n\t\t\t\t".'$file_data = $this->fe->upload->data();';
+					echo "\r\n\t\t\t".'} //endif '."\r\n\t\t} //endif";
+				}
+
+				echo "\r\n\r\n";
 			}
-			
-			echo "\r\n\r\n";
 		?>
 
 		$this->fe->validation->run();
@@ -235,7 +252,8 @@ class <?php echo $modelname;?> extends Model {
 			}
 		}
 	}
-
+<?php }//endif ?>
+<?php if(isset($delete["field"])) { ?>
 	function delete($id) {
 
 		if($id == '') {
@@ -250,9 +268,12 @@ class <?php echo $modelname;?> extends Model {
 		$this->db->f_delete('<?php echo $delete["table"]; ?>',$where);
 		return true;
 	}
-	
+<?php }//endif ?>	
 	function get_errors() {
 	
-		return $this->fe->validation->_error_array;
+		if(isset($this->fe->validation))
+			return $this->fe->validation->_error_array;
+		else
+			return false;
 	} 
 }

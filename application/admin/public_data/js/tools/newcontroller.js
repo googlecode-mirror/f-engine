@@ -741,7 +741,7 @@
 			}
 		});
 	});
-	
+
 	$('input.back2db_fields').bind('click',function() {
 
 		$(this).parent().parent().fadeOut("normal", function () {
@@ -750,13 +750,11 @@
 			$(this).children("div.db_styles").html("");
 		});
 	});
-	
-	
+
  	/***	Create model
  	 ********************************************************/
 	$("#cmodel").change(function () {
-		
-		
+
 		if($(this).attr("value") == 1) {
 			
 			$(this).next().show().children("input").focus().select();
@@ -765,6 +763,20 @@
 			
 			$(this).next().hide();
 		}
+	});
+	
+ 	/***	Autoset model name
+ 	 ********************************************************/
+	$("#finish input[name=url]").blur(function () {
+		
+		var myModelName = $(this).attr("value").split("/");
+		
+		if(myModelName[(myModelName.length-1)] != "")
+			myModelName = myModelName[(myModelName.length-1)];
+		else
+			myModelName = myModelName[(myModelName.length-2)];
+
+		$("#finish input[name=modelname]").attr("value","m" + myModelName.charAt(0).toUpperCase() + myModelName.slice(1))
 	});
 	
  });//end ready
