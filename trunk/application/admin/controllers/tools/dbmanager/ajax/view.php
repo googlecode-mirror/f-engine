@@ -266,8 +266,38 @@ class view extends Controller
 			$data['exam']['orderby'] = $query_orderby;
 		}
 
-		$data["actions"] = $this->isView ? false : $actions;
 		$data["isView"] = $this->isView;
+		if($data["isView"]) {
+
+			$data["actions"] = false;
+
+		} else {
+
+			if($data['exam']['primary']) {
+
+	        	$tmp = explode('|',$data['exam']['primary']);
+	        	$exam_keys = explode(",",$tmp[1]);
+
+	        	if(count($exam_keys) > 1) {
+
+	        		$index_count = 0;
+	        		foreach($data['exam']['query']->row() as $key => $item) {
+	
+	        			if(in_array($key,$exam_keys)) {
+	        				$index_count++;
+	        			}
+	        		}
+
+	        		if(count($exam_keys) != $index_count) {
+
+	        			$actions = false;
+	        		}
+	        	}
+	        }
+
+	        $data["actions"] = $actions;
+		}
+
 
         if(!isset($_POST['fullLoad'])) {
 
@@ -376,7 +406,7 @@ class view extends Controller
 
 		//multidatabase
 		preg_match_all("(".implode("|",$dblist).")",$dummy_query,$multidb);
-		$multidb = $multidb[0];
+		$multidb = array_unique($multidb[0]);
 		//multiple select
 		preg_match_all("/select\s+/i",$dummy_query,$multiselect);
 		$multiselect = $multiselect[0];

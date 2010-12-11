@@ -126,8 +126,21 @@ class CI_DB_mysqli_utility extends CI_DB_utility {
 			
 			$i = 0;
 			$result = $query->result_array();
-			foreach ($result[0] as $val)
+
+			$is_view = false;
+			foreach ($result[0] as $key=>$val)
 			{
+				if(in_array($key, array("character_set_client","collation_connection"))) {
+
+					continue;
+				}
+
+				if(strpos($val,"CREATE ALGORITHM") !== false) {
+
+					$val = preg_replace("/ALGORITHM.*DEFINER/","",$val);
+					$is_view = true;
+				}
+
 				if ($i++ % 2)
 				{
 					if(isset($ifnotexists) and $ifnotexists == true)
@@ -138,7 +151,7 @@ class CI_DB_mysqli_utility extends CI_DB_utility {
 			}
 
 			// If inserts are not needed we're done...
-			if ($add_insert == FALSE)
+			if ($add_insert == FALSE or $is_view)
 			{
 				continue;
 			}
@@ -153,11 +166,11 @@ class CI_DB_mysqli_utility extends CI_DB_utility {
 			{
 				continue;
 			}
-		
+
 			// Fetch the field names and determine if the field is an
 			// integer type.  We use this info to decide whether to
 			// surround the data with quotes or not
-			
+
 			$i = 0;
 			$field_str = '';
 			$is_int = array();
@@ -239,7 +252,7 @@ class CI_DB_mysqli_utility extends CI_DB_utility {
 				}
 			}
 
-			if(isset($extended) and $extended == true and ($kont) % 25 != 0) {
+			if(isset($extended) and $extended == true and substr($output,-1) == ")") {
 
 				$output .= ';';
 			}

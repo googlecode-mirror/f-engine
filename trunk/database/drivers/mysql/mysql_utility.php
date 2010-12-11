@@ -114,19 +114,31 @@ class CI_DB_mysql_utility extends CI_DB_utility {
 
 			$i = 0;
 			$result = $query->result_array();
-			foreach ($result[0] as $val)
+			$is_view = false;
+			foreach ($result[0] as $key=>$val)
 			{
+				if(in_array($key, array("character_set_client","collation_connection"))) {
+
+					continue;
+				}
+
+				if(strpos($val,"CREATE ALGORITHM") !== false) {
+
+					$val = preg_replace("/ALGORITHM.*DEFINER/","",$val);
+					$is_view = true;
+				}
+
 				if ($i++ % 2)
-				{ 		
+				{
 					if(isset($ifnotexists) and $ifnotexists == true)
-						$output .= str_replace("`$table`","IF NOT EXISTS `$table`",$val).';'.$newline.$newline;
+						$output .= str_replace("`$table`","IF NOT EXISTS `$table` ",$val).';'.$newline.$newline;
 					else
 						$output .= $val.';'.$newline.$newline;
 				}
 			}
-			
+
 			// If inserts are not needed we're done...
-			if ($add_insert == FALSE)
+			if ($add_insert == FALSE or $is_view)
 			{
 				continue;
 			}
@@ -225,7 +237,7 @@ class CI_DB_mysql_utility extends CI_DB_utility {
 				}
 			}
 
-			if(isset($extended) and $extended == true and ($kont) % 25 != 0) {
+			if(isset($extended) and $extended == true and substr($output,-1) == ")") {
 
 				$output .= ';';
 			}

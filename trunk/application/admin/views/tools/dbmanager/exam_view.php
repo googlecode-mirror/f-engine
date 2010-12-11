@@ -15,7 +15,6 @@
 		<span style="white-space:pre-line;max-height:140px;overflow-y:auto;display:block;"><?php echo preg_replace("/,(?=.*(from|where).*)/i",", ",$exam["sql"]);?></span>
 		<span class="meta">(~<?php echo isset($total_rows) ? $total_rows : count($exam['query']->result()); ?> total, Query took <?php echo $exam["execution_time"]; ?> sec)</span>
 	</div>
-
     <table border="0" cellpadding="0" cellspacing="1" style="width:100%;margin-top:10px;">
         <tr>
         	<?php if(isset($actions) && $actions == true && count($exam['query']->result()) > 0) { ?>
@@ -48,17 +47,22 @@
         <tr>
         	<td colspan="<?php echo count($exam['fields']); ?>" style="text-align:center;">No result found</td>
         </tr>
-        <?php } //endif ?>
-        <?php foreach($exam['query']->result() as $row) { ?>
+        <?php } //endif 
+
+        foreach($exam['query']->result() as $row) { 
+        ?>
         <tr style="vertical-align:top;">
-        	<?php if(isset($actions) && $actions == true) { ?>
+
+			<?php
+        	if(isset($actions) && $actions == true) { 
+        	?>
  			<td>
                 <center>
                     <form>
-                        <?php if($exam['primary']) { ?>
-                            <?php 
-                                $tmp = explode('|',$exam['primary']);
-                                $exam_keys = explode(",",$tmp[1]);
+                        <?php if($exam['primary']) {
+								
+                        		$tmp = explode('|',$exam['primary']);
+                        		$exam_keys = explode(",",$tmp[1]);
                                 $exam_key = $exam_keys[0];
                                 $lcase_exam_key = strtolower($exam_keys[0]);
 
@@ -73,10 +77,15 @@
                                 if(strpos($tmp[1],",")) {
                             ?>
 									<input type="hidden" name="<?php  echo $tmp[0];?>" value="<?php  echo $tmp[1];?>" />
-									<?php foreach(explode(",",$tmp[1]) as $fld) { 
-										  $lcase_fld = strtolower($fld);
+									<?php foreach(explode(",",$tmp[1]) as $fld) {
+										$lcase_fld = strtolower($fld);
+
+										if(!isset($row->$fld) and !isset($row->$lcase_fld)) {
+											continue;
+										}
 									?>
-		                            <input type="hidden" name="<?php  echo $tmp[0];?>_value[]" value="<?php  echo isset($row->$fld) ? $row->$fld : $row->$lcase_fld;?>" />
+		                            <input type="hidden" name="<?php  echo $tmp[0];?>_value[]" 
+		                            value="<?php  echo isset($row->$fld) ? $row->$fld : $row->$lcase_fld;?>" />
 		                            <?php }//endforeach ?>
 
 							<?php } else { ?>
