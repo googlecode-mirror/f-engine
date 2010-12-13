@@ -38,7 +38,6 @@ if(isset($update["indexes"])) { ?>
 	foreach($update["indexes"] as $param) {
 
 		$params[] = "$".str_replace(".","_",$param);
-
 	}
 	?>
 
@@ -53,7 +52,7 @@ if(isset($update["indexes"])) { ?>
 			} ?>
 		);
 
-		return $this->db->f_select(array('<?php echo implode("','",$update["dbs"]);?>'),
+		return $this->fe->db->f_select(array('<?php echo implode("','",$update["dbs"]);?>'),
 		'<?php echo implode(",",$update["data"]);?>'
 		,$where)->row();
 	}
@@ -68,7 +67,7 @@ if(isset($update["indexes"])) { ?>
 
 	function get_totalrows($where = array()) {
 
-		return $this->db->f_select(array('<?php echo implode("','",$datagrid["dbs"]);?>'),
+		return $this->fe->db->f_select(array('<?php echo implode("','",$datagrid["dbs"]);?>'),
 		'count(*) as itemNum',<?php echo '$where'; ?>)->row()->itemNum;
 	}
 <?php }//endif ?>
@@ -93,7 +92,7 @@ if(isset($update["indexes"])) { ?>
 			);
 
 			$this->fe->db->f_insert('<?php echo $db;?>',$data);
-			<?php }//endforeach ?>return true;
+			<?php }//endforeach ?>return $this->fe->db->insert_id();
 
 		} else {
 
@@ -131,10 +130,10 @@ if(isset($update["indexes"])) { ?>
 					}
 				}
 			}//endif
-			
+
 			if(isset($upload_fields)) {
 				foreach($upload_fields as $item) {
-	
+
 					echo "\r\n\t\t".'if( stripos($rules["'.$item.'"],"required") !== false or $_FILES["'.$item.'"]["error"] == 0) {';
 					echo "\r\n\r\n\t\t\t".'if(!$this->fe->upload->do_upload("'.$item.'")) { ';
 					echo "\r\n\r\n\t\t\t\t".'$uerror["'.$item.'"] = $this->fe->upload->display_errors($this->error_delimiter_start, $this->error_delimiter_end);';
@@ -144,11 +143,11 @@ if(isset($update["indexes"])) { ?>
 					echo "\r\n\t\t\t\t".'$this->data["'.$item.'"] = $file_data["file_name"];';
 					echo "\r\n\t\t\t".'} //endif '."\r\n\t\t} //endif";
 				}
-			
+
 				echo "\r\n\r\n";
 			}
 		?>
-		
+
 		$this->fe->validation->run();
 		$this->fe->validation->data_src = $_POST;
 
@@ -184,7 +183,7 @@ if(isset($update["indexes"])) { ?>
 				} //endforeach ?>
 			);
 
-			$this->db->f_update('<?php echo $db;?>',$data,$where);
+			$this->fe->db->f_update('<?php echo $db;?>',$data,$where);
 			<?php }//endforeach ?>return true;
 
 		} else {
@@ -265,7 +264,7 @@ if(isset($update["indexes"])) { ?>
 			'<?php echo $delete["field"]; ?>' => $id
 		);
 
-		$this->db->f_delete('<?php echo $delete["table"]; ?>',$where);
+		$this->fe->db->f_delete('<?php echo $delete["table"]; ?>',$where);
 		return true;
 	}
 <?php }//endif ?>	
