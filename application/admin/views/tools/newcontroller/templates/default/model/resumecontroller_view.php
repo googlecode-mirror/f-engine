@@ -20,7 +20,7 @@ class <?php echo $classname;?> extends Controller {
 
 		/*** set pagination ***/
 		$config['base_url'] = site_url("<?php echo $vpath;?>");
-		$config['total_rows'] = $this-><?php echo $modelname; ?>->get_totalrows();
+		$config['total_rows'] = $this-><?php echo $modelname; ?>->get_totalrows($where);
 		$config['per_page'] = '20';
 		$config['ajax'] = "#fe-datagrid";
 

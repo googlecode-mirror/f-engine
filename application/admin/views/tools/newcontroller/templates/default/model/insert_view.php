@@ -15,7 +15,7 @@
 	    	  foreach($field_names as $item){ if($item == '') continue;?>
 		<tr>
 			        <td width="10%">
-			            <?php echo $item;?> 
+			            <?php echo ucfirst(trim($item));?> 
 			        </td>
 			        <td>
 			            <?php 
@@ -32,6 +32,7 @@
 						?><input type="file" name="<?php echo $item?>" /><?php
 							break;
 			            }
+			            echo "\r\n"; 
 			            ?>
 						<? echo '<?php if(isset($this->validation)) { echo $this->validation->'.$item.'_error; } ?>'."\n";?>
 			        </td>
