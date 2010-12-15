@@ -200,6 +200,11 @@ class CI_Router extends Router {
 	{
 		$this->method = $method;
 	}
+	
+	function set_directory($dir)
+	{
+		$this->directory = str_replace(".",'',$dir).'/';
+	}
 
 }
 // END Router Class

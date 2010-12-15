@@ -6,7 +6,7 @@
  *
  * @package		CodeIgniter
  * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008 - 2009, EllisLab, Inc.
+ * @copyright	Copyright (c) 2008 - 2010, EllisLab, Inc.
  * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
@@ -258,7 +258,7 @@ class DB_driver {
 		{			
 			$sql = preg_replace("/(\W)".$this->swap_pre."(\S+?)/", "\\1".$this->dbprefix."\\2", $sql);
 		}
-	
+		
 		// Is query caching enabled?  If the query is a "read type"
 		// we will load the caching class and return the previously
 		// cached query if it exists
@@ -273,7 +273,7 @@ class DB_driver {
 				}
 			}
 		}
-
+		
 		// Compile binds if needed
 		if ($binds !== FALSE)
 		{
@@ -285,14 +285,13 @@ class DB_driver {
 		{
 			$this->queries[] = $sql;
 		}
-
+		
 		// Start the Query Timer
 		$time_start = list($sm, $ss) = explode(' ', microtime());
 	
 		// Run the Query
 		if (FALSE === ($this->result_id = $this->simple_query($sql)))
 		{
-	
 			if ($this->save_queries == TRUE)
 			{
 				$this->query_times[] = 0;
@@ -327,6 +326,7 @@ class DB_driver {
 		
 			return FALSE;
 		}
+		
 		// Stop and aggregate the query time results
 		$time_end = list($em, $es) = explode(' ', microtime());
 		$this->benchmark += ($em + $es) - ($sm + $ss);
@@ -335,7 +335,7 @@ class DB_driver {
 		{
 			$this->query_times[] = ($em + $es) - ($sm + $ss);
 		}
-
+		
 		// Increment the query counter
 		$this->query_count++;
 		
@@ -352,7 +352,7 @@ class DB_driver {
 		
 			return TRUE;
 		}
-
+		
 		// Return TRUE if we don't need to create a result object
 		// Currently only the Oracle driver uses this when stored
 		// procedures are used

@@ -22,10 +22,12 @@
  * @author		ExpressionEngine Dev Team
  * @link		http://codeigniter.com/user_guide/database/
  */
-class CI_DB_utility extends CI_DB_forge {
+if ( ! class_exists('DB_utility'))
+{
+	require('CI_DB_utility.php');
+}
 
-	var $db;
-	var $data_cache 	= array();
+class CI_DB_utility extends DB_utility {
 
 	/**
 	 * Constructor
@@ -40,219 +42,6 @@ class CI_DB_utility extends CI_DB_forge {
 		$this->db =& $CI->db;
 		
 		log_message('debug', "Database Utility Class Initialized");
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * List databases
-	 *
-	 * @access	public
-	 * @return	bool
-	 */
-	function list_databases()
-	{	
-		// Is there a cached result?
-		if (isset($this->data_cache['db_names']))
-		{
-			return $this->data_cache['db_names'];
-		}
-	
-		$query = $this->db->query($this->_list_databases());
-		$dbs = array();
-		if ($query->num_rows() > 0)
-		{
-			foreach ($query->result_array() as $row)
-			{
-				$dbs[] = current($row);
-			}
-		}
-			
-		$this->data_cache['db_names'] = $dbs;
-		return $this->data_cache['db_names'];
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * Optimize Table
-	 *
-	 * @access	public
-	 * @param	string	the table name
-	 * @return	bool
-	 */
-	function optimize_table($table_name)
-	{
-		$sql = $this->_optimize_table($table_name);
-		
-		if (is_bool($sql))
-		{
-				show_error('db_must_use_set');
-		}
-	
-		$query = $this->db->query($sql);
-		$res = $query->result_array();
-		
-		// Note: Due to a bug in current() that affects some versions
-		// of PHP we can not pass function call directly into it
-		return current($res);
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * Optimize Database
-	 *
-	 * @access	public
-	 * @return	array
-	 */
-	function optimize_database()
-	{
-		$result = array();
-		foreach ($this->db->list_tables() as $table_name)
-		{
-			$sql = $this->_optimize_table($table_name);
-			
-			if (is_bool($sql))
-			{
-				return $sql;
-			}
-			
-			$query = $this->db->query($sql);
-			
-			// Build the result array...
-			// Note: Due to a bug in current() that affects some versions
-			// of PHP we can not pass function call directly into it
-			$res = $query->result_array();
-			$res = current($res);
-			$key = str_replace($this->db->database.'.', '', current($res));
-			$keys = array_keys($res);
-			unset($res[$keys[0]]);
-			
-			$result[$key] = $res;
-		}
-
-		return $result;
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * Repair Table
-	 *
-	 * @access	public
-	 * @param	string	the table name
-	 * @return	bool
-	 */
-	function repair_table($table_name)
-	{
-		$sql = $this->_repair_table($table_name);
-		
-		if (is_bool($sql))
-		{
-			return $sql;
-		}
-	
-		$query = $this->db->query($sql);
-		
-		// Note: Due to a bug in current() that affects some versions
-		// of PHP we can not pass function call directly into it
-		$res = $query->result_array();
-		return current($res);
-	}
-	
-	// --------------------------------------------------------------------
-
-	/**
-	 * Generate CSV from a query result object
-	 *
-	 * @access	public
-	 * @param	object	The query result object
-	 * @param	string	The delimiter - comma by default
-	 * @param	string	The newline character - \n by default
-	 * @param	string	The enclosure - double quote by default
-	 * @return	string
-	 */
-	function csv_from_result($query, $delim = ",", $newline = "\n", $enclosure = '"')
-	{
-		if ( ! is_object($query) OR ! method_exists($query, 'list_fields'))
-		{
-			show_error('You must submit a valid result object');
-		}	
-	
-		$out = '';
-		
-		// First generate the headings from the table column names
-		foreach ($query->list_fields() as $name)
-		{
-			$out .= $enclosure.str_replace($enclosure, $enclosure.$enclosure, $name).$enclosure.$delim;
-		}
-		
-		$out = rtrim($out);
-		$out .= $newline;
-		
-		// Next blast through the result array and build out the rows
-		foreach ($query->result_array() as $row)
-		{
-			foreach ($row as $item)
-			{
-				$out .= $enclosure.str_replace($enclosure, $enclosure.$enclosure, $item).$enclosure.$delim;			
-			}
-			$out = rtrim($out);
-			$out .= $newline;
-		}
-
-		return $out;
-	}
-	
-	// --------------------------------------------------------------------
-
-	/**
-	 * Generate XML data from a query result object
-	 *
-	 * @access	public
-	 * @param	object	The query result object
-	 * @param	array	Any preferences
-	 * @return	string
-	 */
-	function xml_from_result($query, $params = array())
-	{
-		if ( ! is_object($query) OR ! method_exists($query, 'list_fields'))
-		{
-			show_error('You must submit a valid result object');
-		}
-		
-		// Set our default values
-		foreach (array('root' => 'root', 'element' => 'element', 'newline' => "\n", 'tab' => "\t") as $key => $val)
-		{
-			if ( ! isset($params[$key]))
-			{
-				$params[$key] = $val;
-			}
-		}
-		
-		// Create variables for convenience
-		extract($params);
-			
-		// Load the xml helper
-		$CI =& get_instance();
-		$CI->load->helper('xml');
-
-		// Generate the result
-		$xml = "<{$root}>".$newline;
-		foreach ($query->result_array() as $row)
-		{
-			$xml .= $tab."<{$element}>".$newline;
-			
-			foreach ($row as $key => $val)
-			{
-				$xml .= $tab.$tab."<{$key}>".xml_convert($val)."</{$key}>".$newline;
-			}
-			$xml .= $tab."</{$element}>".$newline;
-		}
-		$xml .= "</$root>".$newline;
-		
-		return $xml;
 	}
 
 	// --------------------------------------------------------------------
@@ -381,11 +170,8 @@ class CI_DB_utility extends CI_DB_forge {
 			$CI->zip->add_data($prefs['filename'], $this->_backup($prefs,$query));							
 			return $CI->zip->get_zip();
 		}
-		
 	}
-
 }
-
 
 /* End of file DB_utility.php */
 /* Location: ./system/database/DB_utility.php */

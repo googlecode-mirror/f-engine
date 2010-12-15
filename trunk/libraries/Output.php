@@ -147,7 +147,7 @@ class CI_Output extends Output {
 				}
 			}
 		}
-		
+
 		// --------------------------------------------------------------------
 
 		// Does the controller contain a function named _output()?
@@ -160,9 +160,57 @@ class CI_Output extends Output {
 		{
 			echo $output;  // Send it to the browser!
 		}
-		
+
 		log_message('debug', "Final output sent to browser");
 		log_message('debug', "Total execution time: ".$elapsed);		
+	}
+	
+	function _write_cache($output)
+	{
+		$CI =& get_instance();	
+		$path = $CI->config->item('cache_path');
+	
+		$cache_path = ($path == '') ? BASEPATH.'cache/fullpage/'.APPNAME : $path;
+
+		if ( ! is_dir($cache_path))
+		{
+			mkdir($cache_path, 0777, true);
+			chmod($cache_path, 0777);
+		}
+		
+		if ( ! is_dir($cache_path) OR ! is_really_writable($cache_path))
+		{
+			return;
+		}
+		
+		$uri =	$CI->config->item('base_url').
+				$CI->config->item('index_page').
+				$CI->uri->uri_string();
+		
+		$cache_path .= md5($uri);
+
+		if ( ! $fp = @fopen($cache_path, FOPEN_WRITE_CREATE_DESTRUCTIVE))
+		{
+			log_message('error', "Unable to write cache file: ".$cache_path);
+			return;
+		}
+		
+		$expire = time() + ($this->cache_expiration * 60);
+		
+		if (flock($fp, LOCK_EX))
+		{
+			fwrite($fp, $expire.'TS--->'.$output);
+			flock($fp, LOCK_UN);
+		}
+		else
+		{
+			log_message('error', "Unable to secure a file lock for file at: ".$cache_path);
+			return;
+		}
+		fclose($fp);
+		@chmod($cache_path, DIR_WRITE_MODE);
+
+		log_message('debug', "Cache file written: ".$cache_path);
 	}
 	
 }
