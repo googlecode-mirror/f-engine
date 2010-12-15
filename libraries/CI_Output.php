@@ -6,7 +6,7 @@
  *
  * @package		CodeIgniter
  * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008 - 2009, EllisLab, Inc.
+ * @copyright	Copyright (c) 2008 - 2010, EllisLab, Inc.
  * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
@@ -34,7 +34,7 @@ class Output {
 	var $enable_profiler 	= FALSE;
 
 
-	function CI_Output()
+	function Output()
 	{
 		log_message('debug', "Output Class Initialized");
 	}
@@ -299,13 +299,7 @@ class Output {
 		$CI =& get_instance();	
 		$path = $CI->config->item('cache_path');
 	
-		$cache_path = ($path == '') ? BASEPATH.'cache/fullpage/'.APPNAME : $path;
-
-		if ( ! is_dir($cache_path))
-		{
-			mkdir($cache_path, 0777, true);
-			chmod($cache_path, 0777);
-		}
+		$cache_path = ($path == '') ? BASEPATH.'cache/' : $path;
 		
 		if ( ! is_dir($cache_path) OR ! is_really_writable($cache_path))
 		{

@@ -6,7 +6,7 @@
  *
  * @package		CodeIgniter
  * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008 - 2009, EllisLab, Inc.
+ * @copyright	Copyright (c) 2008 - 2010, EllisLab, Inc.
  * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
@@ -23,19 +23,6 @@
  * @category	Helpers
  * @author		ExpressionEngine Dev Team
  * @link		http://codeigniter.com/user_guide/helpers/url_helper.html
- */
-
-/**
- * F-engine URL Helpers
- *
- * @package   F-engine
- * @author		 flmn
- * @copyright	 Copyright (c) 2010, Mikel Madariaga
- * @license		 http://www.f-engine.net/userguide/license
- * @link		     http://www.f-engine.net/
- * @since		 Version 0.2
- * 
- * Modified/added functions: public_data
  */
 
 // ------------------------------------------------------------------------

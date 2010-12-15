@@ -40,7 +40,7 @@
  */
 
 // CI Version
-define('CI_VERSION',	'1.7.2');
+define('CI_VERSION',	'1.7.3');
 define('FE_VERSION',	'0.5');
 
 /*
@@ -228,8 +228,8 @@ if (method_exists($CI, '_remap'))
 else
 {
 	$controller_methods = array_map('strtolower', get_class_methods($CI));
-	
-	// is an ajax request? Replace method if 'ajax' method is found 
+
+	// is an ajax request? Replace method if 'ajax' method is set 
 	if(IS_AJAX && $class != "ajax" && in_array("ajax",  $controller_methods )) {
 
 		$method = "ajax";	
@@ -246,7 +246,7 @@ else
 
 	// Call the requested method.
 	// Any URI segments present (besides the class/function) will be passed to the method for convenience
-	call_user_func_array(array(&$CI, $method), array_slice($RTR->uri->params,1));
+	call_user_func_array(array(&$CI, $method), $RTR->uri->params);
 	
 }
 

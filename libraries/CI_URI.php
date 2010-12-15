@@ -6,7 +6,7 @@
  *
  * @package		CodeIgniter
  * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008 - 2009, EllisLab, Inc.
+ * @copyright	Copyright (c) 2008 - 2010, EllisLab, Inc.
  * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
@@ -256,7 +256,6 @@ class URI {
 	{
 		array_unshift($this->segments, NULL);
 		array_unshift($this->rsegments, NULL);
-		array_unshift($this->params, NULL);
 		unset($this->segments[0]);
 		unset($this->rsegments[0]);
 	}

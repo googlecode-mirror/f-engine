@@ -6,7 +6,7 @@
  *
  * @package		CodeIgniter
  * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008 - 2009, EllisLab, Inc.
+ * @copyright	Copyright (c) 2008 - 2010, EllisLab, Inc.
  * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
@@ -24,7 +24,7 @@
  * @author		ExpressionEngine Dev Team
  * @link		http://codeigniter.com/user_guide/libraries/validation.html
  */
-class CI_Validation {
+class Validation {
 	
 	var $CI;
 	var $error_string		= '';
@@ -43,7 +43,7 @@ class CI_Validation {
 	 * Constructor
 	 *
 	 */	
-	function CI_Validation()
+	function Validation()
 	{	
 		$this->CI =& get_instance();
 		
