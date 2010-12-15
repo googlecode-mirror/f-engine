@@ -413,21 +413,23 @@ function pagination (html) {
     $('#exam-results tr:gt(0) td a.delete').click(function () {
 
     	$.post($(this).attr('href')+$("#currentprojectname").attr("rel"), 
-    	        "table="+$('#db_list ul.jqueryFileTree a.selected').text() + "&dbconf=" + $("select[name=db_conf]").attr("value") + "&" +$(this).parent().serialize(), 
-        function (response) {
-            if(response == 1) {
+    	    "table="+$('#db_list ul.jqueryFileTree a.selected').text() + "&dbconf=" + $("select[name=db_conf]").attr("value") + "&" +$(this).parent().serialize(), 
+	        function (response) {
 
-            	if($("#exam-results > table tr").length == 2) {
-            		$('#db_list ul li a.selected').click();
-            	} else {
-                	$("#exam-results aexpandContent:eq(0)").click();
-            	}
+	            if(response == 1) {
 
-            } else {
+	            	if($("#exam-results > table tr").length == 2) {
+	            		$('#db_list ul li a.selected').click();
+	            	} else {
+	                	$("#exam-results a.refresh:eq(0)").click();
+	            	}
 
-                alert(response);
-            }
-        });
+	            } else {
+
+	                alert(response);
+	            }
+	        }
+    	);
         return false;
     });
     
@@ -884,6 +886,9 @@ function recordEditEvents () {
 	$('#exam div.edit input.cancel').click(function () {
 
 		$('#exam > div').toggle();
+
+		//scrollTop
+		$('html,body').animate({scrollTop: (parseInt($("#forms h2 a").offset().top))}, 800);
 	});
 
 	$('#exam div.edit textarea.expanding').autogrow();
@@ -1181,9 +1186,37 @@ function initTab_sql() {
 
         return false;
     });
+    
+    
+    /*** Autocomplete on-off switcher ***/
+    var autocom_switcher = $("#ac_switcher");
+    autocom_switcher.click(function () {
+
+    	$(this).children("img").toggle();
+    	$("#sqlquery").focus();
+
+    	//Save value into a browser cookie
+    	var exdate=new Date();
+		exdate.setDate(exdate.getDate()+100);
+
+    	if($(this).children("img.disabled:visible").length > 0) {
+
+    		document.cookie="autocom_enabled=1;expires="+exdate.toUTCString();
+
+    	}  else {
+
+    		document.cookie="autocom_enabled=0;expires="+exdate.toUTCString();
+    	}
+    	
+    	var rel = $(this).attr("rel");
+    	$(this).attr("rel",$(this).attr("title"));
+    	$(this).attr("title",rel);
+
+    	return false;
+    });
 
     /*** table field reminder/autocomplete ***/
-    autocomplete = $("#field_autocomplete");
+    var autocomplete = $("#field_autocomplete");
     var autocom_tables = $("#query input[name=tables[]]");
     var autocom_lastPos = 0;
     var autocom_default = autocomplete.children("ul.default");
@@ -1212,6 +1245,11 @@ function initTab_sql() {
 
             var cursorPos = this.selectionStart;
             var skipAutocomplete = false;
+            
+            if(autocom_switcher.children("img.disabled:visible").length > 0) {
+            	skipAutocomplete = true;
+            }
+            	
             if(cursorPos <= autocom_lastPos) {
 
             	skipAutocomplete = true;
@@ -1220,7 +1258,6 @@ function initTab_sql() {
             var text = $(this).attr("value");
         }
 
-    	
     	var key = text.substring(cursorPos-1, cursorPos);
 
     	if(key == " " || key == ",") {
@@ -1229,9 +1266,11 @@ function initTab_sql() {
     		if(autocom_default.length > 0) {
     			autocomplete.children("strong").text(autocom_default.attr("id").replace("_fields",""));
     			autocom_default.show().find("a").show();
+    			$("#ac_switcher").show();
 
     		} else {
     			autocomplete.hide();
+    			$("#ac_switcher").hide();
     		}
     		return;
     	}
@@ -1239,7 +1278,8 @@ function initTab_sql() {
     	if(key == ".") {
 
     		var segments = text.substring(0,cursorPos-1).split(/[^A-Z0-9_\-]/ig);
-    		autocomplete.addClass("enabled");
+    		if(autocom_tables.filter("[value="+segments[segments.length-1]+"]").length > 0)
+    			autocomplete.addClass("enabled");
 
     	} else if(key.match(/[A-Z0-9_\-]/i) == null) {
 
@@ -1250,6 +1290,7 @@ function initTab_sql() {
     			autocom_default.show();
     		} else {
     			autocomplete.hide();
+    			$("#ac_switcher").hide()
     		}
     		return;
 
@@ -1263,6 +1304,7 @@ function initTab_sql() {
 
 	    			autocomplete.removeClass("noMatch");
     				autocomplete.show();
+    				$("#ac_switcher").show();
 	    		}
 
     			var segment = segments[segments.length -1].toLowerCase();
@@ -1276,6 +1318,7 @@ function initTab_sql() {
 
     				autocomplete.addClass("noMatch");
     				autocomplete.hide();
+    				$("#ac_switcher").hide();
 
     			} else if ( visibleItems.length == 1 && skipAutocomplete == false && event.keyCode != 39
     					 	&& event.keyCode != 35 && event.keyCode != 36) {
@@ -1324,13 +1367,19 @@ function initTab_sql() {
 							if($('#'+segment+'_fields').length == 0) {
 
 								autocomplete.show().children("ul").hide();
+								$("#ac_switcher").show();
 								autocomplete.append(resp);
+
+								if(autocom_default.length == 0) {
+									autocom_default = autocomplete.children("ul:eq(0)").addClass("default");
+								}
+
 								autocomplete.children("strong").text(
 										autocomplete.children("ul:last").attr("id").replace("_fields","")
 								);
 
 								autocomplete.find("ul:last a").bind("click",function () {
-	
+
 									$("#sqlquery").insertAtCaret($(this).text());
 								});
 							}
@@ -1463,7 +1512,6 @@ function maximize () {
 			'top' : 0,
 			'left' : '-' + $('#contenidos').offset().left + "px",
 			'width' : $(document).width(),
-			/*'height' : $(document).height()*/
 		});
 
 		$('#contenidos div.leftFrame').hide();
@@ -1471,6 +1519,15 @@ function maximize () {
 		$('#tableContent a#minimize').show();
 
 		$("#tableContent ul.btnTabs.idTabs").css("max-width",screen.width-150);
+
+		/***
+		 * Design Fix:: Sometimes scrollbar disappeares once the content is maximized
+		 * and we need to add thoose extra pixels to the main content div
+		 ****************************/
+		if(parseInt($('#tableContent').css("width")) < $(document).width()) {
+
+			$('#tableContent').css("width", $(document).width());
+		}
 	});
 
 	//minimize
