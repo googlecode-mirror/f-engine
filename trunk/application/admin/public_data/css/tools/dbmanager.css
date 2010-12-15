@@ -171,7 +171,7 @@ div#field_autocomplete {
 	float:left;
 	background-color:white;
 	opacity:0.8;
-	max-height:150px;
+	height:150px;
 	width:140px;
 	border:1px solid #ccc;
 	margin-top:3px;
@@ -182,7 +182,7 @@ div#field_autocomplete {
 
 div#field_autocomplete > strong {
 	
-	padding-left:17px;
+	padding-left:21px;
 	background-image: url(img/tools/help2.png);
 	background-repeat:no-repeat;
 }

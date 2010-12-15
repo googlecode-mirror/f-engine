@@ -3,7 +3,7 @@ New in v0.5
 		- Cache library ported from Kohana framework
 		- Added APPNAME constant
 		- Css/Js combiner/compressor to speedup pages
-		- Codeigniter database cache removed 
+		- Codeigniter database cache removed
 		- Querystring based url compatibility removed
 		- jQuery version update
     	- New Ajax layer
@@ -20,7 +20,7 @@ New in v0.5
 		- New folder/file permissions fixed
 		- Added library template
 	- Javascript
-		- Autogrow jquery plugin unspaced long string issues fixed
+		- Autogrow jquery plugin: unspaced long string issues fixed
 
 New in v0.4.2
 	- Dbmanager:

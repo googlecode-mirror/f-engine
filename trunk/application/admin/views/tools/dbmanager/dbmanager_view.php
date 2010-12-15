@@ -34,7 +34,7 @@
 			DB conf: 
 				<select name="db_conf" style="width:95px;">
 				<?php foreach($db_conf as $conf) { ?>
-					<option value="<?php echo $conf; ?>" <?php echo $conf == $current_db ? "selected='selected'" : ""; ?>>
+					<option value="<?php echo $conf; ?>" <?php echo $conf == $dbconf ? "selected='selected'" : ""; ?>>
 						<?php echo $conf; ?>
 					</option>
 				<?php } //end foreach?>

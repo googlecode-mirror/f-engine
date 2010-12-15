@@ -21,11 +21,13 @@ body	{
 	
 a	{
 	
-	text-decoration:		none;
+	text-decoration: none;
 }
+
 a img	{
 	
-	border:					none;
+	border : none;
+	vertical-align:bottom;
 }
 
 .pg-separador {

@@ -90,13 +90,14 @@
 
 			<div class="query" style="float:left;min-width:400px;padding-left:4px;">
 				<?php if (isset($_POST['table'])) { ?>
-					<textarea  style="min-height:150px; padding:3px; max-height: 300px; width:550px;" class="expanding" id="sqlquery" name="sql">SELECT * FROM (`<?php  echo $_POST['table']?>`)</textarea>
+					<textarea  style="min-height:175px; padding:3px; max-height: 300px; width:550px;" class="expanding" id="sqlquery" name="sql">SELECT * FROM (`<?php  echo $_POST['table']?>`)</textarea>
 				<?php } else { ?>
-					<textarea  style="min-height:150px; padding:3px; max-height: 300px; width:550px;" class="expanding" id="sqlquery" name="sql"></textarea>
+					<textarea  style="min-height:175px; padding:3px; max-height: 300px; width:550px;" class="expanding" id="sqlquery" name="sql"></textarea>
 				<?php }//endif ?>
 				<center><input type="submit" value="Run query" /></center>
 			</div>
 			<div id="field_autocomplete" <?php echo isset($_POST['table']) ? '' : 'class="oculto"'; ?>>
+
 				<strong><?php echo isset($_POST['table']) ? $_POST['table'] : "Table fields"; ?></strong>
 				<?php if (isset($_POST['table'])) { ?>
 				<ul class="jqueryFileTree default" id="<?php echo $_POST['table']; ?>_fields">
@@ -108,6 +109,23 @@
 				</ul>
 				<?php }//endif ?>
 			</div>
+
+			<?php if(isset($_COOKIE["autocom_enabled"]) and  $_COOKIE["autocom_enabled"] == 1) { ?>
+				<a id="ac_switcher" class="active" href="#" style="<?php if(!isset($_POST['table'])) { echo "display: none;"; } else { echo "display: block;"; } ?>
+				width: 125px; float: left; padding: 7px 12px;text-align:center;" title="Autocomplete disabled" rel="Autocomplete enabled">
+					<img class="enabled" src="<?php echo public_data("img/tools/application_edit.png");?>" style="display:none;" />
+					<img class="disabled" src="<?php echo public_data("img/tools/application_delete.png");?>" />
+					Autocomplete
+				</a>
+			<?php } else { ?>
+				<a id="ac_switcher" class="active" href="#" style="<?php if(!isset($_POST['table'])) { echo "display: none;"; } else { echo "display: block;"; } ?>
+				width: 125px; float: left; padding: 7px 12px;text-align:center;" title="Autocomplete enabled" rel="Autocomplete disabled">
+					<img class="enabled" src="<?php echo public_data("img/tools/application_edit.png");?>" />
+					<img class="disabled" src="<?php echo public_data("img/tools/application_delete.png");?>" style="display:none;"  />
+					Autocomplete
+				</a>
+			<?php }//endif ?>
+
 	        <?php foreach($tables as $table) {?>
               	<input type="hidden" name="tables[]" value="<?php  echo strtolower($table);?>" />
                 <?php }//endforeach;?>
@@ -121,7 +139,7 @@
 
 </div>
 
-<?php if(isset($structure)) { ?>	
+<?php if(isset($structure)) { ?>
 <div id="insert" style="clear:both;">
 
 	<form action="<? echo site_url().'tools/dbmanager/ajax/insert';?>" method="post">
