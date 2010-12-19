@@ -1608,16 +1608,15 @@ function expandTablelist() {
 		if($("div.frame").width() > width) {
 
 			$("div.frame").animate({"width":width},400,"swing", function () {
-	
+
 				$("#expandTableList").css("width",$("#db_list").next().width());
 				$("#expandTableList img.right").removeClass("oculto");
 				$("#expandTableList img.left").addClass("oculto");
 			});
-	
+
 			var arrow = $("#expandTableList");
 			width = width - arrow.width();
 			arrow.css({"left":width});
-
 		}
 	});
 
@@ -1628,7 +1627,11 @@ function expandTablelist() {
 
 		if($("#db_list").width() < width) {
 
-			$("#expandTableList").fadeIn(1000);
+			if($.browser.msie == true) {
+				$("#expandTableList").show();
+			} else {
+				$("#expandTableList").fadeIn(1000);
+			}
 			clearTimeout(collapseId);
 		}
 
@@ -1640,10 +1643,16 @@ function expandTablelist() {
 
 function collapseTableList () {
 
-	if($("#expandTableList img.right").hasClass("oculto"))
+	if($("#expandTableList img.right").hasClass("oculto")) {
 		$("#expandTableList").hide();
-	else
-		$("#expandTableList").fadeOut(600);
+	} else {
+
+		if($.browser.msie == true) {
+			$("#expandTableList").hide();
+		} else {
+			$("#expandTableList").fadeOut(600);
+		}
+	}
 	$("#expandTableList img.left").click();
 }
 
