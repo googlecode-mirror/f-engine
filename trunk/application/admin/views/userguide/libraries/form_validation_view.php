@@ -132,14 +132,14 @@
 </p>
 <ol>
     <li>
-        A <a href="<? echo site_url();?>userguide/general/views">View</a>
+        A <a href="<?php echo site_url();?>userguide/general/views">View</a>
         file containing a form.
     </li>
     <li>
         A View file containing a "success" message to be displayed upon successful submission.
     </li>
     <li>
-        A <a href="<? echo site_url();?>userguide/general/controllers">controller</a>
+        A <a href="<?php echo site_url();?>userguide/general/controllers">controller</a>
         function to receive and process the submitted data.
     </li>
 </ol>
@@ -794,7 +794,7 @@ class Form extends Controller {
     $this->lang->load('file_name');
 </code>
 <p>
-    See the <a href="<? echo site_url();?>userguide/libraries/language">Language Class</a>
+    See the <a href="<?php echo site_url();?>userguide/libraries/language">Language Class</a>
     page for more info regarding language files.
 </p>
 <a name="errordelimiters"></a>
@@ -1654,7 +1654,7 @@ class Form extends Controller {
             No
         </td>
         <td class="td">
-            Runs the data through the XSS filtering function, described in the <a href="<? echo site_url();?>userguide/libraries/input">Input Class</a>
+            Runs the data through the XSS filtering function, described in the <a href="<?php echo site_url();?>userguide/libraries/input">Input Class</a>
             page.
         </td>
     </tr>

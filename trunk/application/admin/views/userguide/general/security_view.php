@@ -71,14 +71,14 @@
             F-engine comes with a Cross Site Scripting filter.  This filter looks for commonly
             used techniques to embed malicious Javascript into your data, or other types of code that attempt to hijack cookies 
             or do other malicious things. The XSS Filter is described 
-			<a href="<? echo site_url();?>userguide/libraries/input">here</a>.
+			<a href="<?php echo site_url();?>userguide/libraries/input">here</a>.
         </p>
     </li>
     <li>
         <h2>Validate the data</h2>
         <p>
             F-engine has a 
-			<a href="<? echo site_url();?>userguide/libraries/form_validation">Form Validation Class</a>
+			<a href="<?php echo site_url();?>userguide/libraries/form_validation">Form Validation Class</a>
             that assists you in validating, filtering, and prepping
             your data.
         </p>
@@ -87,7 +87,7 @@
         <h2>Escape all data before database insertion</h2>
         <p>
             Never insert information into your database without escaping it. Please see the section that discusses
-			<a href="<? echo site_url();?>userguide/database/queries">queries</a>
+			<a href="<?php echo site_url();?>userguide/database/queries">queries</a>
             for more information.
         </p>
     </li>

@@ -36,7 +36,7 @@
     Sending email is not only simple, but you can configure it on the fly or set your preferences in a config file.
 </p>
 <p>
-    Here is a basic example demonstrating how you might send email.  Note:  This example assumes you are sending the email from one of your <a href="<? echo site_url();?>userguide/general/controllers">controllers</a>.
+    Here is a basic example demonstrating how you might send email.  Note:  This example assumes you are sending the email from one of your <a href="<?php echo site_url();?>userguide/general/controllers">controllers</a>.
 </p>
 <code>
     $this->load->library('email');

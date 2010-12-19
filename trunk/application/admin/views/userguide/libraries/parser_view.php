@@ -103,7 +103,7 @@
     $this->parser->parse('blog_template', $data);
 </code>
 <p>
-    The first parameter contains the name of the <a href="<? echo site_url();?>userguide/general/views">view file</a>
+    The first parameter contains the name of the <a href="<?php echo site_url();?>userguide/general/views">view file</a>
     (in this example the file would be called blog_template.php),
     and the second parameter contains an associative array of data to be replaced in the template.  In the above example, the
     template would contain two variables: {blog_title} and {blog_heading}

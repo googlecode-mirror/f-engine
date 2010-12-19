@@ -45,7 +45,7 @@
 <p class="important">
     <strong>Warning:</strong>
     Because of the way F-engine stores content for output, caching will only work if you are generating display for your controller with a 
-	<a href="<? echo site_url();?>userguide/general/views">view</a>.
+	<a href="<?php echo site_url();?>userguide/general/views">view</a>.
 </p>
 <p class="important">
     <strong>Note:</strong>

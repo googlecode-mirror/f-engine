@@ -7,7 +7,7 @@
 <code>$this->db->query('YOUR QUERY HERE');</code>
 
 <p>The <dfn>query()</dfn> function returns a database result <strong>object</strong> when "read" type queries are run,
-which you can use to <a href="<? echo site_url();?>userguide/database/results">show your results</a>.  When "write" type queries are run it simply returns TRUE or FALSE
+which you can use to <a href="<?php echo site_url();?>userguide/database/results">show your results</a>.  When "write" type queries are run it simply returns TRUE or FALSE
 depending on success or failure.  When retrieving data you will typically assign the query to your own variable, like this:</p>
 
 <code><var>$query</var> = $this->db->query('YOUR QUERY HERE');</code>

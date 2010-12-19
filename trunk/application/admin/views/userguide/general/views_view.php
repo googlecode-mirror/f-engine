@@ -9,14 +9,14 @@
     of hierarchy.
 </p>
 <p>
-    Views are never called directly, they must be loaded by a <a href="<? echo site_url();?>userguide/general/controllers">controller</a>.  
+    Views are never called directly, they must be loaded by a <a href="<?php echo site_url();?>userguide/general/controllers">controller</a>.  
 	Remember that in an MVC framework, the Controller acts as the 
-    traffic cop, so it is responsible for fetching a particular view. If you have not read the <a href="<? echo site_url();?>userguide/general/controllers">Controllers</a>
+    traffic cop, so it is responsible for fetching a particular view. If you have not read the <a href="<?php echo site_url();?>userguide/general/controllers">Controllers</a>
     page
     you should do so before continuing.
 </p>
 <p>
-    Using the example controller you created in the <a href="<? echo site_url();?>userguide/general/controllers">controller</a>
+    Using the example controller you created in the <a href="<?php echo site_url();?>userguide/general/controllers">controller</a>
     page, let's add a view to it.
 </p>
 <h2>Creating a View</h2>
@@ -253,7 +253,7 @@ class Blog extends Controller {
 <p>
     <strong>Note:</strong>
     You'll notice that in the example above we are using PHP's alternative syntax.  If you 
-    are not familiar with it you can read about it <a href="<? echo site_url();?>userguide/general/alternative_php">here</a>.
+    are not familiar with it you can read about it <a href="<?php echo site_url();?>userguide/general/alternative_php">here</a>.
 </p>
 <h2>Master views: Avoiding recurrent data</h2>
 <p>

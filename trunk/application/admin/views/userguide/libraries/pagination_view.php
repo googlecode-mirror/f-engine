@@ -10,7 +10,7 @@
 </code>
 <h2>Example</h2>
 <p>
-    Here is a simple example showing how to create pagination in one of your <a href="<? echo site_url();?>userguide/general/controllers">controller</a>
+    Here is a simple example showing how to create pagination in one of your <a href="<?php echo site_url();?>userguide/general/controllers">controller</a>
     functions:
 </p>
 <code>
@@ -46,7 +46,7 @@
     <li>
         <strong>base_url</strong>
         This is the full URL to the controller class/function containing your pagination.  In the example
-        above, it is pointing to a controller called "Test" and a function called "page".  Keep in mind that you can<a href="<? echo site_url();?>userguide/general/routing">re-route your URI</a>
+        above, it is pointing to a controller called "Test" and a function called "page".  Keep in mind that you can<a href="<?php echo site_url();?>userguide/general/routing">re-route your URI</a>
         if you need a different structure.
     </li>
     <li>
@@ -103,7 +103,7 @@
 </p>
 <h4>$config['page_query_string'] = TRUE</h4>
 <p>
-    By default, the pagination library assume you are using <a href="<? echo site_url();?>userguide/general/urls">URI Segments</a>, and constructs your links something like
+    By default, the pagination library assume you are using <a href="<?php echo site_url();?>userguide/general/urls">URI Segments</a>, and constructs your links something like
 </p>
 <p>
     <code>

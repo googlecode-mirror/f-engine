@@ -6,7 +6,7 @@
     </dfn>
     folder. 
     In most cases, to use one of these classes involves initializing it within a 
-	<a href="<? echo site_url();?>userguide/general/controllers">controller</a>
+	<a href="<?php echo site_url();?>userguide/general/controllers">controller</a>
     using the following initialization function:
 </p>
 <code>
@@ -33,5 +33,5 @@
 </p>
 <h2>Creating Your Own Libraries</h2>
 <p>
-    Please read the section of the user guide that discusses how to <a href="<? echo site_url();?>userguide/general/creating_libraries">create your own libraries</a>
+    Please read the section of the user guide that discusses how to <a href="<?php echo site_url();?>userguide/general/creating_libraries">create your own libraries</a>
 </p>

@@ -142,7 +142,7 @@
 <?php if(isset($structure)) { ?>
 <div id="insert" style="clear:both;">
 
-	<form action="<? echo site_url().'tools/dbmanager/ajax/insert';?>" method="post">
+	<form action="<?php echo site_url().'tools/dbmanager/ajax/insert';?>" method="post">
 		<input type="hidden" name="table" value="<?php echo $_POST['table'];?>" />
 	    <table border="0" cellpadding="3" cellspacing="1" width="100%">
 	    	<tr>
@@ -204,7 +204,7 @@
                     </th>
                 </tr>
 
-            <?php foreach ($structure as $field): ?>
+            <?php foreach ($structure as $field) { ?>
                 <tr>
                     <?php if(!$isView) { ?>
                     <td class="edit">
@@ -240,7 +240,7 @@
                         <?php  echo $field->Extra?>&nbsp;
                     </td>
                 </tr>
-            <?php endforeach;?>
+            <?php } //endforeach ?>
             </tbody>
         </table>
         <?php if(!$isView) { ?>
@@ -445,9 +445,9 @@
 				</div>
 				<div style="float:left;">
 					<select multiple="multiple" size="4" name="tables[]" style="display:none;">
-                        <?php foreach($tables as $table):?>
+                        <?php foreach($tables as $table) { ?>
                             <option value="<?php  echo $table;?>"><?php  echo $table;?></option>
-                        <?php endforeach;?>
+                        <?php } //endforeach ?>
 					</select>
 				</div>
 				<br style="clear:both;" /><br />
@@ -502,13 +502,13 @@
 <div id="other" style="clear:both;">
 
 	<h2>Remove table</h2>
-		<input type="button" name="remove_table" id="remove_table" value="remove" rel="<? echo site_url();?>tools/dbmanager/ajax/droptable" />
+		<input type="button" name="remove_table" id="remove_table" value="remove" rel="<?php echo site_url();?>tools/dbmanager/ajax/droptable" />
 
 	<h2>Optimize</h2>
-		<input type="button" name="optimize_table" id="optimize_table" value="optimize" rel="<? echo site_url();?>tools/dbmanager/ajax/optimizetable" />
+		<input type="button" name="optimize_table" id="optimize_table" value="optimize" rel="<?php echo site_url();?>tools/dbmanager/ajax/optimizetable" />
 
 	<h2>Repair table</h2>
-		<input type="button" name="repair_table" id="repair_table" value="repair" rel="<? echo site_url();?>tools/dbmanager/ajax/repairtable" />
+		<input type="button" name="repair_table" id="repair_table" value="repair" rel="<?php echo site_url();?>tools/dbmanager/ajax/repairtable" />
 
 </div>
 <?php } else {?>

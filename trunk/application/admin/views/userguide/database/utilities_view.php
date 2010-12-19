@@ -157,7 +157,7 @@
 </code>
 <p>
     <strong>Important:</strong>&nbsp; This function will NOT write the CSV file for you.  It simply creates the CSV layout. 
-    If you need to write the file use the <a href="<? echo site_url();?>userguide/helpers/file_helper">File Helper</a>.
+    If you need to write the file use the <a href="<?php echo site_url();?>userguide/helpers/file_helper">File Helper</a>.
 </p>
 <h2><a name="xml"></a>$this->dbutil->xml_from_result($db_result)</h2>
 <p>
@@ -188,7 +188,7 @@
 </code>
 <p>
     <strong>Important:</strong>&nbsp; This function will NOT write the XML file for you.  It simply creates the XML layout. 
-    If you need to write the file use the <a href="<? echo site_url();?>userguide/helpers/file_helper">File Helper</a>.
+    If you need to write the file use the <a href="<?php echo site_url();?>userguide/helpers/file_helper">File Helper</a>.
 </p>
 <h2><a name="backup"></a>$this->dbutil->backup()</h2>
 <p>

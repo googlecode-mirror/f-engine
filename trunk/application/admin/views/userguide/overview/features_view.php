@@ -3,7 +3,7 @@
 <p>Features in and of themselves are a very poor way to judge an application since they tell you nothing
 about the user experience, or how intuitively or intelligently it is designed.  Features
 don't reveal anything about the quality of the code, or the performance, or the attention to detail, or security practices.
-The only way to really judge an app is to try it and get to know the code. <a href="<? echo site_url();?>userguide/installation/index">Installing</a>
+The only way to really judge an app is to try it and get to know the code. <a href="<?php echo site_url();?>userguide/installation/index">Installing</a>
 F-engine is child's play so we encourage you to do just that.  In the mean time here's a list of F-engine's main features.</p>
 
 <ul>

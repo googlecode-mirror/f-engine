@@ -2,7 +2,7 @@
 <p>
     F-engine's Hooks feature provides a means to tap into and modify the inner workings of the framework without hacking the core files. 
     When F-engine runs it follows a specific execution process, diagramed in the 
-	<a href="<? echo site_url();?>userguide/overview/appflow">Application Flow</a>
+	<a href="<?php echo site_url();?>userguide/overview/appflow">Application Flow</a>
     page.
     There may be instances, however, where you'd like to cause some action to take place at a particular stage in the execution process.
     For example, you might want to run a script right before your controllers get loaded, or right after, or you might want to trigger one of

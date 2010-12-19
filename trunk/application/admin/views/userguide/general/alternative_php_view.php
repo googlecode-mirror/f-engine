@@ -1,6 +1,6 @@
 <h1>Alternate PHP Syntax for View Files</h1>
 
-<p>If you do not utilize F-engine's <a href="<? echo site_url();?>userguide/libraries/parser">template engine</a>, you'll be using pure PHP
+<p>If you do not utilize F-engine's <a href="<?php echo site_url();?>userguide/libraries/parser">template engine</a>, you'll be using pure PHP
 in your View files.  To minimize the PHP code in these files, and to make it easier to identify the code blocks it is recommended that you use 
 PHPs alternative syntax for control structures and short tag echo statements.  If you are not familiar with this syntax, it allows you to eliminate the braces from your code,
 and eliminate "echo" statements.</p>

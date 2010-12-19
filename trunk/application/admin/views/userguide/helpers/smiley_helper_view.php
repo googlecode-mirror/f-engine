@@ -63,7 +63,7 @@
     folder.
 </p>
 <p>
-    You'll notice that in addition to the smiley helper we are using the <a href="<? echo site_url();?>userguide/libraries/table">Table Class</a>.
+    You'll notice that in addition to the smiley helper we are using the <a href="<?php echo site_url();?>userguide/libraries/table">Table Class</a>.
 </p>
 <textarea class="textarea" style="width:100%" cols="50" rows="25">
     &lt;?php

@@ -10,13 +10,13 @@
         NOT
     </kbd>
     need to be initialized. It is loaded automatically by the
-	<a href="<? echo site_url();?>userguide/libraries/output">Output Class</a>
+	<a href="<?php echo site_url();?>userguide/libraries/output">Output Class</a>
     if profiling is enabled as shown below.
 </p>
 <h2>Enabling the Profiler</h2>
 <p>
     To enable the profiler place the following function anywhere within your 
-	<a href="<? echo site_url();?>userguide/general/controllers">Controller</a>
+	<a href="<?php echo site_url();?>userguide/general/controllers">Controller</a>
     functions:
 </p>
 <code>
@@ -37,6 +37,6 @@
 </p>
 <p>
     Please read the information on setting Benchmark points in 
-	<a href="<? echo site_url();?>userguide/libraries/benchmark">Benchmark Class</a>
+	<a href="<?php echo site_url();?>userguide/libraries/benchmark">Benchmark Class</a>
     page.
 </p>

@@ -5,9 +5,9 @@
 <h2>Files</h2>
 <ul>
     <li>
-        <a href="<? echo base_url();?>public_data/css/doc/userguide.css">Stylesheet</a>
+        <a href="<?php echo base_url();?>public_data/css/doc/userguide.css">Stylesheet</a>
     </li>
     <li>
-        <a href="<? echo site_url();?>userguide/doc_style/template">Page Template</a>
+        <a href="<?php echo site_url();?>userguide/doc_style/template">Page Template</a>
     </li>
 </ul>

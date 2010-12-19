@@ -295,5 +295,5 @@
     to the browser since it utilizes server headers.
     <br/>
     <strong>Note:</strong>
-    For  very fine grained control over headers, you should use the <a href="<? echo site_url();?>userguide/libraries/output">Output  Library</a>'s set_header() function.
+    For  very fine grained control over headers, you should use the <a href="<?php echo site_url();?>userguide/libraries/output">Output  Library</a>'s set_header() function.
 </p>

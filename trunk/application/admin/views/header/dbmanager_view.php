@@ -4,7 +4,7 @@
 		<li class="primero<?php if($this->uri->segment(1) == 'dashboard' || $this->uri->segment(1) == ''){ ?> selected<?php }//endif ?>">
 			<a href="<?php echo site_url();?>dashboard">Dashboard</a>
 		</li>
-		<li class="<?if($this->uri->segment(1) == 'tools') {?> selected<? }//endif?>">
+		<li class="<?php if($this->uri->segment(1) == 'tools') {?> selected<?php }//endif?>">
 			<a href="<?php echo site_url();?>tools">Tools</a>
 		</li>
 		<li class="ultimo">

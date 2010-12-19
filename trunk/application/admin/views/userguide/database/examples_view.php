@@ -5,7 +5,7 @@
 </p>
 <h2>Initializing the Database Class</h2>
 <p>
-    The following code loads and initializes the database class based on your <a href="<? echo site_url();?>userguide/database/configuration">configuration</a>
+    The following code loads and initializes the database class based on your <a href="<?php echo site_url();?>userguide/database/configuration">configuration</a>
     settings:
 </p>
 <code>
@@ -15,7 +15,7 @@
     Once loaded the class is ready to be used as described below.
 </p>
 <p>
-    Note: If all your pages require database access you can connect automatically.  See the <a href="<? echo site_url();?>userguide/database/connecting">connecting</a>
+    Note: If all your pages require database access you can connect automatically.  See the <a href="<?php echo site_url();?>userguide/database/connecting">connecting</a>
     page for details.
 </p>
 <h2>Standard Query With Multiple Results (Object Version)</h2>
@@ -149,7 +149,7 @@
 </code>
 <h2>Active Record Query</h2>
 <p>
-    The <a href="<? echo site_url();?>userguide/database/active_record">Active Record Pattern</a>
+    The <a href="<?php echo site_url();?>userguide/database/active_record">Active Record Pattern</a>
     gives you a simplified means of retrieving data:
 </p>
 <code>
@@ -170,7 +170,7 @@
         get()
     </dfn>
     function retrieves all the results from the supplied table. 
-    The <a href="<? echo site_url();?>userguide/database/active_record">Active Record</a>
+    The <a href="<?php echo site_url();?>userguide/database/active_record">Active Record</a>
     class contains a full compliment of functions
     for working with data.
 </p>

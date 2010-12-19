@@ -1,7 +1,7 @@
 <h1>Output Class</h1>
 <p>
     The Output class is a small class with one main function:  To send the finalized web page to the requesting browser.  It is 
-    also responsible for <a href="<? echo site_url();?>userguide/general/caching">caching</a>
+    also responsible for <a href="<?php echo site_url();?>userguide/general/caching">caching</a>
     your web pages, if you use that feature.
 </p>
 <p class="important">
@@ -10,7 +10,7 @@
 </p>
 <p>
     Under normal circumstances you won't even notice the Output class since it works transparently without your intervention. 
-    For example, when you use the <a href="<? echo site_url();?>userguide/libraries/loader">Loader</a>
+    For example, when you use the <a href="<?php echo site_url();?>userguide/libraries/loader">Loader</a>
     class to load a view file, it's automatically
     passed to the Output class, which will be called automatically by F-engine at the end of system execution.
     It is possible, however, for you to manually intervene with the output if you need to, using either of the two following functions:
@@ -73,11 +73,11 @@
 </p>
 <h2>$this->output->enable_profiler();</h2>
 <p>
-    Permits you to enable/disable the <a href="<? echo site_url();?>userguide/general/profiling">Profiler</a>, which will display benchmark and other data
+    Permits you to enable/disable the <a href="<?php echo site_url();?>userguide/general/profiling">Profiler</a>, which will display benchmark and other data
     at the bottom of your pages for debugging and optimization purposes.
 </p>
 <p>
-    To enable the profiler place the following function anywhere within your <a href="<? echo site_url();?>userguide/general/controllers">Controller</a>
+    To enable the profiler place the following function anywhere within your <a href="<?php echo site_url();?>userguide/general/controllers">Controller</a>
     functions:
 </p>
 <code>
@@ -94,5 +94,5 @@
 </code>
 <h2>$this->output->cache();</h2>
 <p>
-    The F-engine output library also controls caching.  For more information, please see the <a href="<? echo site_url();?>userguide/general/caching">caching documentation</a>.
+    The F-engine output library also controls caching.  For more information, please see the <a href="<?php echo site_url();?>userguide/general/caching">caching documentation</a>.
 </p>

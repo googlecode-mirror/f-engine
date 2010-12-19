@@ -9,7 +9,7 @@
 
 <div style="width:325px;float:left;">
 	<h2>Create a new project</h2>
-	<form method="post" action="<? echo site_url();?>tools/newproject" />
+	<form method="post" action="<?php echo site_url();?>tools/newproject" />
 	<?php  if (is_really_writable(BASEPATH.'application/') == 1) { ?>
 
 
@@ -28,8 +28,8 @@
 <div style="float:left; padding-left:50px ;width: 500px;">
 	<h2>My projects</h2>
 	<ul>
-		<?php  foreach($myprojects as $project): ?>
+		<?php  foreach($myprojects as $project) { ?>
 		<li><a href="<?php  echo base_url().'../'.$project?>"><?php  echo $project;?></a></li>
-		<?php  endforeach; ?>
+		<?php } //endforeach ?>
 	</ul>
 </div>

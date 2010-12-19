@@ -9,7 +9,7 @@
 <h2>F-engine is Free</h2>
 <p>
     F-engine is licensed under an Apache/BSD-style open source license so you can use it however you please. 
-    For more information please read the <a href="<? echo site_url();?>userguide/license">license agreement</a>.
+    For more information please read the <a href="<?php echo site_url();?>userguide/license">license agreement</a>.
 </p>
 <!--<h2>F-engine Runs on PHP 4</h2>
 <p>

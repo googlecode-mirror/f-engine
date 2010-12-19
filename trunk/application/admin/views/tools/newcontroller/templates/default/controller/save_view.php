@@ -51,7 +51,7 @@ class save extends Controller {
 			
 			if(!IS_AJAX) {
 
-				redirect("<? echo $path?>","refresh");
+				redirect("<?php echo $path?>","refresh");
 			}
 		
 		/*** validation error ***/
@@ -75,7 +75,7 @@ class save extends Controller {
 
 <?php foreach ($rules as $key => $val) { ?>
 		$fields['<?php  echo $key?>'] = '<?php  echo $key?>';
-<?php } //endforeach;?>
+<?php } //endforeach ?>
 		$this->validation->set_fields($fields);
 
 		<?php if(isset($styles) and in_array("file", $styles)) { ?>$this->load->library('upload', array('upload_path' => PUBLIC_DATA, 'allowed_types' => '*')); <?php 

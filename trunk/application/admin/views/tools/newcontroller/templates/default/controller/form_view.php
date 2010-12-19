@@ -1,11 +1,11 @@
 	<?php echo "<?php if(!IS_AJAX) {  ?>\n" ?>
-	<a href="<?php echo '<? echo site_url("'.$path.'"); ?>'; ?>">Return</a><br /><br />
+	<a href="<?php echo '<?php echo site_url("'.$path.'"); ?>'; ?>">Return</a><br /><br />
 	<style>
 		form table textarea {
 			width:100%;
 		}
 	</style>
-	<form action="<?php echo '<? echo site_url("'.$path.'/'.$target.'"); ?>'; ?>" method="post"
+	<form action="<?php echo '<?php echo site_url("'.$path.'/'.$target.'"); ?>'; ?>" method="post"
 	<?php if(in_array("file",$styles)) { ?> enctype="multipart/form-data" <?php } ?>>
 	<?php echo "<?php }//endif ?>\n" ?>
 		<table width="90%" id="insert-form">
@@ -34,10 +34,10 @@
 							break;
 			            }
 			            ?>
-						<? echo '<?php if(isset($this->validation)) { echo $this->validation->'.$item.'_error; } ?>'."\n";?>
+						<?php echo '<?php if(isset($this->validation)) { echo $this->validation->'.$item.'_error; } ?>'."\n";?>
 			        </td>
 			    </tr>
-			<?php }//endforeach;?>
+			<?php }//endforeach ?>
 	</tbody>
 		</table>
 	<?php echo "<?php if(!IS_AJAX) {  ?>\n" ?>

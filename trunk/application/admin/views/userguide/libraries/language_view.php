@@ -140,7 +140,7 @@
     <kbd>
         lang()
     </kbd>
-    function of the <a href="<? echo site_url();?>userguide/helpers/language_helper">Language helper</a>.
+    function of the <a href="<?php echo site_url();?>userguide/helpers/language_helper">Language helper</a>.
 </p>
 <h2>Auto-loading Languages</h2>
 <p>

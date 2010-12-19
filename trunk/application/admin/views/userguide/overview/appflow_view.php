@@ -3,7 +3,7 @@
     The following graphic illustrates how data flows throughout the system:
 </p>
 <div>
-    <img src="<? echo base_url()?>public_data/img/userguide/appflowchart.png" alt="F-engine application flow" />
+    <img src="<?php echo base_url()?>public_data/img/userguide/appflowchart.png" alt="F-engine application flow" />
 </div>
 <ol>
     <li>

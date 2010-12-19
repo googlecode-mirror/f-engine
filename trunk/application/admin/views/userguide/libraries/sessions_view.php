@@ -14,9 +14,9 @@
 </p>
 <h2>Initializing a Session</h2>
 <p>
-    Sessions will typically run globally with each page load, so the session class must either be <a href="<? echo site_url();?>userguide/general/libraries">initialized</a>
-    in your <a href="<? echo site_url();?>userguide/general/controllers">controller</a>
-    constructors, or it can be <a href="<? echo site_url();?>userguide/general/autoloader">auto-loaded</a>
+    Sessions will typically run globally with each page load, so the session class must either be <a href="<?php echo site_url();?>userguide/general/libraries">initialized</a>
+    in your <a href="<?php echo site_url();?>userguide/general/controllers">controller</a>
+    constructors, or it can be <a href="<?php echo site_url();?>userguide/general/autoloader">auto-loaded</a>
     by the system.
     For the most part the session class will run unattended in the background, so simply initializing the class
     will cause it to read, create, and update sessions.
@@ -88,7 +88,7 @@
 <p>
     If you have the encryption option enabled, the serialized array will be encrypted before being stored in the cookie,
     making the data highly secure and impervious to being read or altered by someone. More info regarding encryption 
-    can be <a href="<? echo site_url();?>userguide/libraries/encryption">found here</a>, although the Session class will take care of initializing
+    can be <a href="<?php echo site_url();?>userguide/libraries/encryption">found here</a>, although the Session class will take care of initializing
     and encrypting the data automatically.
 </p>
 <p>

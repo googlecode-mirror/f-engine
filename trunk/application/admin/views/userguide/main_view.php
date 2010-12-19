@@ -380,12 +380,12 @@
     <div id="content">
         <?php echo $this->load->view(isset($page) ? $page : 'userguide/welcome');?>
 		
-		<?if(isset($page)):?>
+		<?php if(isset($page)) { ?>
 			<script type="text/javascript">
 				JS2EXEC.push(function(){
 					go_to("<?php echo $page?>");
 				});
 			</script>
-		<?endif;?>
+		<?php  } //endif ?>
     </div>
 </div>

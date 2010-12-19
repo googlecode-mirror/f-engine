@@ -23,7 +23,7 @@
         <tr>
            <th colspan="2">Edit record</th>
         </tr>
-        <?php foreach($fields as $field): ?>
+        <?php foreach($fields as $field) { ?>
         <tr>
             <td>
                 <?php echo  $field->name; ?>
@@ -34,7 +34,7 @@
 				max-height: 120px; width: 550px; display: block;"><?php $f = $field->name; echo form_prep($query->$f); ?></textarea>
             </td>
         </tr>
-        <?php endforeach; ?>
+        <?php } //endforeach ?>
     </table>
 	<input type="button" value="cancel" class="cancel">
 	<input type="submit" value="send">

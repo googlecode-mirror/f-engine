@@ -9,7 +9,7 @@
 		<a href="#finish">Finish</a>
 	</li>
 </ul>
-<form method="post" action="<? echo site_url();?>/tools/dbmanager/ajax/createtable" >
+<form method="post" action="<?php echo site_url();?>/tools/dbmanager/ajax/createtable" >
 <input type="hidden" name="project" value="<?php echo $_POST["project"]?>" />
 <input type="hidden" name=dbconf value="<?php echo $_POST["dbconf"]?>" />
 <div id="main">
