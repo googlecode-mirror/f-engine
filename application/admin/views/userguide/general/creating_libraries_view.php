@@ -101,7 +101,7 @@
 </code>
 <h2>Using Your Class</h2>
 <p>
-    From within any of your <a href="<? echo site_url();?>userguide/general/controllers">Controller</a>
+    From within any of your <a href="<?php echo site_url();?>userguide/general/controllers">Controller</a>
     functions you can initialize your class using the standard:
 </p>
 <code>

@@ -16,7 +16,7 @@
 	<?php echo "\r\n";?>
 	</thead>
 	<tbody>
-	<?php  echo '<?foreach($content as $row) { ?>';?>
+	<?php  echo '<?php foreach($content as $row) { ?>';?>
 	<?php echo "\r\n";?>
 		<tr>
 			<?php if($edit == true || $delete == true) { ?>
@@ -27,25 +27,25 @@
 					foreach($delete_ids as $id)	isset($delpath) == false ? $delpath = '$row->'.array_pop(explode(".",$id)).'.\'/\'' : $delpath .= '.$row->'.array_pop(explode(".",$id)).'.\'/\'';
 				?>
 				<?php if($edit == true) { echo "\r\n\t\t"; ?>
-					<td><a href="<?php echo '<?php echo site_url();?>'?><?php echo $uri?>/edit/<?php echo '<? echo '.$editpath.';?>'?>">edit</a></td>
+					<td><a href="<?php echo '<?php echo site_url();?>'?><?php echo $uri?>/edit/<?php echo '<?php echo '.$editpath.';?>'?>">edit</a></td>
 				<?php
 				} //endif
 				
 				if($delete == true) { echo "\r\n\t\t"; ?>
-					<td><a href="<?php echo '<? echo site_url();?>'?><?php echo $uri?>/delete/<?php echo '<?php echo '.$delpath.';?>'?>">delete</a></td>
+					<td><a href="<?php echo '<?php echo site_url();?>'?><?php echo $uri?>/delete/<?php echo '<?php echo '.$delpath.';?>'?>">delete</a></td>
 				<?php }//endif ?>
 			<?php }//endif ?>
 			<?php foreach($fields as $field) { ?>
 				<?php if($field != "") { ?>
 				<?php echo "\r\n";?>
 				<td>
-					<span title="<?php  echo '<? echo htmlspecialchars($row->'.$field.');?>';?>"><?php  echo '<? echo substr(htmlspecialchars($row->'.$field.'),0,'.(int) ($fnum*3).');?>';?></span><?php echo "\r\n";?>
+					<span title="<?php  echo '<?php echo htmlspecialchars($row->'.$field.');?>';?>"><?php  echo '<? echo substr(htmlspecialchars($row->'.$field.'),0,'.(int) ($fnum*3).');?>';?></span><?php echo "\r\n";?>
 				</td>
 				<?php } //endif ?>
 			<?php } //endforeach ?>
 			<?php echo "\r\n";?>
 		</tr>
-	<? echo '<?php }//endforeach ?>'?>	
+	<?php echo '<?php }//endforeach ?>'?>	
 	</tbody>
 </table>
 

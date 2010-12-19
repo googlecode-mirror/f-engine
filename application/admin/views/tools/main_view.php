@@ -38,7 +38,7 @@
 			in a few clicks
 		</p>
 		
-		<a href="<?echo site_url()?>tools/newcontroller">
+		<a href="<?php echo site_url()?>tools/newcontroller">
 			<img src="<?php echo base_url();?>public_data/img/tools/appz/controller.jpg">
 		</a>
 	</div>

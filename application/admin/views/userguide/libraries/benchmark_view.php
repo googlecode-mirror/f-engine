@@ -30,7 +30,7 @@
 <a name="using"></a>
 <h2>Using the Benchmark Class</h2>
 <p>
-    The Benchmark class can be used within your <a href="<? echo site_url();?>userguide/general/controllers">controllers</a>, <a href="<? echo site_url();?>userguide/general/views">views</a>, or your <a href="<? echo site_url();?>userguide/general/models">Models</a>.  The process for usage is this:
+    The Benchmark class can be used within your <a href="<?php echo site_url();?>userguide/general/controllers">controllers</a>, <a href="<? echo site_url();?>userguide/general/views">views</a>, or your <a href="<? echo site_url();?>userguide/general/models">Models</a>.  The process for usage is this:
 </p>
 <ol>
     <li>
@@ -88,7 +88,7 @@
 <a name="profiler"></a>
 <h2>Profiling Your Benchmark Points</h2>
 <p>
-    If you want your benchmark data to be available to the <a href="<? echo site_url();?>userguide/general/profiling">Profiler</a>
+    If you want your benchmark data to be available to the <a href="<?php echo site_url();?>userguide/general/profiling">Profiler</a>
     all of your marked points must be set up in pairs, and 
     each mark point name must end with 
     <kbd>
@@ -131,7 +131,7 @@
     </kbd>');
 </code>
 <p>
-    Please read the <a href="<? echo site_url();?>userguide/general/profiling">Profiler page</a>
+    Please read the <a href="<?php echo site_url();?>userguide/general/profiling">Profiler page</a>
     for more information.
 </p>
 <a name="execution"></a>

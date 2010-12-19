@@ -55,7 +55,7 @@
     <li>
         <strong>Manual Loading</strong>
         <p>
-            To load one of your custom config files you will use the following function within the <a href="<? echo site_url();?>userguide/general/controllers">controller</a>
+            To load one of your custom config files you will use the following function within the <a href="<?php echo site_url();?>userguide/general/controllers">controller</a>
             that needs it:
         </p>
         <code>

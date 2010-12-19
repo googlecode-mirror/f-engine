@@ -1,7 +1,7 @@
 <h1>Plugins</h1>
 
 <p>Plugins work almost identically to 
-<a href="<? echo site_url();?>userguide/general/helpers">Helpers</a>.  The main difference is that a plugin usually
+<a href="<?php echo site_url();?>userguide/general/helpers">Helpers</a>.  The main difference is that a plugin usually
 provides a single function, whereas a Helper is usually a collection of functions.  Helpers are also considered a part of
 the core system; plugins are intended to be created and shared by our community.</p>
 
@@ -26,8 +26,8 @@ directory.  If the directory does not exist or the specified plugin is not locat
 
 
 <p>A plugin can be loaded anywhere within your 
-<a href="<? echo site_url();?>userguide/general/controllers">controller</a> functions (or even within your 
-<a href="<? echo site_url();?>userguide/general/views">View files</a>, although that's not a good practice),
+<a href="<?php echo site_url();?>userguide/general/controllers">controller</a> functions (or even within your 
+<a href="<?php echo site_url();?>userguide/general/views">View files</a>, although that's not a good practice),
 as long as you load it before you use it.  You can load your plugins in your controller constructor so that they become available
 automatically in any function, or you can load a plugin in a specific function that needs it.</p>
 

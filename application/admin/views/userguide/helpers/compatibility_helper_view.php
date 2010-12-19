@@ -2,7 +2,7 @@
 <p>
     The Compatibility Helper file contains PHP 4 implementations of some PHP 5 only native PHP functions and constants.  This can be useful
     if you'd like to take advantage of some of these native function but your application may end up running on a PHP 4 server. 
-    In these cases, it may be advantageous to <a href="<? echo site_url();?>userguide/general/autoloader">Auto-load</a>
+    In these cases, it may be advantageous to <a href="<?php echo site_url();?>userguide/general/autoloader">Auto-load</a>
     the Compatibility Helper so you
     do not have to load it in each controller.
 </p>

@@ -33,7 +33,7 @@
             </th>
              <?php }// end if ?>
 
-            <?php foreach($exam['fields'] as $field): ?>
+            <?php foreach($exam['fields'] as $field) {  ?>
             <?php if( isset($exam['orderby']) && $exam['orderby'][0] === $field) { ?>
             <th class="<?php echo $exam['orderby'][1]; ?>">
             <?php } else { ?>
@@ -41,7 +41,7 @@
             <?php } ?>
                 <center><?php  echo $field;?></center>
             </th>
-            <?php endforeach; ?>
+            <?php } //endforeach ?>
         </tr>
         <?php if( count($exam['query']->result()) === 0) { ?>
         <tr>
@@ -103,9 +103,9 @@
 		                            </a>
                         <?php } else { ?>
 
-                             <?php foreach($exam['fields'] as $field): ?>
+                             <?php foreach($exam['fields'] as $field) {  ?>
 				            	<textarea name="<?php echo $field; ?>" style="display:none;"><?php echo rawurlencode($row->$field); ?></textarea>
-				            <?php endforeach; ?>
+				            <?php } //endforeach ?>
 
 							<a href="<?php  echo site_url();?>tools/dbmanager/ajax/edit/" class="edit">
                                 <img class="delete_field" style="cursor: pointer;" title="edit this record" src="<?php  echo base_url();?>public_data/img/contextmenu/page_white_edit.png"/>
@@ -130,9 +130,9 @@
                 	<span><?php  echo htmlspecialchars(substr($row->$field,0,45));?></span>
                 <?php }//endif ?>
             </td>
-            <?php } //endforeach; ?>
+            <?php } //endforeach ?>
         </tr>
-        <?php } //endforeach; ?>
+        <?php } //endforeach ?>
     </table>
 	<div class="pagination" style="clear: both;padding:5px 0;">
         <div style="float: left; padding-right: 10px; border-right: 1px dotted #2F3B6F;">

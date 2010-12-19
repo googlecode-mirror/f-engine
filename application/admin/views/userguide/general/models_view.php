@@ -99,7 +99,7 @@
     <strong>Note:</strong>
     For the sake of simplicity in this example we're using $_POST directly.  
 	This is generally bad practice, and a more common approach would be to use the 
-	<a href="<? echo site_url();?>userguide/libraries/input">Input Class</a>
+	<a href="<?php echo site_url();?>userguide/libraries/input">Input Class</a>
     $this-&gt;input-&gt;post('title')
 </p>
 <h2><a name="anatomy"></a>Anatomy of a Model</h2>
@@ -178,7 +178,7 @@
 <h2><a name="loading"></a>Loading a Model</h2>
 <p>
     Your models will typically be loaded and called from within your 
-	<a href="<? echo site_url();?>userguide/general/controllers">controller</a>
+	<a href="<?php echo site_url();?>userguide/general/controllers">controller</a>
     functions.
     To load a model you will use the following function:
 </p>
@@ -271,7 +271,7 @@
 <ul>
     <li>
         You can connect using the standard database methods 
-		<a href="<? echo site_url();?>userguide/database/connecting">described here</a>, either from within your Controller class or your Model class.
+		<a href="<?php echo site_url();?>userguide/database/connecting">described here</a>, either from within your Controller class or your Model class.
     </li>
     <li>
         You can tell the model loading function to auto-connect by passing 

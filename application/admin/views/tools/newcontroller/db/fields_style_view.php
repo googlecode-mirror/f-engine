@@ -2,7 +2,7 @@
     <legend>
 		<span>
 	        <a class='vrules'>
-	        	<img src='<? echo base_url();?>public_data/img/tools/application.png' style="vertical-align:bottom;" />
+	        	<img src='<?php echo base_url();?>public_data/img/tools/application.png' style="vertical-align:bottom;" />
 				<span style="color:black;">Form field style</span>
 			</a>
 		</span>

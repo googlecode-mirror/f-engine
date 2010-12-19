@@ -87,7 +87,7 @@
 </h2>
 <p>
     This function is identical to the first one, except that it lets you retrieve a specific segment from your 
-    re-routed URI in the event you are using F-engine's <a href="<? echo site_url();?>userguide/general/routing">URI Routing</a>
+    re-routed URI in the event you are using F-engine's <a href="<?php echo site_url();?>userguide/general/routing">URI Routing</a>
     feature.
 </p>
 <h2>$this->uri->slash_segment(
@@ -139,7 +139,7 @@
 </h2>
 <p>
     This function is identical to the previous one, except that it lets you add slashes a specific segment from your 
-    re-routed URI in the event you are using F-engine's <a href="<? echo site_url();?>userguide/general/routing">URI Routing</a>
+    re-routed URI in the event you are using F-engine's <a href="<?php echo site_url();?>userguide/general/routing">URI Routing</a>
     feature.
 </p>
 <h2>$this->uri->uri_to_assoc(
@@ -205,7 +205,7 @@
 </h2>
 <p>
     This function is identical to the previous one, except that it creates an associative array using the 
-    re-routed URI in the event you are using F-engine's <a href="<? echo site_url();?>userguide/general/routing">URI Routing</a>
+    re-routed URI in the event you are using F-engine's <a href="<?php echo site_url();?>userguide/general/routing">URI Routing</a>
     feature.
 </p>
 <h2>$this->uri->assoc_to_uri()</h2>
@@ -241,7 +241,7 @@
 </h2>
 <p>
     This function is identical to the previous one, except that it returns the 
-    re-routed URI in the event you are using F-engine's <a href="<? echo site_url();?>userguide/general/routing">URI Routing</a>
+    re-routed URI in the event you are using F-engine's <a href="<?php echo site_url();?>userguide/general/routing">URI Routing</a>
     feature.
 </p>
 <h2>$this->uri->total_segments()</h2>
@@ -251,7 +251,7 @@
 <h2>$this->uri->total_rsegments()</h2>
 <p>
     This function is identical to the previous one, except that it returns the total number of segments in your 
-    re-routed URI in the event you are using F-engine's <a href="<? echo site_url();?>userguide/general/routing">URI Routing</a>
+    re-routed URI in the event you are using F-engine's <a href="<?php echo site_url();?>userguide/general/routing">URI Routing</a>
     feature.
 </p>
 <h2>$this->uri->segment_array()</h2>
@@ -275,6 +275,6 @@
 <h2>$this->uri->rsegment_array()</h2>
 <p>
     This function is identical to the previous one, except that it returns the array of segments in your 
-    re-routed URI in the event you are using F-engine's <a href="<? echo site_url();?>userguide/general/routing">URI Routing</a>
+    re-routed URI in the event you are using F-engine's <a href="<?php echo site_url();?>userguide/general/routing">URI Routing</a>
     feature.
 </p>

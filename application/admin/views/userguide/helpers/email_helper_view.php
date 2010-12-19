@@ -1,6 +1,6 @@
 <h1>Email Helper</h1>
 <p>
-    The Email Helper provides some assistive functions for working with Email. For a more robust email solution, see F-engine's <a href="<? echo site_url();?>userguide/libraries/email">Email Class</a>.
+    The Email Helper provides some assistive functions for working with Email. For a more robust email solution, see F-engine's <a href="<?php echo site_url();?>userguide/libraries/email">Email Class</a>.
 </p>
 <h2>Loading this Helper</h2>
 <p>
@@ -58,6 +58,6 @@
 </h2>
 <p>
     Sends an email using PHP's native <a href="http://www.php.net/function.mail">mail()</a>
-    function. For a more robust email solution, see F-engine's <a href="<? echo site_url();?>userguide/libraries/email">Email Class</a>.
+    function. For a more robust email solution, see F-engine's <a href="<?php echo site_url();?>userguide/libraries/email">Email Class</a>.
 </p>
 </div>

@@ -80,7 +80,7 @@
     }
 </code>
 <p>
-    Please visit the <a href="<? echo site_url();?>userguide/database/results">result functions</a>
+    Please visit the <a href="<?php echo site_url();?>userguide/database/results">result functions</a>
     page for a full discussion regarding result generation.
 </p>
 <h2>$this->db->get_where();</h2>

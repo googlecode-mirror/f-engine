@@ -33,12 +33,12 @@ will launch the scaffolding interface, so please pick something obscure that no 
 <h2>Enabling Scaffolding</h2>
 
 <p>Note: The information on this page assumes you already know how 
-<a href="<? echo site_url();?>userguide/general/controllers">controllers</a> work, and that you have
+<a href="<?php echo site_url();?>userguide/general/controllers">controllers</a> work, and that you have
 a working one available.  It also assumes you have configured CodeIgniter to auto-connect to your 
-<a href="<? echo site_url();?>userguide/database/index">database</a>.
+<a href="<?php echo site_url();?>userguide/database/index">database</a>.
 If not, the information here won't be very relevant, so you are encouraged to go through those sections first.
 Lastly, it assumes you understand what a class constructor is.  If not, read the last section of the 
-<a href="<? echo site_url();?>userguide/general/controllers">controllers</a>
+<a href="<?php echo site_url();?>userguide/general/controllers">controllers</a>
 page.</p>
 
 <p>To enable scaffolding you will initialize it in your constructor like this:</p>

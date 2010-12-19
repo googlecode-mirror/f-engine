@@ -4,7 +4,7 @@
 curve while making the process as enjoyable as possible.
 </p>
 
-<p>The first step is to <a href="<? echo site_url()?>userguide/installation/index">install</a> F-engine, then read
+<p>The first step is to <a href="<?php echo site_url()?>userguide/installation/index">install</a> F-engine, then read
 all the topics in the <strong>Introduction</strong> section of the Table of Contents.</p>
 
 <p>Next, read each of the <strong>General Topics</strong> pages in order.

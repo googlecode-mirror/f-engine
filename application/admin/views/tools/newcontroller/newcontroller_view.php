@@ -1,5 +1,5 @@
 <!--<h2>New controller wizard</h2>-->
-<form action="<? echo site_url();?>tools/newcontroller/save" method="post">
+<form action="<?php echo site_url();?>tools/newcontroller/save" method="post">
 	<div id="forms">
 		<ul class="btnTabs idTabs">
 			<li><a href="#resume">Datagrid</a></li>
@@ -12,11 +12,11 @@
 					<img src="<?php echo base_url();?>public_data/img/tools/validation.png"> <input type="text" class="filter" />
 					<hr />
 					<ul style="" class="jqueryFileTree">
-					<?foreach($fields as $item):?>
+					<?php foreach($fields as $item) { ?>
 						<li class="file ext_bat">
-							<a><? echo $item?></a>
+							<a><?php echo $item?></a>
 						</li>
-					<?endforeach;?>	
+					<?php } //endforeach ?>	
 					</ul>
 				</div>
 				<div class="help">
@@ -58,11 +58,11 @@
 					<img src="<?php echo base_url();?>public_data/img/tools/validation.png"> <input type="text" class="filter" />
 					<hr />
 					<ul style="" class="jqueryFileTree">
-					<?foreach($fields as $item):?>
+					<?php foreach($fields as $item) { ?>
 						<li class="file ext_bat">
-							<a><? echo $item?></a>
+							<a><?php echo $item?></a>
 						</li>
-					<?endforeach;?>	
+					<?php } //endforeach ?>	
 					</ul>
 				</div>
 				<div class="help">
@@ -182,11 +182,11 @@
 					<img src="<?php echo base_url();?>public_data/img/tools/validation.png"> <input type="text" class="filter" />
 					<hr />
 					<ul style="" class="jqueryFileTree">
-					<?foreach($fields as $item):?>
+					<?php foreach($fields as $item) { ?>
 						<li class="file ext_bat">
-							<a><? echo $item?></a>
+							<a><?php echo $item?></a>
 						</li>
-					<?endforeach;?>	
+					<?php } //endforeach ?>	
 					</ul>
 				</div>
 				<div class="help">

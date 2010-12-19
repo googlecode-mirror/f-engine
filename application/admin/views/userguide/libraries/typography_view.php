@@ -97,7 +97,7 @@
 <p class="important">
     <strong>Note:</strong>
     Typographic formatting can be processor intensive, particularly if you have a lot of content being formatted.
-    If you choose to use this function you may want to consider <a href="<? echo site_url();?>userguide/general/caching">caching</a>
+    If you choose to use this function you may want to consider <a href="<?php echo site_url();?>userguide/general/caching">caching</a>
     your pages.
 </p>
 <h2>convert_characters()</h2>

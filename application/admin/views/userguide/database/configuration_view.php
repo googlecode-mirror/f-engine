@@ -79,7 +79,7 @@
 </p>
 <h3>Active Record</h3>
 <p>
-    The <a href="<? echo site_url();?>userguide/database/active_record">Active Record Class</a>
+    The <a href="<?php echo site_url();?>userguide/database/active_record">Active Record Class</a>
     is globally enabled or disabled by setting the $active_record variable in the database configuration file to TRUE/FALSE (boolean). If you are not using the active record class, setting it to FALSE will utilize fewer resources when the database classes are initialized.
 </p>
 <code>
@@ -113,7 +113,7 @@
     </li>
     <li>
         <strong>dbprefix</strong>
-        - An optional table prefix which will added to the table name when running <a href="<? echo site_url();?>userguide/database/active_record">Active Record</a>
+        - An optional table prefix which will added to the table name when running <a href="<?php echo site_url();?>userguide/database/active_record">Active Record</a>
         queries.  This permits multiple F-engine installations to share one database.
     </li>
     <li>
@@ -126,7 +126,7 @@
     </li>
     <li>
         <strong>cache_on</strong>
-        - TRUE/FALSE (boolean) - Whether database query caching is enabled, see also <a href="<? echo site_url();?>userguide/database/caching">Database Caching Class</a>.
+        - TRUE/FALSE (boolean) - Whether database query caching is enabled, see also <a href="<?php echo site_url();?>userguide/database/caching">Database Caching Class</a>.
     </li>
     <li>
         <strong>cachedir</strong>

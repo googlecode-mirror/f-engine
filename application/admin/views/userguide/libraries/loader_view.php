@@ -1,6 +1,6 @@
 <h1>Loader Class</h1>
 <p>
-    Loader, as the name suggests, is used to load elements.  These elements can be libraries (classes) <a href="<? echo site_url();?>userguide/general/views">View files</a>,<a href="<? echo site_url();?>userguide/general/helpers">Helpers</a>, <a href="<? echo site_url();?>userguide/general/plugins">Plugins</a>, or your own files.
+    Loader, as the name suggests, is used to load elements.  These elements can be libraries (classes) <a href="<?php echo site_url();?>userguide/general/views">View files</a>,<a href="<? echo site_url();?>userguide/general/helpers">Helpers</a>, <a href="<? echo site_url();?>userguide/general/plugins">Plugins</a>, or your own files.
 </p>
 <p class="important">
     <strong>Note:</strong>
@@ -113,7 +113,7 @@
         </kbd>)
     </h2>
     <p>
-        This function is used to load your View files.  If you haven't read the <a href="<? echo site_url();?>userguide/general/views">Views</a>
+        This function is used to load your View files.  If you haven't read the <a href="<?php echo site_url();?>userguide/general/views">Views</a>
         section of the
         user guide it is recommended that you do since it shows you how this function is typically used.
     </p>
@@ -128,7 +128,7 @@
         parameter can take 
         an associative array or an object as input, which it runs through the PHP <a href="http://www.php.net/extract">extract</a>
         function to 
-        convert to variables that can be used in your view files.  Again, read the <a href="<? echo site_url();?>userguide/general/views">Views</a>
+        convert to variables that can be used in your view files.  Again, read the <a href="<?php echo site_url();?>userguide/general/views">Views</a>
         page to learn
         how this might be useful.
     </p>
@@ -207,7 +207,7 @@
         </kbd>)
     </h2>
     <p>
-        This function lets you load the database class.  The two parameters are <strong>optional</strong>.  Please see the <a href="<? echo site_url();?>userguide/database/examples">database</a>
+        This function lets you load the database class.  The two parameters are <strong>optional</strong>.  Please see the <a href="<?php echo site_url();?>userguide/database/examples">database</a>
         section for more info.
     </p>
     <h2>$this->load->scaffolding('
@@ -216,7 +216,7 @@
         </var>')
     </h2>
     <!--<p>
-        This function lets you enable scaffolding.  Please see the<a href="<? echo site_url();?>userguide/general/scaffolding">scaffolding</a>
+        This function lets you enable scaffolding.  Please see the<a href="<?php echo site_url();?>userguide/general/scaffolding">scaffolding</a>
         section for more info.
     </p>-->
     <h2>$this->load->vars(
@@ -291,7 +291,7 @@
         </var>')
     </h2>
     <p>
-        This function is an alias of the <a href="<? echo site_url();?>userguide/libraries/language">language loading function</a>: $this->lang->load()
+        This function is an alias of the <a href="<?php echo site_url();?>userguide/libraries/language">language loading function</a>: $this->lang->load()
     </p>
     <h2>$this->load->config('
         <var>
@@ -299,5 +299,5 @@
         </var>')
     </h2>
     <p>
-        This function is an alias of the <a href="<? echo site_url();?>userguide/libraries/config">config file loading function</a>: $this->config->load()
+        This function is an alias of the <a href="<?php echo site_url();?>userguide/libraries/config">config file loading function</a>: $this->config->load()
     </p>

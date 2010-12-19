@@ -29,8 +29,8 @@
 <p>
     F-engine does not load Helper Files by default, so the first step in using 
     a Helper is to load it.  Once loaded, it becomes globally available in your 
-	<a href="<? echo site_url();?>userguide/general/controllers">controller</a>
-    and <a href="<? echo site_url();?>userguide/general/views">views</a>.
+	<a href="<?php echo site_url();?>userguide/general/controllers">controller</a>
+    and <a href="<?php echo site_url();?>userguide/general/views">views</a>.
 </p>
 <p>
     Helpers are typically stored in your 

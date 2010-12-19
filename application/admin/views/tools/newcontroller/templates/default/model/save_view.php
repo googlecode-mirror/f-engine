@@ -33,7 +33,7 @@ class save extends Controller {
 		{
 			if(!IS_AJAX) {
 
-				redirect("<? echo $path?>","refresh");
+				redirect("<?php echo $path?>","refresh");
 			}
 		
 		/*** validation error ***/

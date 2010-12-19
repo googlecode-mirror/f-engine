@@ -167,7 +167,7 @@
 </code>
 <p>
     This route lets you set a secret word, which when present in the URL, triggers the scaffolding feature. 
-    Please read the <a href="<? echo site_url();?>userguide/general/scaffolding">Scaffolding</a>
+    Please read the <a href="<?php echo site_url();?>userguide/general/scaffolding">Scaffolding</a>
     page for details.
 </p> -->
 <p class="important">

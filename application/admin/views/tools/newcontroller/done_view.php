@@ -1,6 +1,6 @@
 <?php if( isset($link) ) { ?>	
 	
-	<? echo $link?>
+	<?php echo $link?>
 	
 <?php 
 	} 

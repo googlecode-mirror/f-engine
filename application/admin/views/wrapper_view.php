@@ -35,8 +35,8 @@
 			$fe_output_conf = $this->config->item('compact');
 			if($fe_output_conf["css"] == true) {
 				?>
-					<link href="<?=public_data("compact.php");?>?css=<?=implode(",",$css)?>" rel="stylesheet" type="text/css" media="screen, projection" />
-				<? 
+					<link href="<?php echo public_data("compact.php");?>?css=<?php echo implode(",",$css)?>" rel="stylesheet" type="text/css" media="screen, projection" />
+				<?php 
 			} else {
 			    foreach($css as $link_css) { ?>
 					<link href="<?php echo base_url();?>public_data/css/<?php echo $link_css?>" rel="stylesheet" type="text/css" media="screen, projection" />

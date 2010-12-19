@@ -204,7 +204,7 @@ if(isset($update["indexes"])) { ?>
 
 <?php foreach ($update["rules"] as $key => $val) { ?>
 		$fields['<?php  echo $key?>'] = '<?php  echo $key?>';
-<?php }//endforeach;?>
+<?php }//endforeach ?>
 		$this->fe->validation->set_fields($fields);
 
 		<?php if(isset($update["styles"]) and in_array("file", $update["styles"])) { ?>$this->fe->load->library('upload', array(
