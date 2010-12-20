@@ -30,7 +30,7 @@
 <a name="using"></a>
 <h2>Using the Benchmark Class</h2>
 <p>
-    The Benchmark class can be used within your <a href="<?php echo site_url();?>userguide/general/controllers">controllers</a>, <a href="<? echo site_url();?>userguide/general/views">views</a>, or your <a href="<? echo site_url();?>userguide/general/models">Models</a>.  The process for usage is this:
+    The Benchmark class can be used within your <a href="<?php echo site_url();?>userguide/general/controllers">controllers</a>, <a href="<?php echo site_url();?>userguide/general/views">views</a>, or your <a href="<? echo site_url();?>userguide/general/models">Models</a>.  The process for usage is this:
 </p>
 <ol>
     <li>

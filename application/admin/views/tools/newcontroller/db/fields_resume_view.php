@@ -59,7 +59,7 @@
 	<?php if (count($databases) > 1) { ?>
 		<hr />
 		<span class="rel_title">Define database relationships:</span>
-		<?
+		<?php
 			$select = 0;
 		?>
 		<div style="padding: 10px 0;">
@@ -80,7 +80,7 @@
 							<?php	$select++;	?>
 							<optgroup label="<?php echo $name?>">
 							<?php foreach ($table as $field) { ?>
-								<option value="<?php echo $name.'.'.$field->Field;?>" <?php if($select == 3) { $select++;?>selected="selected" <?php } //endif ?>><? echo $field->Field;?></option>
+								<option value="<?php echo $name.'.'.$field->Field;?>" <?php if($select == 3) { $select++;?>selected="selected" <?php } //endif ?>><?php echo $field->Field;?></option>
 							<?php } //endforeach ?>
 							</optgroup>
 						<?php } //endforeach ?>

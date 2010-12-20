@@ -38,7 +38,7 @@
 		            <div class="row">
 		                <div class='enlarge'>
 		                	<img style="cursor:pointer;vertical-align:middle;float:left;" class="del_row" src="<?php echo base_url();?>public_data/img/contextmenu/delete.png" />
-							<span style="float: left; overflow: hidden; width: 90px; margin-left: 3px;" title="<? echo $field->Field?>"><? echo $field->Field; ?></span><input type='hidden' name='<? echo $view?>_field_names[]' value='<? echo $field->Field?>' />
+							<span style="float: left; overflow: hidden; width: 90px; margin-left: 3px;" title="<?php echo $field->Field?>"><?php echo $field->Field; ?></span><input type='hidden' name='<? echo $view?>_field_names[]' value='<? echo $field->Field?>' />
 		                </div>
 		                <div class='enlarge'>
 		                    <?php echo $field->Type?>&nbsp;
@@ -50,13 +50,13 @@
 		                    <span title="<?php echo $field->Extra?>"><?php echo substr($field->Extra,0,8)?></span>&nbsp;
 		                </div>
 		                <div class='enlarge'>
-		                    <span title="<?php echo $name?>"><? echo substr($name,0,16)?></span>
+		                    <span title="<?php echo $name?>"><?php echo substr($name,0,16)?></span>
 		                    <input type='hidden' name='<?php echo $view?>_form_fields[]' value='<?php echo $name.".".$field->Field?>' />
 		                </div>
 		            </div>
 		            <div class='oculto fldv'>
 		                <div class='enlarge'>
-		                    <span title="<?php echo $name.'.'.$field->Field;?>"><? echo $field->Field?></span>
+		                    <span title="<?php echo $name.'.'.$field->Field;?>"><?php echo $field->Field?></span>
 		                </div>
 		                <input type='text' name='<?php echo $view?>_validation_rules[]' value='<?php echo $field->validation?>'>
 		                <a class='add_rule'><img src='<?php echo base_url()?>public_data/img/tools/add.png' /></a>
