@@ -5,7 +5,7 @@
 <?php }//endif ?>
 <table style="text-align:center;">
 	<thead><?php echo "\r\n";?>
-	<?
+	<?php
 		$fnum = round(90/count($fields),1);
 	?>
 	<?php if($edit == true) { ?><th>Edit</th><?php }//endif ?>
@@ -39,7 +39,7 @@
 				<?php if($field != "") { ?>
 				<?php echo "\r\n";?>
 				<td>
-					<span title="<?php  echo '<?php echo htmlspecialchars($row->'.$field.');?>';?>"><?php  echo '<? echo substr(htmlspecialchars($row->'.$field.'),0,'.(int) ($fnum*3).');?>';?></span><?php echo "\r\n";?>
+					<span title="<?php  echo '<?php echo htmlspecialchars($row->'.$field.');?>';?>"><?php  echo '<?php echo substr(htmlspecialchars($row->'.$field.'),0,'.(int) ($fnum*3).');?>';?></span><?php echo "\r\n";?>
 				</td>
 				<?php } //endif ?>
 			<?php } //endforeach ?>

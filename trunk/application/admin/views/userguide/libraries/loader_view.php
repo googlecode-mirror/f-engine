@@ -1,6 +1,6 @@
 <h1>Loader Class</h1>
 <p>
-    Loader, as the name suggests, is used to load elements.  These elements can be libraries (classes) <a href="<?php echo site_url();?>userguide/general/views">View files</a>,<a href="<? echo site_url();?>userguide/general/helpers">Helpers</a>, <a href="<? echo site_url();?>userguide/general/plugins">Plugins</a>, or your own files.
+    Loader, as the name suggests, is used to load elements.  These elements can be libraries (classes) <a href="<?php echo site_url();?>userguide/general/views">View files</a>,<a href="<?php echo site_url();?>userguide/general/helpers">Helpers</a>, <a href="<? echo site_url();?>userguide/general/plugins">Plugins</a>, or your own files.
 </p>
 <p class="important">
     <strong>Note:</strong>
