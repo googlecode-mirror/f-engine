@@ -11,13 +11,6 @@
  * @copyright	Copyright (c) 2010, Mikel Madariaga
  * @license		http://www.f-engine.net/userguide/license
  * @since		Version 0.5
- * 
- * Kohana:
- * @package    Kohana
- * @category   Cache
- * @author     Kohana Team
- * @copyright  (c) 2009-2010 Kohana Team
- * @license    http://kohanaphp.com/license
  */
 class CI_Cache_Apc {
 
