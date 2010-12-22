@@ -23,14 +23,14 @@ class userguide extends Controller {
 		$data = array();
 
 		if($page != '')
-			$data['page'] = 'userguide'.implode('/',$this->uri->params);
+			$data['page'] = 'userguide/'.implode('/',$this->uri->params);
 
 		$this->load->masterview('userguide/main',$data,'userguide');
 	}
 
 	function ajax() {
 
-		$this->load->view('userguide'.implode('/',$this->uri->params));
+		$this->load->view('userguide/'.implode('/',$this->uri->params));
 	}
 }
 ?>

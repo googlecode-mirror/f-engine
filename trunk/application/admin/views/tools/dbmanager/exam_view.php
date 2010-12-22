@@ -23,8 +23,8 @@
                 	<?php if($exam['primary'] == "") { ?>
 
                 		<img 
-                		alt="This table has not any index defined. Record edition could throw unexpected results" 
-                		title="This table has not any index defined. Record edition could throw unexpected results"
+                		alt="This table has not defined any key. Record edition could throw unexpected results" 
+                		title="This table has not defined any key. Record edition could throw unexpected results"
                 		style="vertical-align:text-top;" src="<?php echo public_data("img/tools/table_error.png");?>" />
 
                 	<?php }//endif ?>

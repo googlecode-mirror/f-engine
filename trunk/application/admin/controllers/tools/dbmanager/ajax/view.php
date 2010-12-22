@@ -12,8 +12,9 @@
  */
 class view extends Controller 
 {
-	private $isView = false;
-	private $createTable = false;
+	var $isView = false;
+	var $createTable = false;
+	var $tableNum = array();
 
 	function view() {
 
@@ -60,15 +61,30 @@ class view extends Controller
 		/*** Exam tab ***/
 		if(isset($_POST["query"])) {
 
-			$query_str = str_ireplace("limit","LIMIT",$_POST["query"]);
-			$query_array = explode("LIMIT", $query_str);
+			$query_str = $_POST["query"];
+
+			/*** Split query into sentence and record limit ***/
+			if(stripos($query_str, "limit")) {
+
+				$limit_pos = strripos($query_str, "limit");
+
+				$query_array = array(
+					substr($query_str,0,$limit_pos),
+					trim(str_ireplace("limit","",substr($query_str,$limit_pos)))
+				);
+
+			} else {
+
+				$query_array = array($query_str);
+			}
+
 			$query_nolimit = $query_array[0];
 			$query_nolimit = preg_replace("/;\s*$/i","",$query_nolimit);
 
-			//should we show actions and pagination ?
+			//should we show actions and/or pagination ?
 			list($actions, $pagination) = $this->showActions($query_str,$listables);
 
-			//redefine offset and limit if they are sent
+			//redefine offset and limit (if sent)
 			if(isset($query_array[1])) {
 
 				@list($newOffset,$newLimit) = explode(",",$query_array[1]);
@@ -97,7 +113,7 @@ class view extends Controller
 
 			} elseif(isset($_POST["query"]) && stripos($_POST["query"],"order") !== false) {	
 
-				preg_match("/order\sby\s\w* (asc|desc)/i",$query_nolimit,$match);
+				preg_match("/order\sby\s.* (asc\s|desc\s)/i",$query_nolimit,$match);
 
 				if(count($match) > 0) {
 
@@ -108,9 +124,14 @@ class view extends Controller
 
 				$query_str = $query_nolimit;
 
+				if($pagination == true) {
+
+					$query_str .= " LIMIT ".$offset.",".$items_per_page;
+				}
+
 			} elseif( isset($_POST["table"]) and $_POST["table"] != "" ) {
 
-				if($actions == false and $pagination == false) {
+				if($pagination == false) {
 
 					$query_str = $query_nolimit;
 
@@ -267,7 +288,7 @@ class view extends Controller
 		}
 
 		$data["isView"] = $this->isView;
-		if($data["isView"]) {
+		if($data["isView"] or (isset($_POST["query"]) and count($this->tableNum) == 0)) {
 
 			$data["actions"] = false;
 
@@ -282,7 +303,7 @@ class view extends Controller
 
 	        		$index_count = 0;
 	        		foreach($data['exam']['query']->row() as $key => $item) {
-	
+
 	        			if(in_array($key,$exam_keys)) {
 	        				$index_count++;
 	        			}
@@ -297,7 +318,6 @@ class view extends Controller
 
 	        $data["actions"] = $actions;
 		}
-
 
         if(!isset($_POST['fullLoad'])) {
 
@@ -406,7 +426,7 @@ class view extends Controller
 
 		//multidatabase
 		preg_match_all("(".implode("|",$dblist).")",$dummy_query,$multidb);
-		$multidb = array_unique($multidb[0]);
+		$this->tableNum = $multidb = array_unique($multidb[0]);
 		//multiple select
 		preg_match_all("/select\s+/i",$dummy_query,$multiselect);
 		$multiselect = $multiselect[0];

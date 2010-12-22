@@ -94,33 +94,28 @@
 <h4>$config['uri_segment'] = 3;</h4>
 <p>
     The pagination function automatically determines which segment of your URI contains the page number. If you need
-    something different you can specify it.
+    something different you can specify it. You can also make use of <strong>$config['uri_param']</strong> as alternative.
 </p>
 <h4>$config['num_links'] = 2;</h4>
 <p>
     The number of &quot;digit&quot; links you would like before and after the selected page number. For example, the number 2
     will place two digits on either side, as in the example links at the very top of this page.
 </p>
-<h4>$config['page_query_string'] = TRUE</h4>
+<h2>Ajax pagination</h2>
 <p>
-    By default, the pagination library assume you are using <a href="<?php echo site_url();?>userguide/general/urls">URI Segments</a>, and constructs your links something like
+	Pagination class is able to make use of F-engine Ajax library. Just define a css selector to 
+	target content element. 
 </p>
-<p>
-    <code>
-        http://example.com/index.php/test/page/20
-    </code>
-</p>
-<p>
-    If you have $config['enable_query_strings']  set to TRUE your links will automatically be re-written using Query Strings. This option can also be explictly set. Using $config['page_query_string'] set to TRUE, the pagination link will become.
-</p>
-<p>
-    <code>
-        http://example.com/index.php?c=test&amp;m=page&amp;per_page=20
-    </code>
-</p>
-<p>
-    Note that &quot;per_page&quot; is the default query string  passed, however can be configured using $config['query_string_segment'] = 'your_string'
-</p>
+<h4>$config['ajax'] = "#my-datagrid";</h4>
+
+<p>View example:</p>
+<pre>
+&lt;div id="my-datagrid"&gt;<br />
+&lt;!-- Here goes your content --&gt;<br />
+&lt;?php echo $pagination; ?&gt;<br />
+&lt;/div&gt;<br />
+</pre>
+
 <h2>Adding Enclosing Markup</h2>
 <p>
     If you would like to surround the entire pagination with some markup you can do it with these two prefs:
