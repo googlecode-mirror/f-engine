@@ -158,14 +158,14 @@
 				</div>
 				<div class="help">
 					<div>
-						<h1>Select fields</h1>
+						<h1>Styling</h1>
 						<p>
-							Manipulate table fields to get the structure you are looking for. You can:
+							Select a html element that fits your needs.<br />
+							<strong>About File upload fields: </strong>
 							<ul>
-								<li>Change the order that fields are shown by drad and droping them</li>
-								<li>Delete the fields you dont need in result form. Press right click and choose Delete in the context menu</li>
-								<li>Edit field names that will be shown in result form. Press right click and choose Edit in the context menu, 
-								type a new name, press right click again and choose apply to commit changes or undo to return to the original value.</li>
+								<li>Defined validation rules will apply to the file name</li>
+								<li>All files are upload to public_data folder by default. You will can change this
+								target folder later, once files have been created.</li>
 							</ul>
 						</p>
 					</div>
@@ -282,14 +282,14 @@
 				</div>
 				<div class="help">
 					<div>
-						<h1>Select fields</h1>
+						<h1>Styling</h1>
 						<p>
-							Manipulate table fields to get the structure you are looking for. You can:
+							Select a html element that fits your needs.<br />
+							<strong>About File upload fields: </strong>
 							<ul>
-								<li>Change the order that fields are shown by drad and droping them</li>
-								<li>Delete the fields you dont need in result form. Press right click and choose Delete in the context menu</li>
-								<li>Edit field names that will be shown in result form. Press right click and choose Edit in the context menu, 
-								type a new name, press right click again and choose apply to commit changes or undo to return to the original value.</li>
+								<li>Defined validation rules will apply to the file name</li>
+								<li>All files are upload to public_data folder by default. You will can change this
+								target folder later, once files have been created.</li>
 							</ul>
 						</p>
 					</div>
