@@ -1,0 +1,47 @@
+#menu {
+	
+	border-top:				1px solid #29399a;	
+}
+
+#menu,
+#submenu {
+	
+	float:					left;
+	width:					100%;
+	margin:					0px;
+	padding:				0px;
+	list-style-type:		none;
+	background-color:		#374496;
+}
+
+#menu li,
+#submenu li	{
+	
+	float:					left;
+	width:					7em;
+	margin:					0;
+	padding:				0.3em 0.5em;
+	text-align:				center;
+	border-left:			1px solid #3F52A2;
+}	
+	
+#menu li.primero,
+#submenu li.primero	{
+	
+	border:					none;
+}
+
+#menu li a,
+#submenu li a {
+
+	text-decoration:		none;
+	color:					#B3BEEE;
+}
+
+#menu li a:hover,
+#menu li a.selected,
+#submenu li a:hover,
+#submenu li a.selected	{
+	
+	color:					white;
+}
