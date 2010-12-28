@@ -73,6 +73,15 @@ class view extends Controller
 					trim(str_ireplace("limit","",substr($query_str,$limit_pos)))
 				);
 
+             	/*** Strip comments ***/
+                $pattern = array(
+                    "/\#.*($|\n)/", // #
+                    "/\--.*($|\n)/", // --
+                    "/\/\*.*\*\//", // /*.....*/
+                );
+
+                $query_array[1]= preg_replace($pattern,"",$query_array[1]);
+
 			} else {
 
 				$query_array = array($query_str);

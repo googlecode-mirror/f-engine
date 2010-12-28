@@ -109,6 +109,10 @@ class CI_Ajax {
 		}
 
 		$this->code[] = "jQuery('#$id').click(function(){
+			if(jQuery(this).parents('form').attr('enctype') == 'multipart/form-data') {
+				
+				return true;
+			}
 			jQuery.ajax({'url':jQuery(this).parents('form').attr('action'),'cache':false,'type':'post',
 			data: jQuery(this).parents('form').serialize(),
 			success:function(resp){ ".$success."},

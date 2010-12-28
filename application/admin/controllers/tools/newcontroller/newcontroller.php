@@ -21,7 +21,7 @@ class newcontroller extends Controller
 
 	function index() {
 
-		if($this->uri->param(1) == "select") {
+		if($this->uri->param(0) == "select" and !isset($_POST['project'])) {
 
 			$this->target_project();
 			return;

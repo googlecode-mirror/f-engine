@@ -38,7 +38,7 @@
 		            <div class="row">
 		                <div class='enlarge'>
 		                	<img style="cursor:pointer;vertical-align:middle;float:left;" class="del_row" src="<?php echo base_url();?>public_data/img/contextmenu/delete.png" />
-							<span style="float: left; overflow: hidden; width: 90px; margin-left: 3px;" title="<?php echo $field->Field?>"><?php echo $field->Field; ?></span><input type='hidden' name='<? echo $view?>_field_names[]' value='<? echo $field->Field?>' />
+							<span style="float: left; overflow: hidden; width: 90px; margin-left: 3px;" title="<?php echo $field->Field?>"><?php echo $field->Field; ?></span><input type='hidden' name='<?php echo $view?>_field_names[]' value='<?php echo $field->Field?>' />
 		                </div>
 		                <div class='enlarge'>
 		                    <?php echo $field->Type?>&nbsp;

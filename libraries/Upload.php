@@ -24,7 +24,7 @@
  * @author		ExpressionEngine Dev Team
  * @link		http://codeigniter.com/user_guide/libraries/file_uploading.html
  */
-require('CI_upload.php');
+require('CI_Upload.php');
 class CI_Upload extends Upload {
 	
 	var $max_size				= 0;

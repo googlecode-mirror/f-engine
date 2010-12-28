@@ -36,7 +36,7 @@ class CI_Pagination {
 	var $prev_link			= '&lt;';
 	var $last_link			= '»';
 	var $uri_segment		= 3;
-	var $uri_param			= 1;
+	var $uri_param			= 0;
 	var $full_tag_open		= '';
 	var $full_tag_close		= '';
 	var $first_tag_open		= '';
@@ -135,7 +135,7 @@ class CI_Pagination {
 		}
 		else
 		{
-			if($this->uri_param > 0 and $CI->uri->param($this->uri_param) != 0) {
+			if(is_numeric($this->uri_param) and $CI->uri->param($this->uri_param) != 0) {
 
 				$this->cur_page = $CI->uri->param($this->uri_param);
 
