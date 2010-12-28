@@ -26,7 +26,8 @@ class <?php echo $modelname;?> extends Model {
         $this->error_delimiter_end = '</div>';
 
         <?php if(isset($upload_file) and $upload_file == true) { 
-        ?>$this->upload_path = PUBLIC_DATA; <?php echo "\r\n\t\t";?>$this->allowed_filetypes = '*'; <?php 
+        ?>/*** file upload options ***/ 
+        $this->upload_path = PUBLIC_DATA; <?php echo "\r\n\t\t";?>$this->allowed_filetypes = '*'; <?php 
         	echo "\r\n"; 
         } else {
         	echo "\r\n";
@@ -85,7 +86,7 @@ if(isset($update["indexes"])) { ?>
 				$i = 0;
 				foreach($insert["data"] as $field) {
 					if(strpos($field, $db) !== false && in_array($insert["fields"][$i],$insert["ignore"]) === false ) {
-						echo "\t\t\t\t'".substr($field,strpos($field,'.')+1).'\' => $data["'.$insert["fields"][$i].'"]'.",\r\n";
+						echo "\t\t\t\t'".substr($field,strpos($field,'.')+1).'\' => $this->data["'.$insert["fields"][$i].'"]'.",\r\n";
 					} //endif
 					$i++;
 				} //endforeach ?>
@@ -134,7 +135,7 @@ if(isset($update["indexes"])) { ?>
 			if(isset($upload_fields)) {
 				foreach($upload_fields as $item) {
 
-					echo "\r\n\t\t".'if( stripos($rules["'.$item.'"],"required") !== false or $_FILES["'.$item.'"]["error"] == 0) {';
+					echo "\r\n\r\n\t\t".'if( stripos($rules["'.$item.'"],"required") !== false or (isset($_FILES["'.$item.'"]) and $_FILES["'.$item.'"]["error"] == 0)) {';
 					echo "\r\n\r\n\t\t\t".'if(!$this->fe->upload->do_upload("'.$item.'")) { ';
 					echo "\r\n\r\n\t\t\t\t".'$uerror["'.$item.'"] = $this->fe->upload->display_errors($this->error_delimiter_start, $this->error_delimiter_end);';
 					echo "\r\n\t\t\t\t".'$this->data["'.$item.'"] = "";';
@@ -177,7 +178,7 @@ if(isset($update["indexes"])) { ?>
 				$i = 0;
 				foreach($update["data"] as $field) {
 					if(strpos($field, $db) !== false && in_array($update["fields"][$i],$update["ignore"]) === false ) {
-						echo "\t\t\t\t'".substr($field,strpos($field,'.')+1).'\' => $data["'.$update["fields"][$i].'"]'.",\r\n";
+						echo "\t\t\t\t'".substr($field,strpos($field,'.')+1).'\' => $this->data["'.$update["fields"][$i].'"]'.",\r\n";
 					} //endif
 					$i++;
 				} //endforeach ?>
@@ -225,7 +226,7 @@ if(isset($update["indexes"])) { ?>
 			if(isset($upload_fields)) {
 				foreach($upload_fields as $item) {
 
-					echo "\r\n\t\t".'if( stripos($rules["'.$item.'"],"required") !== false or $_FILES["'.$item.'"]["error"] == 0) {';
+					echo "\r\n\r\n\t\t".'if( stripos($rules["'.$item.'"],"required") !== false or (isset($_FILES["'.$item.'"]) and $_FILES["'.$item.'"]["error"] == 0)) {';
 					echo "\r\n\r\n\t\t\t".'if(!$this->fe->upload->do_upload("'.$item.'")) { ';
 					echo "\r\n\r\n\t\t\t\t".'$uerror["'.$item.'"] = $this->fe->upload->display_errors($this->error_delimiter_start, $this->error_delimiter_end);';
 					echo "\r\n\r\n\t\t\t".'} else { '."\r\n";

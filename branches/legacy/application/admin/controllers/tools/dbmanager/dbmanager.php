@@ -21,7 +21,7 @@ class dbmanager extends Controller
 	
 	function index($current_db = '') {
 
-		if($this->uri->param(1) == "select") {
+		if($this->uri->param(0) == "select" and !isset($_POST['project'])) {
 
 			//select project
 			$this->target_project();
