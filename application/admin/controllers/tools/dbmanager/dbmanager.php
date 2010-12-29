@@ -85,7 +85,7 @@ class dbmanager extends Controller
 		$data["current_db"] = $current_db;
 
 		/*** process list ***/
-		$data['processes'] = $this->db->query("SHOW PROCESSLIST")->result();
+		$data['processes'] = $this->db->query("SHOW FULL PROCESSLIST")->result();
 
 		/*** users/privileges ***/
 		$this->db->skip_errors = TRUE;

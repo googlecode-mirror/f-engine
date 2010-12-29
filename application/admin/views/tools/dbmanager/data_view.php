@@ -87,13 +87,22 @@
 
 	<div id="query">
 		<form method="post" action="<?php echo site_url()?>tools/dbmanager/ajax/query">
-
 			<div class="query" style="float:left;min-width:400px;padding-left:4px;">
-				<?php if (isset($_POST['table'])) { ?>
-					<textarea  style="min-height:175px; padding:3px; max-height: 300px; width:550px;" class="expanding" id="sqlquery" name="sql">SELECT * FROM (`<?php  echo $_POST['table']?>`)</textarea>
-				<?php } else { ?>
-					<textarea  style="min-height:175px; padding:3px; max-height: 300px; width:550px;" class="expanding" id="sqlquery" name="sql"></textarea>
-				<?php }//endif ?>
+				<?php 
+					if(isset($_POST["fullLoad"]) and isset($_POST['query'])) {
+
+						$current_query = $_POST['query'];
+
+					} else if(isset($_POST['table'])) {
+
+						$current_query = "SELECT * FROM (`".$_POST['table']."`)";
+
+					} else {
+
+						$current_query = "";
+					}
+				?>
+				<textarea  style="min-height:175px; padding:3px; max-height: 300px; width:550px;" class="expanding" id="sqlquery" name="sql"><?php echo $current_query; ?></textarea>
 				<center><input type="submit" value="Run query" /></center>
 			</div>
 			<div id="field_autocomplete" <?php echo isset($_POST['table']) ? '' : 'class="oculto"'; ?>>
@@ -501,14 +510,25 @@
 <?php if(isset($structure)) { ?>
 <div id="other" style="clear:both;">
 
-	<h2>Remove table</h2>
-		<input type="button" name="remove_table" id="remove_table" value="remove" rel="<?php echo site_url();?>tools/dbmanager/ajax/droptable" />
+	<div>
+		<a id="remove_table" href="#" rel="<?php echo site_url("tools/dbmanager/ajax/droptable");?>">
+			Remove table
+		</a>
+	</div>
 
-	<h2>Optimize</h2>
-		<input type="button" name="optimize_table" id="optimize_table" value="optimize" rel="<?php echo site_url();?>tools/dbmanager/ajax/optimizetable" />
+	<div>
+		<a id="optimize_table" href="#" rel="<?php echo site_url("tools/dbmanager/ajax/optimizetable");?>">
+			Optimize table
+		</a>
+	</div>
 
-	<h2>Repair table</h2>
-		<input type="button" name="repair_table" id="repair_table" value="repair" rel="<?php echo site_url();?>tools/dbmanager/ajax/repairtable" />
+	<div>
+		<a id="repair_table" href="#" rel="<?php echo site_url("tools/dbmanager/ajax/repairtable");?>">
+			Repair table
+		</a>
+	</div>
+
+	<br style="clear:both;"/>
 
 </div>
 <?php } else {?>

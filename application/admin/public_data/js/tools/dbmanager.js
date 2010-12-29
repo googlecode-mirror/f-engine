@@ -176,6 +176,8 @@ $('#db_list a').each(function () {
                     $("#tableContent ul.btnTabs li:eq(0)").show().click()
                  }  
 		});
+		
+		$("div.footer").html("");
     });
 });
 

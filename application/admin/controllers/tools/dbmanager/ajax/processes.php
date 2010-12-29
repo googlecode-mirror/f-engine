@@ -10,6 +10,20 @@ class processes extends Controller
 
 		$this->init_db();
 		$data['processes'] = $this->db->query("SHOW PROCESSLIST")->result();
+		$data['processes_sleep'] = array();
+		
+		for($i=0; $i < count($data['processes']) ; $i++) {
+			
+			if($data['precesses'][$i]->Command = "Sleep") {
+
+				$data['processes_sleep'][] = $data['precesses'][$i];
+				unset($data['precesses'][$i]);
+			}			
+		}
+		
+		/*echo "</pre>";
+		print_r($data);
+		echo "</pre>";*/
 		
 		$this->load->view("tools/dbmanager/processes",$data);
 	}
