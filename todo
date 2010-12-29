@@ -1,11 +1,10 @@
 Core & libraries:
     - Check URL Suffix compatibility
     - Plugins: Widgets, tools, appz
-    - Merge with CI 1.7.3
+    - Merge Pagination class
 
 Dbmanager:
 	- kill processes feature
 	- Advance index editor
 	- Edit user permissions
 	- New features and style redesign in "operations"
-	- BUG: Dont make inserts into views

@@ -1,3 +1,7 @@
+New in v0.6
+	- Core:
+		- Merged with CI 2.0 
+		
 New in v0.5
 	- Core:
 		- Cache library ported from Kohana framework
