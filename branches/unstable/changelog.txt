@@ -1,0 +1,71 @@
+New in v0.6
+	- Core:
+		- Merged with CI 2.0 
+		
+New in v0.5
+	- Core:
+		- Cache library ported from Kohana framework
+		- Added APPNAME constant
+		- Css/Js combiner/compressor to speedup pages
+		- Codeigniter database cache removed
+		- Querystring based url compatibility removed
+		- jQuery version update
+    	- New Ajax layer
+    	- Ajax capable pagination library
+    	- Documentation updated
+	- Bbmanager:
+		- Bugfixing
+		- Added Import feature (zip/gzip compatible)
+	- New form wizard:
+		- It generates cleaner code now
+		- Rewritted to support the new ajax layer
+		- Added create model feature
+	- Filemanager:
+		- New folder/file permissions fixed
+		- Added library template
+	- Javascript
+		- Autogrow jquery plugin: unspaced long string issues fixed
+
+New in v0.4.2
+	- Dbmanager:
+		- Bugfixing in pagination for certain queries
+		- Little usability/design upgrade
+		- Added processlist autorefresh feature
+		- A few more warning/info message handler
+
+New in v0.4
+	- Fileeditor: 
+		- Added basic file management
+	- Dbmanager
+		- Performance improvements
+		- Added some effect 
+	- New project: 
+		- Fixed diretory permissions
+	- new controller wizard:
+		- Masterview profile selectable
+    	- Some lorem ipsum removed
+ 
+New in v0.3
+
+	Core:
+		- added backup feature to mysqli driver
+
+	New form wizard:
+		- Some short tag replaced with standard php sintax
+		- Multidatabase feature added for datagrids
+		- Pagination by default in datagrids
+
+	Dbmanager:
+		- Now its posible to define and switch between all your databases
+		- Bugfixing in edit/delete record when the table has not any defined indexes 
+		- It does not set/read project/database from session anymore. Now its posible to have project independent tabs/windows opened in your browser 
+		- Bugfixing in sql tab
+		- Improved pagination
+		- Add fields at the end/begining of the table or after a selected field
+		- New table detail tab
+		- Added processes/permissions tabs
+		- Improved backups
+		- New feature: Expand truncate content in datagrid 
+
+	Other:
+		- minor bug fixing

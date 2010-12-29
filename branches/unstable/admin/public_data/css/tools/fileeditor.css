@@ -1,0 +1,51 @@
+/* main
+---------------------------------------------------------------------------------*/
+
+.rblock {
+
+	margin-top: 	10px;
+	clear:both;
+}
+
+.dir {
+
+	background:#FFFFFF none repeat scroll 0 0;
+	border-color:#BBBBBB;
+	border-style:solid;
+	border-width:1px;
+	height:390px;
+	overflow:auto;
+	padding:5px;
+	margin:0px 5px 5px 5px;
+	width:200px;
+}
+
+.floatl {
+
+	float:left;
+}
+
+.buttons {
+	
+	clear:both;
+}
+
+textarea#editor {
+	
+	width: 650px;
+	margin:10px 5px 5px 5px;
+	border-color:#BBBBBB;
+	border-style:solid;
+	border-width:1px;
+	height:402px;
+}
+
+iframe {
+	
+	margin: 10px 5px 0px 5px;
+}
+
+ul.jqueryFileTree a:hover {
+	
+	background-color:#ddd;	
+}
