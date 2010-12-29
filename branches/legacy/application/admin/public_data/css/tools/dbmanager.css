@@ -194,6 +194,24 @@ div#tableContent div#other h2 {
 	margin-top: 10px;
 }
 
+div#tableContent div#other > div {
+
+	width: 150px; 
+	height: 100px; 
+	text-align: center; 
+	height: 60px; 
+	display: block; 
+	float:left;
+	background-color: #c8e1f9; 
+	margin-right:5px;
+}
+
+div#tableContent div#other > div > a {
+
+	padding-top: 20px; 
+	display: block;
+}
+
 /*** Structure tab ***/
 ul.dbheader {
     font-weight: bold;

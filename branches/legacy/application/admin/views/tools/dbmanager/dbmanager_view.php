@@ -52,4 +52,5 @@
 	<div id="tableContent">
 		<?php echo $this->load->view("tools/dbmanager/data"); ?>
 	</div>
+	<br style="clear:both;"/>
 </div>
