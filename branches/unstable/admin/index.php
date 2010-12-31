@@ -119,7 +119,6 @@ if( (isset($_SERVER["LOCAL_ADDR"]) && $_SERVER["LOCAL_ADDR"] != $_SERVER["REMOTE
 	// Is the system path correct?
 	if ( ! is_dir($system_path))
 	{
-		echo $system_path;
 		exit("Your system folder path does not appear to be set correctly. Please open the following file and correct this: ".pathinfo(__FILE__, PATHINFO_BASENAME));
 	}
 
@@ -136,13 +135,19 @@ if( (isset($_SERVER["LOCAL_ADDR"]) && $_SERVER["LOCAL_ADDR"] != $_SERVER["REMOTE
 
 	// Path to the system folder
 	define('BASEPATH', str_replace("\\", "/", $system_path));
-	
+
 	// Path to the front controller (this file)
 	define('FCPATH', str_replace(SELF, '', __FILE__));
 
+	// Path to the root folder
+	if(stripos(php_uname(),"windows") !== false) {
+		define('ROOTPATH',substr(FCPATH,0,strrpos(substr(FCPATH,0,-1),"\\")));
+	} else {
+		define('ROOTPATH',substr(FCPATH,0,strrpos(substr(FCPATH,0,-1),"/")));
+	}
+
 	// Name of the "system folder"
 	define('SYSDIR', trim(strrchr(trim(BASEPATH, '/'), '/'), '/'));
-
 
 	// The path to the "application" folder
 	if (is_dir($application_folder))

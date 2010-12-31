@@ -215,7 +215,7 @@ class CI_Ajax {
 
 	function getString() {
 
-		if(IS_AJAX == true) {
+		if($this->input->is_ajax_request() == true) {
 
 			$check_jquery = false;
 

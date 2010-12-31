@@ -35,7 +35,7 @@ class view extends CI_Controller
 
 		if(isset($_POST['project'])) {
 
-			require(APPPATH.'../'.$_POST['project'].'/config/database.php');
+			require(FCPATH.'../'.$_POST['project'].'/config/database.php');
 
 			if(isset($_POST["dbconf"]) and isset($db[$_POST["dbconf"]]))
 				$this->load->database($db[$_POST["dbconf"]], FALSE, TRUE);

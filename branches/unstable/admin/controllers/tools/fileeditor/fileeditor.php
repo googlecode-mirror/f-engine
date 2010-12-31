@@ -21,7 +21,7 @@ class fileeditor extends CI_Controller
 	
 	function index() {
 
-		if($this->uri->param(0) == "select") {
+		if($this->uri->param(0) == "select" and !isset($_POST['project'])) {
 
 			$this->target_project();
 			return;
@@ -48,11 +48,11 @@ class fileeditor extends CI_Controller
 
 		$this->load->helper("directory");
 		$my_projects = array();
-		$projects = directory_map(APPPATH.'../', true);
+		$projects = directory_map(FCPATH.'../', true);
 
 		foreach($projects as $project) {
 
-			if(is_dir(APPPATH.'../'.$project) && $project != 'fengine') {
+			if(is_dir(FCPATH.'../'.$project) && $project != 'system') {
 
 				$my_projects[] = $project;
 			}	

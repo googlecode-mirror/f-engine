@@ -35,7 +35,7 @@ class <?php echo $classname;?> extends Controller {
 			'pagination' => $this->pagination->create_links() 
 		); 
 		
-		if(IS_AJAX) {
+		if($this->input->is_ajax_request()) {
 
 			$this->load->view('<?php echo $vpath;?>/datagrid', $data);
 		} else {

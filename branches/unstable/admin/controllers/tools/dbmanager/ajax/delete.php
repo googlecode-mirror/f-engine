@@ -20,7 +20,7 @@ class delete extends CI_Controller
 		$project = $this->uri->param(1) != "" ? $this->uri->param(1) : $_SESSION['project'];
 		if(isset($project)) {
 
-			require(APPPATH.'../'.$project.'/config/database.php');
+			require(FCPATH.'../'.$project.'/config/database.php');
 			if(isset($_POST["dbconf"]) and isset($db[$_POST["dbconf"]])) {
 
 				$this->load->database($db[$_POST["dbconf"]], FALSE, TRUE);

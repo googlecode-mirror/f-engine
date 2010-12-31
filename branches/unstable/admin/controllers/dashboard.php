@@ -20,7 +20,7 @@ class dashboard extends CI_Controller {
 
 	function index()
 	{
-
+		
 		$my_projects = array();
 		$projects = directory_map(FCPATH.'../', true);
 

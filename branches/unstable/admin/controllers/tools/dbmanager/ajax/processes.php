@@ -19,7 +19,7 @@ class processes extends CI_Controller
 		$project = $_POST['project'] != "" ? $_POST['project'] : $_SESSION['project'];
 		if(isset($project)) {
 
-			require(APPPATH.'../'.$project.'/config/database.php');
+			require(FCPATH.'../'.$project.'/config/database.php');
 			if(isset($_POST["dbconf"]) and isset($db[$_POST["dbconf"]]))
 				$this->load->database($db[$_POST["dbconf"]]);
 			else

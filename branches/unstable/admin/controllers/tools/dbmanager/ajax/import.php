@@ -11,7 +11,7 @@ class import extends CI_Controller
 		@set_time_limit(0);
 
 		/*** Load database ***/
-		require(APPPATH.'../'.$project.'/config/database.php');
+		require(FCPATH.'../'.$project.'/config/database.php');
 		$this->load->database($db[$dbconf]);
 
 		/*** Parse file ***/

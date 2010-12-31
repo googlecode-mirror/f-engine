@@ -24,7 +24,7 @@ class frename extends CI_Controller {
         if(!isset($_POST['newname']) and $_POST['newname'] != "") return;
         if(!isset($_POST['project']) and $_POST['project'] != "") return;
 
-        $dir = BASEPATH."application/".$_POST["project"];
+        $dir = ROOTPATH.$_POST["project"];
 
 		if(rename($dir.$_POST['file'], $dir.$_POST['newname']) == true) {
 

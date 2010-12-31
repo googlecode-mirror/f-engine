@@ -20,7 +20,7 @@ class appbuilder extends CI_Controller {
 		$this->load->helper('directory'); 
 		$this->load->helper(array('xml','file'));
 		
-		$this->path = array(APPPATH.'../base/');
+		$this->path = array(FCPATH.'../base/');
 
 	}
 	
@@ -32,7 +32,7 @@ class appbuilder extends CI_Controller {
 		$this->xml->setIndent(true);
 		$this->xml->startElement('app');
 
-		$this->fill_xml(directory_map(BASEPATH.'application/base'));
+		$this->fill_xml(directory_map(ROOTPATH.'base'));
 
 		$this->xml->endElement();
 		header ("Content-Type:text/xml");

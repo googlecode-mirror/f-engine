@@ -2,41 +2,70 @@
 /**
  * CodeIgniter
  *
- * An open source application development framework for PHP 4.3.2 or newer
+ * An open source application development framework for PHP 5.1.6 or newer
  *
  * @package		CodeIgniter
  * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008 - 2009, EllisLab, Inc.
+ * @copyright	Copyright (c) 2008 - 2010, EllisLab, Inc.
  * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
  * @filesource
  */
 
-/**
- * F-engine: Added backup feature
- *
- * @package		F-engine
- * @author		flmn
- * @copyright	Copyright (c) 2010, Mikel Madariaga
- * @license		http://www.f-engine.net/userguide/license
- * @link		http://www.f-engine.net/
- * @since		Version 0.3
- * @filesource
- */
-
 // ------------------------------------------------------------------------
 
 /**
- * MySQLi Utility Class
+ * MySQL Utility Class
  *
  * @category	Database
  * @author		ExpressionEngine Dev Team
  * @link		http://codeigniter.com/user_guide/database/
  */
+class DB_mysql_utility extends CI_DB_utility {
 
-require('ci_mysqli_utility.php');
-class CI_DB_mysqli_utility extends DB_mysqli_utility {
+	/**
+	 * List databases
+	 *
+	 * @access	private
+	 * @return	bool
+	 */
+	function _list_databases()
+	{
+		return "SHOW DATABASES";
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Optimize table query
+	 *
+	 * Generates a platform-specific query so that a table can be optimized
+	 *
+	 * @access	private
+	 * @param	string	the table name
+	 * @return	object
+	 */
+	function _optimize_table($table)
+	{
+		return "OPTIMIZE TABLE ".$this->db->_escape_identifiers($table);
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Repair table query
+	 *
+	 * Generates a platform-specific query so that a table can be repaired
+	 *
+	 * @access	private
+	 * @param	string	the table name
+	 * @return	object
+	 */
+	function _repair_table($table)
+	{
+		return "REPAIR TABLE ".$this->db->_escape_identifiers($table);
+	}
 
 	// --------------------------------------------------------------------
 	/**
@@ -46,7 +75,7 @@ class CI_DB_mysqli_utility extends DB_mysqli_utility {
 	 * @param	array	Preferences
 	 * @return	mixed
 	 */
-	function _backup($params = array(),$sql='')
+	function _backup($params = array())
 	{
 		if (count($params) == 0)
 		{
@@ -55,7 +84,7 @@ class CI_DB_mysqli_utility extends DB_mysqli_utility {
 
 		// Extract the prefs for simplicity
 		extract($params);
-	
+
 		// Build the output
 		$output = '';
 		foreach ((array)$tables as $table)
@@ -68,59 +97,40 @@ class CI_DB_mysqli_utility extends DB_mysqli_utility {
 
 			// Get the table schema
 			$query = $this->db->query("SHOW CREATE TABLE `".$this->db->database.'`.'.$table);
-			
+
 			// No result means the table name was invalid
 			if ($query === FALSE)
 			{
 				continue;
 			}
-			
+
 			// Write out the table schema
 			$output .= '#'.$newline.'# TABLE STRUCTURE FOR: '.$table.$newline.'#'.$newline.$newline;
 
- 			if ($add_drop == TRUE)
- 			{
+			if ($add_drop == TRUE)
+			{
 				$output .= 'DROP TABLE IF EXISTS '.$table.';'.$newline.$newline;
 			}
-			
+
 			$i = 0;
 			$result = $query->result_array();
-
-			$is_view = false;
-			foreach ($result[0] as $key=>$val)
+			foreach ($result[0] as $val)
 			{
-				if(in_array($key, array("character_set_client","collation_connection"))) {
-
-					continue;
-				}
-
-				if(strpos($val,"CREATE ALGORITHM") !== false) {
-
-					$val = preg_replace("/ALGORITHM.*DEFINER/","",$val);
-					$is_view = true;
-				}
-
 				if ($i++ % 2)
 				{
-					if(isset($ifnotexists) and $ifnotexists == true)
-						$output .= str_replace("`$table`","IF NOT EXISTS `$table` ",$val).';'.$newline.$newline;
-					else
-						$output .= $val.';'.$newline.$newline;
+					$output .= $val.';'.$newline.$newline;
 				}
 			}
 
 			// If inserts are not needed we're done...
-			if ($add_insert == FALSE or $is_view)
+			if ($add_insert == FALSE)
 			{
 				continue;
 			}
 
 			// Grab all the data from the current table
-			if($sql != '')
-				$query = $this->db->query($sql);
-			else
-				$query = $this->db->query("SELECT * FROM $table");
-			
+			$query = $this->db->query("SELECT * FROM $table");
+
 			if ($query->num_rows() == 0)
 			{
 				continue;
@@ -133,16 +143,15 @@ class CI_DB_mysqli_utility extends DB_mysqli_utility {
 			$i = 0;
 			$field_str = '';
 			$is_int = array();
-
-			while ($field = mysqli_fetch_field($query->result_id))
+			while ($field = mysql_fetch_field($query->result_id))
 			{
 				// Most versions of MySQL store timestamp as a string
-				// More info: http://www.php.net/manual/en/mysqli.constants.php
-				$is_int[$i] = (in_array($field->type,
-								array(MYSQLI_TYPE_TINY, MYSQLI_TYPE_SHORT, MYSQLI_TYPE_INT24, MYSQLI_TYPE_LONG, MYSQLI_TYPE_LONGLONG), 
+				$is_int[$i] = (in_array(
+										strtolower(mysql_field_type($query->result_id, $i)),
+										array('tinyint', 'smallint', 'mediumint', 'int', 'bigint'), //, 'timestamp'),
 										TRUE)
 										) ? TRUE : FALSE;
-										
+
 				// Create a string of field names
 				$field_str .= '`'.$field->name.'`, ';
 				$i++;
@@ -150,12 +159,11 @@ class CI_DB_mysqli_utility extends DB_mysqli_utility {
 
 			// Trim off the end comma
 			$field_str = preg_replace( "/, $/" , "" , $field_str);
-			
-			
-			// Build the insert string
-			$kont = 0;
-			foreach ($query->result_array() as $row) {
 
+
+			// Build the insert string
+			foreach ($query->result_array() as $row)
+			{
 				$val_str = '';
 
 				$i = 0;
@@ -176,8 +184,8 @@ class CI_DB_mysqli_utility extends DB_mysqli_utility {
 						else
 						{
 							$val_str .= $v;
-						}					
-					}					
+						}
+					}
 
 					// Append a comma
 					$val_str .= ', ';
@@ -188,32 +196,7 @@ class CI_DB_mysqli_utility extends DB_mysqli_utility {
 				$val_str = preg_replace( "/, $/" , "" , $val_str);
 
 				// Build the INSERT string
-				if(isset($extended) and $extended == true) {
-
-					if($kont == 0) {
-
-						$output .= $newline.'INSERT INTO '.$table.' ('.$field_str.') VALUES '.$newline.'('.$val_str.')';
-
-					} elseif($kont % 25 == 0) {
-
-						$output .= ';'.$newline.$newline.'INSERT INTO '.$table.' ('.$field_str.') VALUES '.$newline.'('.$val_str.')';
-
-					} else {
-
-						$output .= ','.$newline.'('.$val_str.')';
-					}
-
-					$kont++;
-
-				} else {
-
-					$output .= 'INSERT INTO '.$table.' ('.$field_str.') VALUES '.$newline.'('.$val_str.');'.$newline;
-				}
-			}
-
-			if(isset($extended) and $extended == true and substr($output,-1) == ")") {
-
-				$output .= ';';
+				$output .= 'INSERT INTO '.$table.' ('.$field_str.') VALUES ('.$val_str.');'.$newline;
 			}
 
 			$output .= $newline.$newline;
@@ -223,5 +206,5 @@ class CI_DB_mysqli_utility extends DB_mysqli_utility {
 	}
 }
 
-/* End of file mysqli_utility.php */
-/* Location: ./system/database/drivers/mysqli/mysqli_utility.php */
+/* End of file mysql_utility.php */
+/* Location: ./system/database/drivers/mysql/mysql_utility.php */
