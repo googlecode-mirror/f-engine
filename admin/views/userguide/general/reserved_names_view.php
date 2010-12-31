@@ -146,6 +146,9 @@
         EXT
     </li>
     <li>
+    	ROOTPATH
+    </li>
+    <li>
         FCPATH
     </li>
     <li>
@@ -159,9 +162,6 @@
     </li>
     <li>
     	PUBLIC_DATA
-    </li>
-    <li>
-    	IS_AJAX
     </li>
     <li>
         CI_VERSION

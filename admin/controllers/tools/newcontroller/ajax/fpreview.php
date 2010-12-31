@@ -22,7 +22,7 @@ class fpreview extends CI_Controller {
 		
 		if(isset($_SESSION['project'])) {
 
-			$apppath = explode("/",str_replace("\\","/", APPPATH));
+			$apppath = explode("/",str_replace("\\","/", FCPATH));
 			$apppath[count($apppath)-2] = $_SESSION['project'];
 			$this->apppath = implode("/",$apppath);
 
@@ -30,7 +30,7 @@ class fpreview extends CI_Controller {
 
 		} else {
 			
-			$this->apppath = APPPATH;
+			$this->apppath = FCPATH;
 			$this->public_data = PUBLIC_DATA;
 		}
 	}

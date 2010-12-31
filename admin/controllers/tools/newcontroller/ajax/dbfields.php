@@ -28,7 +28,7 @@ class dbfields extends CI_Controller {
 
 		    if(isset($_SESSION['project'])) {
 
-				require(APPPATH.'../'.$_SESSION['project'].'/config/database.php');
+				require(FCPATH.'../'.$_SESSION['project'].'/config/database.php');
 				$this->load->database($db[$active_group]);
 
 			} else {

@@ -24,7 +24,7 @@ class paste extends CI_Controller {
         if(!isset($_POST['action']) and $_POST['action'] != "") return;
         if(!isset($_POST['project']) and $_POST['project'] != "") return;
 
-        $dir = BASEPATH."application/".$_POST["project"];
+        $dir = ROOTPATH.$_POST["project"];
 	
 		$filename = $_POST['newfile'];
 

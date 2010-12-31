@@ -10,8 +10,7 @@
 <div style="width:325px;float:left;">
 	<h2>Create a new project</h2>
 	<form method="post" action="<?php echo site_url();?>tools/newproject" />
-	<?php  if (is_really_writable(BASEPATH.'application/') == 1) { ?>
-
+	<?php  if (is_really_writable(ROOTPATH) == 1) { ?>
 
 		Project name:
 		<input type="text" name="projectname" />
@@ -20,7 +19,7 @@
 		
 	<?php } else {
 			
-			echo BASEPATH.'application/ directory <strong>must be writable</strong>'; 
+			echo ROOTPATH.' directory <strong>must be writable</strong>'; 
 		
 	} //endif ?>
 	</form>

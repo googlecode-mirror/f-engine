@@ -21,7 +21,7 @@ class dbmanager extends CI_Controller
 	
 	function index($current_db = '') {
 
-		if($this->uri->param(0) == "select") {
+		if($this->uri->param(0) == "select" and !isset($_POST['project'])) {
 
 			//select project
 			$this->target_project();
@@ -40,9 +40,9 @@ class dbmanager extends CI_Controller
 
 		} else {
 
-			if(file_exists(APPPATH.'../'.$_SESSION['project'].'/config/database.php')) {
+			if(file_exists(FCPATH.'../'.$_SESSION['project'].'/config/database.php')) {
 			
-				require(APPPATH.'../'.$_SESSION['project'].'/config/database.php');
+				require(FCPATH.'../'.$_SESSION['project'].'/config/database.php');
 				
 				if($current_db != '' and isset($db[$current_db])) 
 					$active_group = $current_db;
@@ -140,11 +140,11 @@ class dbmanager extends CI_Controller
 
 		$this->load->helper("directory");
 		$my_projects = array();
-		$projects = directory_map(APPPATH.'../', true);
+		$projects = directory_map(FCPATH.'../', true);
 
 		foreach($projects as $project) {
 
-			if(is_dir(APPPATH.'../'.$project) && $project != 'fengine') {
+			if(is_dir(FCPATH.'../'.$project) && $project != 'system') {
 
 				$my_projects[] = $project;
 			}	

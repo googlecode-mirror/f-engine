@@ -24,7 +24,7 @@ class filetree extends CI_Controller {
 		$_POST['dir'] = urldecode($_POST['dir']);
 		$base = explode("/",$_POST['dir']);
 
-		$apppath = explode("/",str_replace("\\","/", APPPATH));
+		$apppath = explode("/",str_replace("\\","/", FCPATH));
 		$apppath[count($apppath)-2] = $project;
 		$root = implode("/",$apppath);
 

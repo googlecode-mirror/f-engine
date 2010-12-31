@@ -14,9 +14,9 @@
 	<ul id="submenu" class="idTabs">
 		<li style="float:right;right:90px;position:relative;">
 		<?php if(isset($_SESSION['project'])) { ?>
-			<a id="currentprojectname" href="<?php echo site_url("tools/dbmanager/select");?>" style="width:180px;" title="Current project: <?php echo $_SESSION['project']; ?>" rel="<?php echo $_SESSION['project']; ?>" >Switch project</a>
+			<a id="currentprojectname" href="<?php echo site_url("tools/".$this->uri->segment(2)."/select");?>" style="width:180px;" title="Current project: <?php echo $_SESSION['project']; ?>" rel="<?php echo $_SESSION['project']; ?>" >Switch project</a>
 		<?php } else { ?>
-			<a id="currentprojectname" href="<?php echo site_url("tools/dbmanager/select");?>" style="width:180px;">Switch project</a>
+			<a id="currentprojectname" href="<?php echo site_url("tools/".$this->uri->segment(2)."/select");?>" style="width:180px;">Switch project</a>
 		<?php } ?>
 		</li>
 	</ul>	

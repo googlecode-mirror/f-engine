@@ -1,5 +1,5 @@
 <?php 
-class newform extends Model {
+class newform extends CI_Model {
 
 	private $post;
 	private $fe;
@@ -30,9 +30,9 @@ class newform extends Model {
 	private $template_folder;
 	private $files;
 
-    function newform() {
+    function __construct() {
 
-        parent::Model();
+        parent::__construct();
     }
 
     function init($data) {
@@ -71,7 +71,7 @@ class newform extends Model {
     	 */
     	if( isset($_SESSION['project']) ) {
 
-			$apppath = explode("/",str_replace("\\","/", APPPATH));
+			$apppath = explode("/",str_replace("\\","/", FCPATH));
 			$apppath[count($apppath)-2] = $_SESSION['project'];
 
 			$this->apppath = implode("/",$apppath);
@@ -79,7 +79,7 @@ class newform extends Model {
 
 		} else {
 
-			$this->apppath = APPPATH;
+			$this->apppath = FCPATH;
 			$this->public_data = PUBLIC_DATA;
 		}
 

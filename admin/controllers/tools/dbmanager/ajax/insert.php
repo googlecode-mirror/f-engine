@@ -32,7 +32,7 @@ class insert extends CI_Controller
 
 		if(isset($project)) {
 
-			require(APPPATH.'../'.$project.'/config/database.php');
+			require(FCPATH.'../'.$project.'/config/database.php');
 
 			if(isset($db[$dbconf]))
 				$this->load->database($db[$dbconf]);

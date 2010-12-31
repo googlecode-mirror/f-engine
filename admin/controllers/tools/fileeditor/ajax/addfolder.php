@@ -22,7 +22,7 @@ class addfolder extends CI_Controller {
         if(!isset($_POST['file'])) return;
 		if(!isset($_POST['project']) and $_POST['project'] != "") return;
 
-        $dir = BASEPATH."application/".$_POST["project"];
+        $dir = ROOTPATH."/".$_POST["project"];
 		$filename = $_POST['file'];
 
         if(mkdir($dir.$filename, 0777)) {

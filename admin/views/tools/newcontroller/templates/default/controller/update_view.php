@@ -60,7 +60,7 @@ class update extends Controller {
 			$this->db->f_update('<?php  echo $db;?>',$data,$where);
 <?php } //end foreach ?>
 
-			if(!IS_AJAX) {
+			if(!$this->input->is_ajax_request()) {
 
 				redirect("<?php echo $path?>","refresh");
 			}
@@ -70,7 +70,7 @@ class update extends Controller {
 
 			$this->load->library("ajax");
 
-			if(IS_AJAX)
+			if($this->input->is_ajax_request())
 				$this->load->view('<?php echo $view; ?>');
 			else
 				$this->load->masterview('<?php echo $view; ?>');

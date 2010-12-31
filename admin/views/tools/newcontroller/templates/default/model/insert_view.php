@@ -1,4 +1,4 @@
-	<?php echo "<?php if(!IS_AJAX) {  ?>\n" ?>
+	<?php echo "<?php if(!$this->input->is_ajax_request()) {  ?>\n" ?>
 	<a href="<?php echo "<?php echo site_url('".$path."'); ?>"; ?>">Return</a><br /><br />
 	<style>
 		form table textarea {
@@ -40,7 +40,7 @@
 			<?php }//endforeach ?>
 	</tbody>
 		</table>
-	<?php echo "<?php if(!IS_AJAX) {  ?>\n" ?>
+	<?php echo "<?php if(!$this->input->is_ajax_request()) {  ?>\n" ?>
 		<?php echo '<?php echo $this->ajax->submitButton("Save","#insert-form","'.$path.'");  ?>'."\n" ?>
 	</form>
 	<?php echo "<?php }//endif ?>" ?>

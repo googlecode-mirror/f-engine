@@ -24,7 +24,7 @@ class fileget extends CI_Controller {
         if(!isset($_POST['file'])) return;
         if(!isset($_POST['project']) and $_POST['project'] != "") return;
 
-		$apppath = explode("/",str_replace("\\","/", APPPATH));
+		$apppath = explode("/",str_replace("\\","/", FCPATH));
 		$apppath[count($apppath)-2] = $_POST['project'];
 		$root = implode("/",$apppath);
 

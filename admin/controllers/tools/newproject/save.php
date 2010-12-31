@@ -24,16 +24,19 @@ class save extends CI_Controller {
 	{
 		if( !isset($_POST['projectname']) || $_POST['projectname'] == '') die;
 
-		$pname = BASEPATH.'application/'.$_POST['projectname'];
-		mkdir($pname, 0777);
+		$pname = ROOTPATH.'/'.$_POST['projectname'];
+
+		if(!file_exists($pname) or !is_dir($pname)) {
+			mkdir($pname, 0777);
+		}
 		chmod($pname, 0777);
 
-		$xml = simplexml_load_file(BASEPATH.'src/newproject.xml'); 
-		
+		$xml = simplexml_load_file(ROOTPATH."/".SYSDIR.'/src/newproject.xml'); 
+
 		if(isset($xml->dir))
 		$this->run_folder($xml,$pname);
 
-		$pname = BASEPATH.'application/'.$_POST['projectname'];
+		$pname = ROOTPATH."/".$_POST['projectname'];
 
 		//Open config.php
 		$config = file_get_contents($pname."/config/config.php"); 
@@ -114,9 +117,12 @@ class save extends CI_Controller {
 		foreach ($xml->dir as $type => $item) {
 
 			$current_folder = $pname.'/'.$item['name'];
-			mkdir($current_folder, 0777);
-			chmod($current_folder, 0777);
 			
+			if(!file_exists($current_folder) or !is_dir($current_folder)) {
+				mkdir($current_folder, 0777);
+			}
+			chmod($current_folder, 0777);
+
 			if($type == 'dir') {
 
 				foreach ($item as $type => $subitem) {
@@ -128,7 +134,10 @@ class save extends CI_Controller {
 
 					} else {
 
-						mkdir($current_folder.'/'.$subitem['name'], 0777);
+						if(!file_exists($current_folder) or !is_dir($current_folder)) {
+							mkdir($current_folder.'/'.$subitem['name'], 0777);
+						}
+
 						chmod($current_folder.'/'.$subitem['name'], 0777);
 						$this->run_folder($subitem,$current_folder.'/'.$subitem['name']);
 					}
