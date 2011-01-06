@@ -134,7 +134,7 @@ class save extends CI_Controller {
 
 					} else {
 
-						if(!file_exists($current_folder) or !is_dir($current_folder)) {
+						if(!file_exists($current_folder.'/'.$subitem['name']) or !is_dir($current_folder.'/'.$subitem['name'])) {
 							mkdir($current_folder.'/'.$subitem['name'], 0777);
 						}
 

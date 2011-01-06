@@ -7,7 +7,7 @@
  * @copyright	Copyright (c) 2010, Mikel Madariaga
  * @license		http://www.f-engine.net/userguide/license
  * @link		http://www.f-engine.net/
- * @since		Version 0.1
+ * @since		Version 0.6
  * @filesource
  */
 class appbuilder extends CI_Controller {
@@ -19,26 +19,24 @@ class appbuilder extends CI_Controller {
 		parent::__construct();
 		$this->load->helper('directory'); 
 		$this->load->helper(array('xml','file'));
-		
-		$this->path = array(FCPATH.'../base/');
 
+		$this->path = array(FCPATH.'../base/');
 	}
-	
+
 	function index()
 	{
-
 		$this->xml = new XmlWriter();
 		$this->xml->openMemory();
 		$this->xml->setIndent(true);
 		$this->xml->startElement('app');
 
-		$this->fill_xml(directory_map(ROOTPATH.'base'));
+		$this->fill_xml(directory_map(ROOTPATH.'/base'));
 
 		$this->xml->endElement();
 		header ("Content-Type:text/xml");
 		print '<?xml version="1.0" encoding="utf-8"?>'."\n".$this->xml->outputMemory();
 	}
-	
+
 	function fill_xml($files) {
 
 		foreach ($files as $name => $file) {
@@ -71,6 +69,5 @@ class appbuilder extends CI_Controller {
 			    $this->xml->endElement();
 			}
 		}
-
 	}
 }
