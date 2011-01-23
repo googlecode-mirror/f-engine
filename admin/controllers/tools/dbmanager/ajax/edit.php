@@ -7,7 +7,7 @@
  * @copyright	Copyright (c) 2010, Mikel Madariaga
  * @license		http://www.f-engine.net/userguide/license
  * @link		http://www.f-engine.net/
- * @since		Version 0.4
+ * @since		Version 0.6
  * @filesource
  */
 class edit extends CI_Controller 
@@ -37,10 +37,10 @@ class edit extends CI_Controller
 			$this->load->database("", FALSE, TRUE);	
 		}
 	}
-		
+
 	function index() {
-		
-		echo "This script is not accesible directly";
+
+		echo "This script is not accessible directly";
 	}
 	
 	function ajax() {
@@ -89,7 +89,6 @@ class edit extends CI_Controller
 				}
 
 				$query = $this->db->get_where($table, $where);
-
 			}
 
 		} elseif(count($_POST) > 0) {
@@ -109,16 +108,16 @@ class edit extends CI_Controller
 		}
 
 		$data = array(
-						'title'		=> 	'Edit Data',
-						'fields'	=> 	$query->field_data(),
-						'query'		=> 	$query->row(),
-						'action'	=> 	site_url().'tools/dbmanager/ajax/update/'.$this->uri->param(1),
-						'table'		=> 	$table,
-						'dbconf'	=>	isset($_POST["dbconf"]) ? $_POST["dbconf"] : "",
-						"data"		=>  $_POST
-					);
+			'title'		=> 	'Edit Data',
+			'fields'	=> 	$query->field_data(),
+			'structure'	=>	$this->db->query('describe '.$table)->result(),
+			'query'		=> 	$query->row(),
+			'action'	=> 	site_url().'tools/dbmanager/ajax/update/'.$this->uri->param(1),
+			'table'		=> 	$table,
+			'dbconf'	=>	isset($_POST["dbconf"]) ? $_POST["dbconf"] : "",
+			"data"		=>  $_POST
+		);
 
 		$this->load->view('tools/dbmanager/edit', $data);
 	}
 }
-?>

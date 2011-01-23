@@ -2,12 +2,12 @@
 /**
  * Dbmanager
  *
- * @package	F-engine
+ * @package		F-engine
  * @author		flmn
  * @copyright	Copyright (c) 2010, Mikel Madariaga
  * @license		http://www.f-engine.net/userguide/license
  * @link		http://www.f-engine.net/
- * @since		Version 0.5
+ * @since		Version 0.6
  * @filesource
  */
 class view extends CI_Controller 
@@ -20,12 +20,11 @@ class view extends CI_Controller
 
 		parent::__construct();
 		$this->load->helper(array('url','form'));
-		//$this->output->enable_profiler = true;
 	}
 
 	function index() {
 
-		echo "This script is not accesible directly";
+		echo "This script is not accessible directly";
 	}
 
 	function ajax($offset=0) {
@@ -264,15 +263,15 @@ class view extends CI_Controller
 
 			// Pagination
 			$data =  array(
-							'base_url'		 => site_url('tools/dbmanager/ajax/view'),
-							'total_rows'	 => $total_rows,
-							'per_page'		 => $items_per_page,
-							'offset'	     => $offset,
-							'uri_segment'	 => 5,
-							'full_tag_open'	 => '<p style="margin:1px;">',
-							'full_tag_close' => '</p>',
-							'first_link'	 => '«',
-							'last_link'		 => '»'
+				'base_url'		 => site_url('tools/dbmanager/ajax/view'),
+				'total_rows'	 => $total_rows,
+				'per_page'		 => $items_per_page,
+				'offset'	     => $offset,
+				'uri_segment'	 => 5,
+				'full_tag_open'	 => '<p style="margin:1px;">',
+				'full_tag_close' => '</p>',
+				'first_link'	 => '«',
+				'last_link'		 => '»'
 			);
 
 			$this->pagination->initialize($data);
@@ -280,14 +279,14 @@ class view extends CI_Controller
 		}
 
 		$data['exam'] = array(
-						'title'	=>  'View Data',
-						'query'		=> $query,
-						'sql'		=> $sql,
-						'fields'	=> $fields,
-						'primary'	=> $primary,
-						'paginate'	=> $paginate,
-						'orderby' => isset($_POST["orderby"]) ? explode(" ",$_POST["orderby"]) : false,
-						'execution_time' => $execution_time
+			'title'	=>  'View Data',
+			'query'		=> $query,
+			'sql'		=> $sql,
+			'fields'	=> $fields,
+			'primary'	=> $primary,
+			'paginate'	=> $paginate,
+			'orderby' => isset($_POST["orderby"]) ? explode(" ",$_POST["orderby"]) : false,
+			'execution_time' => $execution_time
 		);
 
 		if(isset($query_orderby)) {
@@ -351,6 +350,7 @@ class view extends CI_Controller
 
 		/*** backup tab ***/
 		$data['tables'] = $listables;
+
 		$this->load->view('tools/dbmanager/data', $data);
 	}
 
@@ -424,6 +424,8 @@ class view extends CI_Controller
 		preg_match("/\s*count\(/i",$dummy_query,$count);
 		//show
 		preg_match("/^\s*show\s*/i",$dummy_query,$show);
+		//describe
+		preg_match("/^\s*describe\s*/i",$dummy_query,$describe);
 		//group by
 		preg_match("/\s+group\s+by/i",$dummy_query,$groupby);
 		//having
@@ -444,7 +446,7 @@ class view extends CI_Controller
 		$multifrom = $multifrom[0];
 
 		// returns array(show actions,show pagination)
-		if (count($show) > 0) {
+		if (count($show) > 0 || count($describe) > 0) {
 
 			return array(false,false);
 

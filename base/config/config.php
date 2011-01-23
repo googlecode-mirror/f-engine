@@ -11,7 +11,18 @@
 |	http://example.com/
 |
 */
-$config['base_url']	= "http://example.com/";
+$config['base_url']	= "";
+
+//autodetect if empty
+if($config['base_url'] == '') {
+
+	if(isset($_SERVER['SCRIPT_URL']))	/***	cherokee alike web servers	***/
+		$config['base_url'] = 'http://'.$_SERVER['HTTP_HOST'].substr($_SERVER['SCRIPT_URL'],0,stripos($_SERVER['SCRIPT_URL'],"index.php"));
+	else								/***	apache alike web servers	***/
+		$config['base_url'] = 'http://'.$_SERVER['HTTP_HOST'].substr($_SERVER['SCRIPT_NAME'],0,stripos($_SERVER['SCRIPT_NAME'],"index.php"));
+}
+
+/*
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +35,51 @@ $config['base_url']	= "http://example.com/";
 |
 */
 $config['index_page'] = "index.php";
+
+/*
+|--------------------------------------------------------------------------
+| Public data folder
+|--------------------------------------------------------------------------
+|
+| Typically this will be your public_data folder, unless you've renamed it to
+| something else. 
+|
+*/
+$config['public_data'] = "public_data";
+
+/*
+|--------------------------------------------------------------------------
+| Combine and compact css and javascript files
+|--------------------------------------------------------------------------
+| Combined files are a way to reduce the number of HTTP requests and 
+| speed up web page load time by combining all scripts into a single file.
+| You can also add an expires or a cache-control header to make thesee components 
+| cacheable on browser. This avoids unnecessary HTTP requests on subsequent page views.
+|
+| Enabling compress option, the time it takes to transfer an HTTP request and response 
+| across the network can be significantly reduced.
+| 
+| Warning:
+| - You may need to modify image references into compacted stylesheets as they will take 
+|   public_data folder as css file location.
+| - Certain javascript libraries may not load properly when compacting (Usually those 
+|	ones that auto load their own plugins, tinyMce for example). You can skip any problematic
+|	script from been compacted adding '#' before script name. Example:
+|	
+|	$conf['fileeditor'] =  array (
+|		'js'  		=> array (	'jquery/jquery.js','jquery/plugins/fileTree.js',
+|                                '#editarea/edit_area_full.js'),
+|		'css' 		=> array (  'default.css'),
+|		'header'	=> 'header/default',
+|		'footer'	=> 'footer/default'
+|	);
+*/
+$config['compact'] = array(
+	"css" => false,
+	"js"  => false,
+	"cachetime" => 0, //hours
+	"compress" => false
+);
 
 /*
 |--------------------------------------------------------------------------
@@ -147,7 +203,7 @@ $config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-';
 | this feature is enabled, since CodeIgniter is designed primarily to
 | use segment based URLs.
 |
-*/
+*
 $config['enable_query_strings'] = FALSE;
 $config['controller_trigger']	= 'c';
 $config['function_trigger']		= 'm';
@@ -270,7 +326,7 @@ $config['cookie_path']		= "/";
 | COOKIE data is encountered
 |
 */
-$config['global_xss_filtering'] = FALSE;
+$config['global_xss_filtering'] = TRUE;
 
 /*
 |--------------------------------------------------------------------------
@@ -280,7 +336,7 @@ $config['global_xss_filtering'] = FALSE;
 | checked on a submitted form. If you are accepting user data, it is strongly
 | recommended CSRF protection be enabled.
 */
-$config['csrf_protection'] = FALSE;
+$config['csrf_protection'] = TRUE;
 
 
 /*

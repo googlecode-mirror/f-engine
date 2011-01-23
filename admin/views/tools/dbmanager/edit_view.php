@@ -23,15 +23,30 @@
         <tr>
            <th colspan="2">Edit record</th>
         </tr>
-        <?php foreach($fields as $field) { ?>
+        <?php foreach($structure as $field) { ?>
         <tr>
             <td>
-                <?php echo  $field->name; ?>
+                <?php echo  $field->Field; ?>
             </td>
             <td>
-                <textarea class="expanding" name="<?php echo $field->name;?>"
+			<?php if(substr($field->Type,0,5) == "enum(") { 
+
+            	$options = explode("','",substr($field->Type,6,-2));
+            	$f = $field->Field; 
+            	$currentValue = $query->$f;
+            ?>
+            	<select name="<?php  echo $field->Field;?>">
+            	<?php foreach($options as $option) { ?>
+            		<option value="<?php echo $option; ?>" <?php echo $currentValue == $option ? 'selected' : ''; ?>>
+            			<?php echo $option; ?>
+            		</option>
+            	<?php }//endforeach ?>
+            	</select>
+			<?php } else { ?>
+				<textarea class="expanding" name="<?php echo $field->Field;?>"
 				style="margin: 0pt; padding: 3px; overflow: hidden; min-height: 15px; height: 15px; 
-				max-height: 120px; width: 550px; display: block;"><?php $f = $field->name; echo form_prep($query->$f); ?></textarea>
+				max-height: 120px; width: 550px; display: block;"><?php $f = $field->Field; echo form_prep($query->$f); ?></textarea>
+			<?php } //endif ?>
             </td>
         </tr>
         <?php } //endforeach ?>

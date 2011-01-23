@@ -5,7 +5,7 @@
  * @copyright	Copyright (c) 2010, Mikel Madariaga
  * @license		http://www.f-engine.net/userguide/license
  * @link		http://www.f-engine.net/
- * @since		Version 0.5
+ * @since		Version 0.6
  * @filesource
  */
 
@@ -1409,6 +1409,28 @@ function initTab_other() {
 
 					$('#db_list a.selected').parent().remove();
 					$('#tableContent').html(' ');
+
+				} else {
+
+					alert('error ocurred');
+				}
+			});
+		}
+	});
+	
+	$('#truncate_table').click( function () {
+
+		var answer = confirm("Do you really want to truncate this table?");
+
+		if (answer) {
+
+			$.post($('#truncate_table').attr('rel'), 
+			'table='+$('#db_list a.selected').text() + "&dbconf=" + $("select[name=db_conf]").attr("value") +"&project=" + $("#currentprojectname").attr("rel"), 
+			function (response) {
+
+				if(response == 1) {
+
+					$('#db_list a.selected').click();
 
 				} else {
 
