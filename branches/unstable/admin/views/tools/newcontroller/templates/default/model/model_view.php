@@ -58,6 +58,7 @@ if(isset($update["indexes"])) { ?>
 		,$where)->row();
 	}
 <?php }//endif ?>
+
 <?php if(isset($datagrid["data"])) { ?>
 	function get_where($where = array(), $extra = '') {
 
@@ -72,6 +73,7 @@ if(isset($update["indexes"])) { ?>
 		'count(*) as itemNum',<?php echo '$where'; ?>)->row()->itemNum;
 	}
 <?php }//endif ?>
+
 <?php if(isset($insert["dbs"])) { ?>
 	function insert($data) {
 
@@ -164,6 +166,7 @@ if(isset($update["indexes"])) { ?>
 		}
 	}
 <?php }//endif ?>
+
 <?php if(isset($update["dbs"])) { ?>
 	function update($data,$where = array()) {
 
@@ -253,6 +256,7 @@ if(isset($update["indexes"])) { ?>
 		}
 	}
 <?php }//endif ?>
+
 <?php if(isset($delete["field"])) { ?>
 	function delete($id) {
 
@@ -268,7 +272,8 @@ if(isset($update["indexes"])) { ?>
 		$this->fe->db->f_delete('<?php echo $delete["table"]; ?>',$where);
 		return true;
 	}
-<?php }//endif ?>	
+<?php }//endif ?>
+
 	function get_errors() {
 	
 		if(isset($this->fe->validation))

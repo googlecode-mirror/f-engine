@@ -1,5 +1,5 @@
 <div id="forms">
-	<h2><a href="<?php  echo current_url();?>">Data base administrator</a></h2>
+	<h2><a href="<?php  echo current_url();?>">Database administrator</a></h2>
 	<div class="leftFrame">
 		<div class="newTable">
 			<a href="<?php  echo site_url();?>tools/dbmanager/ajax/newtable">Create a new table</a>

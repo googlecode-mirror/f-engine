@@ -196,20 +196,23 @@ div#tableContent div#other h2 {
 
 div#tableContent div#other > div {
 
-	width: 150px; 
+	width: 121px; 
 	height: 100px; 
 	text-align: center; 
-	height: 60px; 
+	height: 30px; 
 	display: block; 
 	float:left;
-	background-color: #c8e1f9; 
-	margin-right:5px;
+	border: 1px solid #c8e1f9;
+	margin: 0 2px 5px;
+	background: url("img/fnd-azul1.png") repeat-x scroll 0 -30px #6D7FC2;
 }
 
 div#tableContent div#other > div > a {
 
-	padding-top: 20px; 
+	padding-top: 7px; 
 	display: block;
+	font-weight:bold;
+	color:white;
 }
 
 /*** Structure tab ***/

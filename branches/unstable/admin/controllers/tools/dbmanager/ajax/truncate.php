@@ -10,44 +10,39 @@
  * @since		Version 0.4
  * @filesource
  */
-class insert extends CI_Controller 
+class truncate extends CI_Controller 
 {
 	function __construct() {
 
 		parent::__construct();
-		$this->load->helper("url");
 		session_start();
-	}
 
-	function index() {
-		
-		echo "This script is not accessible directly";
-	}
-	
-	function ajax($project = '', $dbconf = '') {
-		
-		if($project == '') {	
-			$project = $_SESSION['project'];
-		}
-
+		$project = $_POST["project"] != "" ? $_POST["project"] : $_SESSION['project'];
 		if(isset($project)) {
 
 			require(FCPATH.'../'.$project.'/config/database.php');
-
-			if(isset($db[$dbconf]))
-				$this->load->database($db[$dbconf]);
+			if(isset($_POST["dbconf"]) and isset($db[$_POST["dbconf"]]))
+				$this->load->database($db[$_POST["dbconf"]]);
 			else
 				$this->load->database($db[$active_group]);
 
 		} else {
 			$this->load->database();	
 		}
+	}
 		
-		$table = $_POST['table'];
-		unset($_POST['table']);
+	function index() {
 		
-		$result = $this->db->insert($table, $_POST);
-		echo $result;
+		echo "This script is not accessible directly";
+	}
+	
+	function ajax() {
+
+		if(!isset($_POST['table'])) return;
+
+		$sql = "truncate table ".$_POST['table'];
+		$this->db->query($sql);		
+		echo "1";
 	}
 }
 ?>

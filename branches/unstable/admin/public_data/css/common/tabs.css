@@ -1,44 +1,50 @@
 ul.btnTabs {
-	
-	background-image:		url("img/tabs/background.png");
+
+	border-bottom: 1px solid #aaccdd;
 	background-position:	center bottom;
 	background-repeat:		repeat-x;
 	list-style-type:		none;
 	padding:				0px 0px 27px 7px;
 	width: 					90%;
+	
 }
 
 ul.btnTabs li {
-	
-	background-image:		url("img/tabs/tab-brd.png");
+
 	padding:				6px 2px 3px 6px;
+	margin: 1px 1px 0 0;
 	float:					left;
 	background-repeat:		no-repeat;
+	border: 1px solid #aaccdd;
+	-moz-border-radius-topleft: 5px;-webkit-border-radius-topleft: 5px; border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;-webkit-border-radius-topright: 5px; border-radius-topright: 5px;  
+	border-bottom:none;
+}
+	
+
+ul.btnTabs li.selected {
+	
+    background-color: white;
+    padding-bottom: 4px;
+    position: relative;
+    top: 1px;
+	margin-top:0;
 }
 	
 ul.btnTabs li a {
-	
-	background-image:		url("img/tabs/tab-background.png");
+
 	padding:				6px 10px 3px 6px;
 	background-position:	right top;
 	background-repeat:		repeat-x;
 	color:					#B3BEEE;
 }
 
-ul.btnTabs li.selected {
-	
-	padding-bottom:			4px;
-}
-
 ul.btnTabs li.selected a {
 	
-	padding-bottom:			4px;
+	padding-bottom:			2px;
 	color:					#2f3b6f;
 	font-weight:			bold;
 }
-
-
-
 
 /*** subtabs ***/
 

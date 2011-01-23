@@ -121,16 +121,16 @@
 
 			<?php if(isset($_COOKIE["autocom_enabled"]) and  $_COOKIE["autocom_enabled"] == 1) { ?>
 				<a id="ac_switcher" class="active" href="#" style="<?php if(!isset($_POST['table'])) { echo "display: none;"; } else { echo "display: block;"; } ?>
-				width: 125px; float: left; padding: 7px 12px;text-align:center;" title="Autocomplete disabled" rel="Autocomplete enabled">
-					<img class="enabled" src="<?php echo public_data("img/tools/application_edit.png");?>" style="display:none;" />
-					<img class="disabled" src="<?php echo public_data("img/tools/application_delete.png");?>" />
+				width: 125px; float: left; padding: 7px 12px;text-align:center;" title="Enable autocomplete" rel="Autocomplete disabled">
+					<img class="enabled" src="<?php echo public_data("img/tools/application_delete.png");?>" style="display:none;" />
+					<img class="disabled" src="<?php echo public_data("img/tools/application_edit.png");?>" />
 					Autocomplete
 				</a>
 			<?php } else { ?>
 				<a id="ac_switcher" class="active" href="#" style="<?php if(!isset($_POST['table'])) { echo "display: none;"; } else { echo "display: block;"; } ?>
-				width: 125px; float: left; padding: 7px 12px;text-align:center;" title="Autocomplete enabled" rel="Autocomplete disabled">
-					<img class="enabled" src="<?php echo public_data("img/tools/application_edit.png");?>" />
-					<img class="disabled" src="<?php echo public_data("img/tools/application_delete.png");?>" style="display:none;"  />
+				width: 125px; float: left; padding: 7px 12px;text-align:center;" title="Disable autocomplete" rel="Autocomplete enabled">
+					<img class="enabled" src="<?php echo public_data("img/tools/application_delete.png");?>" />
+					<img class="disabled" src="<?php echo public_data("img/tools/application_edit.png");?>" style="display:none;"  />
 					Autocomplete
 				</a>
 			<?php }//endif ?>
@@ -150,7 +150,6 @@
 
 <?php if(isset($structure)) { ?>
 <div id="insert" style="clear:both;">
-
 	<form action="<?php echo site_url().'tools/dbmanager/ajax/insert';?>" method="post">
 		<input type="hidden" name="table" value="<?php echo $_POST['table'];?>" />
 	    <table border="0" cellpadding="3" cellspacing="1" width="100%">
@@ -161,11 +160,23 @@
             
 	        <?php foreach($structure as $field){ ?>
 		        <tr>
+		        	<td>
+		        		<?php print(substr($field->Type,0,5)); ?>
+		        	</td>
 		            <td>
 		                <span title="<?php  echo $field->Type;?>"><?php echo $field->Field;?></span>
 		            </td>
 		            <td width="100%">
-                        <?php if (!$field->Extra == "auto_increment") { ?>
+		            	<?php if(substr($field->Type,0,5) == "enum(") { 
+
+		            		$options = explode("','",substr($field->Type,6,-2));
+		            	?>
+		            		<select name="<?php  echo $field->Field;?>">
+		            		<?php foreach($options as $option) { ?>
+		            			<option value="<?php echo $option; ?>"><?php echo $option; ?></option>
+		            		<?php }//endforeach ?>
+		            		</select>
+                        <?php } else if (!$field->Extra == "auto_increment") { ?>
                             <textarea class="expanding" name="<?php  echo $field->Field;?>" style="margin:0; padding:3px; min-height:15px; height:15px; max-height: 120px; width:98%;"></textarea>
                         <?php } else { ?>
                             <textarea name="<?php  echo $field->Field;?>" style="margin:0; padding:3px; height:15px; width:98%;" class="primary" disabled="disabled">Primary key - auto increment </textarea>
@@ -515,7 +526,13 @@
 			Remove table
 		</a>
 	</div>
-
+	
+	<div>
+		<a id="truncate_table" href="#" rel="<?php echo site_url("tools/dbmanager/ajax/truncate");?>">
+			Truncate table
+		</a>
+	</div>
+	
 	<div>
 		<a id="optimize_table" href="#" rel="<?php echo site_url("tools/dbmanager/ajax/optimizetable");?>">
 			Optimize table

@@ -10,11 +10,11 @@
  * @since		Version 0.1
  * @filesource
  */
-class jspacker extends Controller {
+class jspacker extends CI_Controller {
 
-	function jspacker()
+	function __construct()
 	{
-		parent::Controller();
+		parent::__construct();
 		$this->load->helper('url');
 	}
 

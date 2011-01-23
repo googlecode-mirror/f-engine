@@ -20,7 +20,7 @@ class createtable extends CI_Controller
 	
 	function index() {
 		
-		echo "This script is not accesible directly";
+		echo "This script is not accessible directly";
 	}
 	
 	function ajax() {
