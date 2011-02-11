@@ -2,8 +2,8 @@
     <legend>
 		<span>
 	        <a href='#' class='vrules'>
-	        	<img src='<?php echo base_url();?>public_data/img/tools/validation.png' style="vertical-align:bottom;" />
-				<img style="display:none" src='<?php echo base_url();?>public_data/img/tools/application.png' style="vertical-align:bottom;" />
+	        	<img src='<?php echo public_data("img/admin/common/validation.png");?>' style="vertical-align:bottom;" />
+				<img style="display:none" src='<?php echo public_data("img/admin/common/application.png");?>' style="vertical-align:bottom;" />
 			
 				<span style="color:black;">Validation rules</span>
 				<span style="color:black;display:none;">Fields</span>

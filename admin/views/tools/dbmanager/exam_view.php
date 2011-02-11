@@ -25,7 +25,7 @@
                 		<img 
                 		alt="This table has not defined any key. Record edition could throw unexpected results" 
                 		title="This table has not defined any key. Record edition could throw unexpected results"
-                		style="vertical-align:text-top;" src="<?php echo public_data("img/tools/table_error.png");?>" />
+                		style="vertical-align:text-top;" src="<?php echo public_data("img/admin/tools/table_error.png");?>" />
 
                 	<?php }//endif ?>
                 	Actions
@@ -94,11 +94,11 @@
 		                            <input type="hidden" name="<?php  echo $tmp[0];?>_value" value="<?php  echo isset($row->$exam_key) ? $row->$exam_key : $row->$lcase_exam_key;?>" />
 
 							<?php }//endif ?>
-		                            <a href="<?php  echo site_url();?>tools/dbmanager/ajax/edit/" class="edit">
+		                            <a href="<?php  echo site_url("admin/dbmanager/ajax/edit/");?>" class="edit">
 		                                <img class="delete_field" style="cursor: pointer;" title="edit this record" src="<?php  echo base_url();?>public_data/img/contextmenu/page_white_edit.png"/>
 		                            </a>
 		
-		                            <a style="margin-left:5px;" href="<?php  echo site_url();?>tools/dbmanager/ajax/delete/" class="delete">
+		                            <a style="margin-left:5px;" href="<?php  echo site_url("admin/dbmanager/ajax/delete/");?>" class="delete">
 		                                <img class="delete_field" style="cursor: pointer;" title="delete this record" src="<?php  echo base_url();?>public_data/img/contextmenu/delete.png"/>
 		                            </a>
                         <?php } else { ?>
@@ -107,11 +107,11 @@
 				            	<textarea name="<?php echo $field; ?>" style="display:none;"><?php echo rawurlencode($row->$field); ?></textarea>
 				            <?php } //endforeach ?>
 
-							<a href="<?php  echo site_url();?>tools/dbmanager/ajax/edit/" class="edit">
+							<a href="<?php  echo site_url("admin/dbmanager/ajax/edit/");?>" class="edit">
                                 <img class="delete_field" style="cursor: pointer;" title="edit this record" src="<?php  echo base_url();?>public_data/img/contextmenu/page_white_edit.png"/>
                             </a>
 
-                            <a style="margin-left:5px;" href="<?php  echo site_url();?>tools/dbmanager/ajax/delete/" class="delete">
+                            <a style="margin-left:5px;" href="<?php  echo site_url("admin/dbmanager/ajax/delete/");?>" class="delete">
                                 <img class="delete_field" style="cursor: pointer;" title="delete this record" src="<?php  echo base_url();?>public_data/img/contextmenu/delete.png"/>
                             </a>
 
@@ -125,7 +125,7 @@
             <td>
             	<?php if(strlen($row->$field) > 45) { ?>
                 	<span title="<?php  echo htmlspecialchars(str_replace(array("<",">"),array("&lt;","&gt;"),$row->$field));?>"><?php  echo htmlspecialchars(substr($row->$field,0,45));?></span>
-                	<img class="expand" alt="expand" title="expand" style="vertical-align:sub;cursor:pointer;opacity:0.3;" src="<?php echo public_data("img/tools/eye.png");?>" />
+                	<img class="expand" alt="expand" title="expand" style="vertical-align:sub;cursor:pointer;opacity:0.3;" src="<?php echo public_data("img/admin/tools/eye.png");?>" />
                 <?php } else { ?>
                 	<span><?php  echo htmlspecialchars(substr($row->$field,0,45));?></span>
                 <?php }//endif ?>
@@ -136,7 +136,7 @@
     </table>
 	<div class="pagination" style="clear: both;padding:5px 0;">
         <div style="float: left; padding-right: 10px; border-right: 1px dotted #2F3B6F;">
-        	<a class="refresh" style="cursor:pointer;" href="<?php echo site_url().'tools/dbmanager/ajax/view/'.$offset;?>">
+        	<a class="refresh" style="cursor:pointer;" href="<?php echo site_url('admin/dbmanager/ajax/view/'.$offset);?>">
         		<img style="cursor: pointer;vertical-align:middle;" title="edit this record" 
         		src="<?php echo base_url();?>public_data/img/tools/arrow_refresh.png"> 
         		Refresh
