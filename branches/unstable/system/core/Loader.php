@@ -67,7 +67,7 @@ class CI_Loader extends Loader {
 		}
 
 		if(!isset($wrapper)) {
-			$wrapper = isset($conf["wrapper"]) ? $conf[$index]["wrapper"] : "wrapper";
+			$wrapper = isset($conf[$index]["wrapper"]) ? $conf[$index]["wrapper"] : "wrapper";
 		}
 
 		$data = array_merge($conf[$index], $data);
