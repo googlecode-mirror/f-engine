@@ -1,0 +1,1 @@
+Application Development Framework based on codeigniter - a toolkit - for people who build web sites using PHP. It provides a rich set of libraries and web based applications for commonly needed tasks, as well as a simple interface and logical structure to access these libraries.
